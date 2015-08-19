@@ -6,15 +6,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
- * MainActivity
+ * 关于
  */
-public class MainActivity extends Activity {
+public class AboutActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_about);
     }
 
-    
 }
