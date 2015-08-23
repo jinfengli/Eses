@@ -2,11 +2,9 @@ package com.example.lijinfeng.eses;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 /**
- * 关于
+ * AboutActivity
  */
 public class AboutActivity extends Activity {
 
