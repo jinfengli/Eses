@@ -15,10 +15,8 @@ import com.example.lijinfeng.eses.R;
  *  Date: 15-9-1 下午11:23
  *  Copyright (c) li.jf All rights reserved.
  */
-
 public class AboutActivity extends AppCompatActivity {
 
-//    private Toolbar mToolBar;
     private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class AboutActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         } else if(id == android.R.id.home) {

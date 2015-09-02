@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.example.lijinfeng.eses.R;
 import com.github.clans.fab.FloatingActionButton;
+import com.umeng.update.UmengUpdateAgent;
 
 /*
  *  TODO: MainActivity
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initView();
         setListener();
+        init();
     }
 
     protected void initView() {
@@ -47,7 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fabMenu.setOnClickListener(this);
     }
 
-    // Create menu
+    private void init() {
+//        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        // 默认只在wifi情况下才更新
+        UmengUpdateAgent.update(this);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
