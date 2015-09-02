@@ -1,0 +1,32 @@
+<!--
+  ~ * TODO:
+  ~ *
+  ~ * Date: 15-9-1 下午11:43
+  ~ * Copyright (c) li.jf All rights reserved.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lijinfeng.eses.activity.AddRecordActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/common_action_bar" />
+
+    <Button
+        android:id="@+id/btnShowDatePicker"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:text="显示日期" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:text="" />
+
+</RelativeLayout>

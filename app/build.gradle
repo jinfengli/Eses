@@ -23,4 +23,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.github.clans:fab:1.5.5'
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.3'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.wdullaer:materialdatetimepicker:1.5.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
 }

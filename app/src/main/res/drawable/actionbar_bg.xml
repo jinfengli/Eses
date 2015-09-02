@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ * TODO:
+  ~ *
+  ~ * Date: 15-8-31 下午9:05
+  ~ * Copyright (c) li.jf All rights reserved.
+  -->
+
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#3366FF" />
+</shape>
