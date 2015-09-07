@@ -147,7 +147,7 @@ public class RecordProvider extends ContentProvider {
         public static final String RECORD_NO = "record_no"; // 记录编号
         public static final String START_DATE = "start_date";// 起床日期
         public static final String START_TIME = "start_time";// 起床时间
-        public static final String SLEEP_DATE = "sleep_time";// 睡眠日期
+        public static final String SLEEP_DATE = "sleep_date";// 睡眠日期
         public static final String SLEEP_TIME = "sleep_time";// 睡眠时间
         public static final String SLEEP_TIME_SECOND = "sleep_time_second";// 睡眠时间（凌晨后）
         public static final String RECORD_TYPE = "record_type";// 记录类型

@@ -15,7 +15,10 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      />
+
+    <!--app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
 
     <LinearLayout
         android:id="@+id/ll_top"
@@ -59,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:lineSpacingExtra="10dp"
-            android:text="@string/contrast"
+            android:text="@string/contract"
             android:textColor="@android:color/black"
             android:textSize="@dimen/TextSizeNormal" />
 

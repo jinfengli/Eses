@@ -3,13 +3,14 @@ package com.example.lijinfeng.eses.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.lijinfeng.eses.R;
+import com.example.lijinfeng.eses.adapter.MainAdapter;
 import com.github.clans.fab.FloatingActionButton;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -25,24 +26,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton fabMenu;
     private Toolbar mToolbar;
 
-//    private MainAdapter mainAdapter;
+    private RecyclerView recyclerViewRecords;
+    private MainAdapter mainAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initTitleView();
         initView();
         setListener();
+
         init();
+    }
+
+    private void initTitleView() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle("ESES");
     }
 
     protected void initView() {
         fabMenu = (FloatingActionButton) findViewById(R.id.fab);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        mToolbar.setTitle("ESES");
     }
 
     private void setListener() {
@@ -50,8 +56,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
-//        UmengUpdateAgent.setUpdateOnlyWifi(false);
         // 默认只在wifi情况下才更新
+//        UmengUpdateAgent.setUpdateOnlyWifi(false);
+
         UmengUpdateAgent.update(this);
     }
 
@@ -63,14 +70,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
 
             case R.id.action_about:
-                startActivity(new Intent(MainActivity.this,AboutActivity.class));
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -84,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, AddRecordActivity.class));
                 break;
 
+            default:
+                break;
         }
-
     }
 }
