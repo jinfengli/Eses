@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -55,16 +56,10 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
 
-        init();
         initTitleView();
         initView();
+        init();
         setListener();
-    }
-
-    private void init() {
-        dbHelper = new EsesDBHelper(this);
-        mCommonAlertDialog = new CommonAlertDialog(this);
-        mCommonAlertDialog.setOnSubmitListener(this);
     }
 
     protected void initTitleView() {
@@ -73,6 +68,12 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         getSupportActionBar().setTitle(R.string.title_activity_add_record);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void init() {
+        dbHelper = new EsesDBHelper(this);
+        mCommonAlertDialog = new CommonAlertDialog(this);
+        mCommonAlertDialog.setOnSubmitListener(this);
     }
 
     protected void initView() {
@@ -171,7 +172,7 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
                 },
                 currentDate.get(Calendar.HOUR_OF_DAY),
                 currentDate.get(Calendar.MINUTE),
-                false
+                true
         );
         tpd.setThemeDark(false);
         tpd.show(getFragmentManager(), "Timepickerdialog");
@@ -204,7 +205,7 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
                 },
                 currentDate.get(Calendar.HOUR_OF_DAY),
                 currentDate.get(Calendar.MINUTE),
-                false
+                true
         );
         tpd.setThemeDark(false);
         tpd.show(getFragmentManager(), "Timepickerdialog");
