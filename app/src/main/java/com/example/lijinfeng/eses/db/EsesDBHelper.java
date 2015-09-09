@@ -42,14 +42,29 @@ public class EsesDBHelper {
 
     /**
      * 查询所有记录
-     * @param cursor
+     * @param
      * @return
      */
-    public ArrayList<RecordBean> queryAllRecords(Cursor cursor) {
+    public ArrayList<RecordBean> queryAllRecords() {
         ArrayList<RecordBean> records = new ArrayList<RecordBean>();
+
+        String []projections = new String[]{
+                RecordProvider.RecordConstants.RECORD_NO,
+                RecordProvider.RecordConstants.START_DATE,
+                RecordProvider.RecordConstants.START_TIME,
+                RecordProvider.RecordConstants.SLEEP_DATE,
+                RecordProvider.RecordConstants.SLEEP_TIME,
+                RecordProvider.RecordConstants.SLEEP_TIME_SECOND,
+                RecordProvider.RecordConstants.RECORD_TYPE,
+                RecordProvider.RecordConstants.RECORD_COMMENT,
+                RecordProvider.RecordConstants.EXCEPTION_FLAG
+        };
+
+        Cursor cursor = resolver.query(RecordProvider.CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             RecordBean recordBean = new RecordBean();
+            recordBean.set_id(cursor.getInt(cursor.getColumnIndex(RecordProvider.RecordConstants._ID)));
             recordBean.setRecordNo(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.RECORD_NO)));
             recordBean.setStartDate(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_DATE)));
             recordBean.setStartTime(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_TIME)));
@@ -62,7 +77,9 @@ public class EsesDBHelper {
             records.add(recordBean);
             cursor.moveToNext();
         }
+
         cursor.close();
+
         return records;
     }
 

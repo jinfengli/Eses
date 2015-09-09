@@ -10,7 +10,10 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
@@ -28,7 +31,7 @@ import java.util.Calendar;
  *  Copyright (c) li.jf All rights reserved.
  */
 public class AddRecordActivity extends AppCompatActivity implements OnClickListener,
-        CommonAlertDialog.OnSubmitListener{
+        CommonAlertDialog.OnSubmitListener,OnItemClickListener{
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -109,6 +112,8 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         recordBean.setStartTime(startTime);
         recordBean.setSleepDate(endDate);
         recordBean.setSleepTime(endTime);
+        recordBean.setSleepTimeSecond("tomorrow second");
+        recordBean.setRecordType("record_type");
         if(!startDate.equals(endDate)) {
             recordBean.setExceptionFlag("1");
         } else {
@@ -129,6 +134,22 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         mCommonAlertDialog.setMeaage("确定添加该条记录？");
         mCommonAlertDialog.setComfirmText(R.string.ok);
         mCommonAlertDialog.setCancelText(R.string.cancel);
+
+//        new AlertView("上传头像", null, "取消", null,
+//                new String[]{"拍照", "从相册中选择"},
+//                this, AlertView.Style.Alert, new OnItemClickListener(){
+//            public void onItemClick(Object o,int position){
+//                if(position == 0) {
+//                    dbHelper.addRecord(recordBean);
+//                    AddRecordActivity.this.finish();
+//                }
+//            }
+//        }).show();
+
+//        new AlertView(null, null, null,
+//                new String[]{"高亮按钮1", "高亮按钮2"},
+//                new String[]{"其他按钮1", "其他按钮2"},
+//                AddRecordActivity.this, AlertView.Style.Alert, this).show();
 
     }
 
@@ -227,5 +248,10 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     public void ok() {
         dbHelper.addRecord(recordBean);
         AddRecordActivity.this.finish();
+    }
+
+    @Override
+    public void onItemClick(Object o, int i) {
+        Toast.makeText(this, "点击了第" + i + "个", Toast.LENGTH_SHORT).show();
     }
 }

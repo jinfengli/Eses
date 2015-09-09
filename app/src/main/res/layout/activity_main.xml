@@ -15,7 +15,7 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="?attr/colorPrimary" />
+        android:background="#21292C" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -26,7 +26,8 @@
         <ListView
             android:id="@+id/lvESTime"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="#ff0000" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab"

@@ -16,13 +16,18 @@
 
 
     <color name="toolbar_title">#ffffff</color>
-    <color name="primary">#008CEE</color>
+    <color name="primary">#999999</color>  <!-- 008CEE-->
     <color name="primary_dark">#0081DB</color>
     <color name="accent">#008CEE</color>
     <color name="control_normal">#ffffff</color>
 
-    <color name="blue">#083a8a</color>
+    <color name="blue">#ffffff</color>
+    <!--#083a8a-->
 
     <color name="light_gray">#999999</color>
+
+    <!--  listview的item背景 -->
+    <color name="common_list_pre">#fbecf0</color>
+    <color name="common_list_nor">#ffffff</color>
 
 </resources>

@@ -27,6 +27,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.wdullaer:materialdatetimepicker:1.5.0'
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile files('src/main/libs/update-2.4.2.jar')
+    compile 'com.bigkoo:alertview:1.0.0'
     compile files('src/main/libs/umeng-update-v2.6.0.1.jar')
 }

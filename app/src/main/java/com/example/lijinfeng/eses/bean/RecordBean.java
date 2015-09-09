@@ -8,6 +8,16 @@ package com.example.lijinfeng.eses.bean;
  */
 public class RecordBean {
 
+    public int _id;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
     /** 记录编号 */
     private String RecordNo;
     /** 开始日期 */
