@@ -6,9 +6,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -22,30 +21,31 @@
     <!-- Permission for Unit Test -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
+   <!-- tools:replace="android:icon,android:theme"-->
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        tools:replace="android:icon,android:theme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.ChartActivity"
-            android:label="@string/title_activity_chart">
+            android:label="@string/title_activity_chart" >
         </activity>
         <activity
             android:name=".activity.AboutActivity"
-            android:label="@string/title_activity_about">
+            android:label="@string/title_activity_about" >
         </activity>
-
+        
         <provider
             android:name=".db.RecordProvider"
             android:authorities="com.jinfengli.eses.provider.record"
@@ -55,13 +55,13 @@
 
         <activity
             android:name=".activity.AddRecordActivity"
-            android:label="@string/title_activity_add_record" >
+            android:label="@string/title_activity_add_record"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
-
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
@@ -76,31 +76,15 @@
             android:name="UMENG_APPKEY"
             android:value="55e6b02b67e58ef1fb0035c2" >
         </meta-data>
-
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Umeng" >
         </meta-data>
 
-
-
-
-
-
+        <activity
+            android:name=".activity.RecordDetailActivity"
+            android:label="@string/title_activity_record_detail" >
+        </activity>
     </application>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </manifest>

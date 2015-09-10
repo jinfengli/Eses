@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.support.v7.widget.Toolbar
+  <!--  <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -15,19 +15,29 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="@color/primary_dark" />
+        android:background="@color/primary_dark" />-->
+<!--    android:layout_below="@id/toolbar"-->
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/common_action_bar"/>
+    </RelativeLayout>
 
     <FrameLayout
+        android:id="@+id/fl_parent"
+        android:layout_below="@id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
         android:background="@android:color/white">
 
         <ListView
             android:id="@+id/lvESTime"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="#ff0000" />
+            android:layout_height="match_parent" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab"

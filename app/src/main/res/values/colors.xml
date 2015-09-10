@@ -33,4 +33,7 @@
     <color name="black">#000000</color>
     <color name="green">#00ff00</color>
 
+    <color name="more_pop_item_nor">#22292C</color>
+    <color name="more_pop_item_pre">#000000</color>
+
 </resources>

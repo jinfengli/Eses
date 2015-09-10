@@ -1,18 +1,18 @@
 package com.example.lijinfeng.eses.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.bean.RecordBean;
@@ -31,11 +31,11 @@ import java.util.Calendar;
  *  Date: 15-8-29 下午11:24
  *  Copyright (c) li.jf All rights reserved.
  */
-public class AddRecordActivity extends AppCompatActivity implements OnClickListener,
+public class AddRecordActivity extends Activity implements OnClickListener,
         CommonAlertDialog.OnSubmitListener,OnItemClickListener,SegmentControl.OnSegmentControlClickListener{
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
-    private Toolbar mToolbar;
+//    private Toolbar mToolbar;
 
     private TextView tvStartDatePicker;
     private TextView tvStartTimePicker;
@@ -50,16 +50,21 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     private String endDate;
     private String endTime;
 
+    private ImageView ivBack;
+    private TextView tvHeadTitle;
+    private ImageView ivHeadRight;
+
     RecordBean recordBean;
     Calendar currentDate = Calendar.getInstance();
 
     SegmentControl segmentControl;
-
     private CommonAlertDialog mCommonAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_record);
 
         initTitleView();
@@ -69,18 +74,11 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     }
 
     protected void initTitleView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(R.string.title_activity_add_record);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-    }
-
-    private void init() {
-        dbHelper = new EsesDBHelper(this);
-        mCommonAlertDialog = new CommonAlertDialog(this);
-        mCommonAlertDialog.setOnSubmitListener(this);
+        ivBack = (ImageView) findViewById(R.id.ivBack);
+        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
+        tvHeadTitle.setText("添加记录");
+        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
+        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
     }
 
     protected void initView() {
@@ -89,38 +87,44 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         tvEndDatePicker = (TextView) findViewById(R.id.tvEndDatePicker);
         tvEndTimePicker = (TextView) findViewById(R.id.tvEndTimePicker);
         etCommnet = (EditText) findViewById(R.id.et_comment);
-
         segmentControl = (SegmentControl) findViewById(R.id.segment_control);
+    }
+
+    private void init() {
+        dbHelper = new EsesDBHelper(this);
+        mCommonAlertDialog = new CommonAlertDialog(this);
+        recordBean = new RecordBean();
+    }
+
+    private void setListener() {
+        ivBack.setOnClickListener(this);
+        ivHeadRight.setOnClickListener(this);
+
         segmentControl.setmOnSegmentControlClickListener(this);
+        mCommonAlertDialog.setOnSubmitListener(this);
+
+        tvStartDatePicker.setOnClickListener(this);
+        tvStartTimePicker.setOnClickListener(this);
+        tvEndDatePicker.setOnClickListener(this);
+        tvEndTimePicker.setOnClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add_record, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        } else if(item.getItemId() == R.id.add_record) {
-            saveToDb();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveToDb() {
-        recordBean = new RecordBean();
+    private void saveRecordToDb() {
         recordBean.setStartDate(startDate);
         recordBean.setStartTime(startTime);
         recordBean.setSleepDate(endDate);
         recordBean.setSleepTime(endTime);
-        recordBean.setSleepTimeSecond("tomorrow second");
-        recordBean.setRecordType("record_type");
+        recordBean.setSleepTimeSecond("tomorrow_second");
         if(!startDate.equals(endDate)) {
             recordBean.setExceptionFlag("1");
         } else {
@@ -133,8 +137,11 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
                 recordBean.setExceptionFlag("0");
             }
         }
-        recordBean.setRecordComment(etCommnet.getText().toString());
-        recordBean.setRecordNo("111");
+        if(!TextUtils.isEmpty(etCommnet.getText().toString())) {
+            recordBean.setRecordComment(etCommnet.getText().toString());
+        }
+        // 以当前时间的毫秒数来作为RecordNo的唯一标识
+        recordBean.setRecordNo(System.currentTimeMillis() + "");
 
         mCommonAlertDialog.show();
         mCommonAlertDialog.setTitleVisibityGone();
@@ -157,19 +164,32 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
 //                new String[]{"高亮按钮1", "高亮按钮2"},
 //                new String[]{"其他按钮1", "其他按钮2"},
 //                AddRecordActivity.this, AlertView.Style.Alert, this).show();
-
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.tvStartDatePicker) {
-            setStartDate();
-        } else if(v.getId() == R.id.tvStartTimePicker) {
-            setStartTime();
-        } else if (v.getId() == R.id.tvEndDatePicker) {
-            setSleepDate();
-        } else if(v.getId() == R.id.tvEndTimePicker) {
-            setSleepTime();
+        switch (v.getId()) {
+            case R.id.ivBack:
+                AddRecordActivity.this.finish();
+                break;
+            case R.id.ivHeaderRight:
+                saveRecordToDb();
+                break;
+            case R.id.tvStartDatePicker:
+                setStartDate();
+                break;
+            case R.id.tvStartTimePicker:
+                setStartTime();
+                break;
+            case R.id.tvEndDatePicker:
+                setSleepDate();
+                break;
+            case R.id.tvEndTimePicker:
+                setSleepTime();
+                break;
+
+            default:
+                break;
         }
     }
     private void setStartDate() {
@@ -182,7 +202,7 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
                     }
                 },
                 currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH),
+                currentDate.get(Calendar.MONTH) + 1,
                 currentDate.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
@@ -215,7 +235,7 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
                     }
                 },
                 currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH),
+                currentDate.get(Calendar.MONTH) + 1,
                 currentDate.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
@@ -239,13 +259,6 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
 
-    private void setListener() {
-        tvStartDatePicker.setOnClickListener(this);
-        tvStartTimePicker.setOnClickListener(this);
-        tvEndDatePicker.setOnClickListener(this);
-        tvEndTimePicker.setOnClickListener(this);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -265,9 +278,11 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     @Override
     public void onSegmentControlClick(int index) {
         if (index == 0) {
-
+            //睡眠
+            recordBean.setRecordType("type_sleep");
         } else if(index == 1) {
-
+            // 健身
+            recordBean.setRecordType("type_exercise");
         }
     }
 }

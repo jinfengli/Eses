@@ -19,8 +19,6 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-//        setContentView(R.layout.activity_base);
     }
 
     @Override
