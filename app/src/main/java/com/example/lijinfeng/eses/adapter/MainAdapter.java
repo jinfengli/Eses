@@ -76,14 +76,13 @@ public class MainAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(recordDatas != null && recordDatas.size() >0) {
+        if(recordDatas != null && recordDatas.size() > 0) {
             RecordBean recordBean = recordDatas.get(position);
-            holder.tvStartTime.setText(recordBean.getStartDate() + recordBean.getStartTime());
-            holder.tvSleepTime.setText(recordBean.getSleepDate() + recordBean.getSleepTime());
+            holder.tvStartTime.setText(recordBean.getStartDate() +" "+ recordBean.getStartTime());
+            holder.tvSleepTime.setText(recordBean.getSleepDate() +" "+ recordBean.getSleepTime());
             holder.tvDiffTime.setText("time diff");
             holder.tvExceptionFlag.setText(recordBean.getExceptionFlag());
         }
-
         return convertView;
     }
 

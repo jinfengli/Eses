@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="horizontal"
-    android:background="#ffffff">
+    android:background="@drawable/list_item_color_bg">
 
     <RelativeLayout
         android:id="@+id/order_id_table"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:paddingTop="13dp"
             android:text="A908653"
             android:textColor="#575757"/>
 
@@ -33,7 +33,7 @@
             android:paddingLeft="10dp"
             android:textColor="#575757"
             android:paddingRight="10dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="13dp"
             android:text="单鞋" />
     </RelativeLayout>
 
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-
+            android:textColor="#575757"
             android:text="2h" />
     </RelativeLayout>
 

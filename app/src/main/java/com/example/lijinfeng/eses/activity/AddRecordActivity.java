@@ -18,6 +18,7 @@ import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
+import com.example.lijinfeng.eses.view.SegmentControl;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -31,7 +32,7 @@ import java.util.Calendar;
  *  Copyright (c) li.jf All rights reserved.
  */
 public class AddRecordActivity extends AppCompatActivity implements OnClickListener,
-        CommonAlertDialog.OnSubmitListener,OnItemClickListener{
+        CommonAlertDialog.OnSubmitListener,OnItemClickListener,SegmentControl.OnSegmentControlClickListener{
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
     private Toolbar mToolbar;
@@ -52,6 +53,8 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     RecordBean recordBean;
     Calendar currentDate = Calendar.getInstance();
 
+    SegmentControl segmentControl;
+
     private CommonAlertDialog mCommonAlertDialog;
 
     @Override
@@ -71,6 +74,7 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         getSupportActionBar().setTitle(R.string.title_activity_add_record);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
     private void init() {
@@ -85,6 +89,9 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
         tvEndDatePicker = (TextView) findViewById(R.id.tvEndDatePicker);
         tvEndTimePicker = (TextView) findViewById(R.id.tvEndTimePicker);
         etCommnet = (EditText) findViewById(R.id.et_comment);
+
+        segmentControl = (SegmentControl) findViewById(R.id.segment_control);
+        segmentControl.setmOnSegmentControlClickListener(this);
     }
 
     @Override
@@ -253,5 +260,14 @@ public class AddRecordActivity extends AppCompatActivity implements OnClickListe
     @Override
     public void onItemClick(Object o, int i) {
         Toast.makeText(this, "点击了第" + i + "个", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSegmentControlClick(int index) {
+        if (index == 0) {
+
+        } else if(index == 1) {
+
+        }
     }
 }

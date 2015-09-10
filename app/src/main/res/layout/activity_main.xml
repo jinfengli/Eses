@@ -15,7 +15,7 @@
         app:contentInsetLeft="0dp"
         app:contentInsetStart="16dp"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:background="#21292C" />
+        android:background="@color/primary_dark" />
 
     <FrameLayout
         android:layout_width="match_parent"

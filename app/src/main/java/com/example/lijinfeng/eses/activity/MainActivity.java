@@ -5,23 +5,22 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.github.clans.fab.FloatingActionButton;
-import com.github.mikephil.charting.charts.Chart;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /*
  *  TODO: MainActivity
@@ -29,19 +28,17 @@ import java.util.List;
  *  Date: 15-8-23 下午5:53
  *  Copyright (c) li.jf All rights reserved.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton fabMenu;
     private Toolbar mToolbar;
 
-//    private RecyclerView recyclerViewRecords;
     private MainAdapter mainAdapter;
-
     private ListView lvRecords;
 
     private ArrayList<RecordBean> recordBeans;
-
+    /** 数据库操作工具类 */
     private EsesDBHelper dbHelper;
 
     @Override
@@ -71,11 +68,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setListener() {
         fabMenu.setOnClickListener(this);
+
+        lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this," 您点击的是" + position, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void init() {
-        // 默认只在wifi情况下才更新
-//        UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
 
         mainAdapter = new MainAdapter(MainActivity.this);
@@ -90,24 +92,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-        menu.add(Menu.NONE, Menu.FIRST + 1, 5, "图表").setIcon(R.drawable.ic_launcher);
-
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        case Menu.FIRST +1:
+//        menu.add(Menu.NONE, Menu.FIRST + 1, 5, "图表").setIcon(R.drawable.ic_launcher);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-//            case R.id.action_settings:
-//                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-//                return true;
-//
-//            case R.id.action_about:
-//                startActivity(new Intent(MainActivity.this, AboutActivity.class));
-//                return true;
-            case Menu.FIRST +1:
+            case R.id.action_settings:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                return true;
+
+            case R.id.action_about:
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                return true;
+            case R.id.action_chart:
                 startActivity(new Intent(MainActivity.this, ChartActivity.class));
                 break;
         }

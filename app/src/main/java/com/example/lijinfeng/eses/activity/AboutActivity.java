@@ -3,6 +3,7 @@ package com.example.lijinfeng.eses.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lijinfeng.eses.R;
@@ -35,6 +36,13 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -45,7 +53,6 @@ public class AboutActivity extends AppCompatActivity {
             onBackPressed();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
