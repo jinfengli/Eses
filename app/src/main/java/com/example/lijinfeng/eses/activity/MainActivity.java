@@ -1,8 +1,6 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Color;

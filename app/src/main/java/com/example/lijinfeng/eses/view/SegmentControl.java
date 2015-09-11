@@ -15,13 +15,6 @@ import android.view.ViewConfiguration;
 
 import com.example.lijinfeng.eses.R;
 
-/*
- *  TODO:
- *
- *  Date: 15-9-9 下午11:28
- *  Copyright (c) li.jf All rights reserved.
- */
-
 /**
  * Created by 7heaven on 15/4/22.
  */

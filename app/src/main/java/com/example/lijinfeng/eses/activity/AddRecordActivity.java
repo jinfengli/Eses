@@ -1,23 +1,26 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
+import com.example.lijinfeng.eses.application.ESConstants;
+import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
+import com.example.lijinfeng.eses.util.ToastUtil;
+import com.example.lijinfeng.eses.view.CustomLayout;
 import com.example.lijinfeng.eses.view.SegmentControl;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -31,11 +34,13 @@ import java.util.Calendar;
  *  Date: 15-8-29 下午11:24
  *  Copyright (c) li.jf All rights reserved.
  */
-public class AddRecordActivity extends Activity implements OnClickListener,
-        CommonAlertDialog.OnSubmitListener,OnItemClickListener,SegmentControl.OnSegmentControlClickListener{
+public class AddRecordActivity extends BaseActivity implements
+        CommonAlertDialog.OnSubmitListener,
+        OnItemClickListener,
+        SegmentControl.OnSegmentControlClickListener,
+        CustomLayout.KeyboardStateListener{
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
-//    private Toolbar mToolbar;
 
     private TextView tvStartDatePicker;
     private TextView tvStartTimePicker;
@@ -45,14 +50,17 @@ public class AddRecordActivity extends Activity implements OnClickListener,
     private EditText etCommnet;
     private EsesDBHelper dbHelper;
 
-    private String startDate;
-    private String startTime;
-    private String endDate;
-    private String endTime;
+    private String startDate ="";
+    private String startTime = "";
+    private String endDate = "";
+    private String endTime = "";
 
     private ImageView ivBack;
     private TextView tvHeadTitle;
     private ImageView ivHeadRight;
+
+    private CustomLayout resizeLayout;
+    private LinearLayout llStartTime;
 
     RecordBean recordBean;
     Calendar currentDate = Calendar.getInstance();
@@ -73,14 +81,16 @@ public class AddRecordActivity extends Activity implements OnClickListener,
         setListener();
     }
 
+    @Override
     protected void initTitleView() {
         ivBack = (ImageView) findViewById(R.id.ivBack);
         tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-        tvHeadTitle.setText("添加记录");
+        tvHeadTitle.setText(R.string.add_record);
         ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
         ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
     }
 
+    @Override
     protected void initView() {
         tvStartDatePicker = (TextView) findViewById(R.id.tvStartDatePicker);
         tvStartTimePicker = (TextView) findViewById(R.id.tvStartTimePicker);
@@ -88,6 +98,9 @@ public class AddRecordActivity extends Activity implements OnClickListener,
         tvEndTimePicker = (TextView) findViewById(R.id.tvEndTimePicker);
         etCommnet = (EditText) findViewById(R.id.et_comment);
         segmentControl = (SegmentControl) findViewById(R.id.segment_control);
+
+        resizeLayout = (CustomLayout) findViewById(R.id.custom_root_layout);
+        llStartTime = (LinearLayout) findViewById(R.id.ll_start_date_time);
     }
 
     private void init() {
@@ -100,6 +113,7 @@ public class AddRecordActivity extends Activity implements OnClickListener,
         ivBack.setOnClickListener(this);
         ivHeadRight.setOnClickListener(this);
 
+        resizeLayout.setKeyboardStateListener(this);
         segmentControl.setmOnSegmentControlClickListener(this);
         mCommonAlertDialog.setOnSubmitListener(this);
 
@@ -120,50 +134,57 @@ public class AddRecordActivity extends Activity implements OnClickListener,
     }
 
     private void saveRecordToDb() {
-        recordBean.setStartDate(startDate);
-        recordBean.setStartTime(startTime);
-        recordBean.setSleepDate(endDate);
-        recordBean.setSleepTime(endTime);
-        recordBean.setSleepTimeSecond("tomorrow_second");
-        if(!startDate.equals(endDate)) {
-            recordBean.setExceptionFlag("1");
-        } else {
-            // -->同一天
-            // 开始时间大于结束时间
-            if(Integer.parseInt(startTime.split("\\:")[0])> Integer.parseInt(endTime.split("\\:")[0])) {
-                recordBean.setExceptionFlag("2"); //  错误的时间
-            } else {
-                // 同一天  start < sleep  正常
-                recordBean.setExceptionFlag("0");
-            }
-        }
-        if(!TextUtils.isEmpty(etCommnet.getText().toString())) {
-            recordBean.setRecordComment(etCommnet.getText().toString());
-        }
         // 以当前时间的毫秒数来作为RecordNo的唯一标识
         recordBean.setRecordNo(System.currentTimeMillis() + "");
 
+        startDate = TextUtils.isEmpty(startDate)? "" : startDate;
+        recordBean.setStartDate(startDate);
+        startTime = TextUtils.isEmpty(startTime)? "" : startTime;
+        recordBean.setStartTime(startTime);
+        endDate = TextUtils.isEmpty(endDate)? "" : endDate;
+        recordBean.setSleepDate(endDate);
+        endTime = TextUtils.isEmpty(endTime)? "" : endTime;
+        recordBean.setSleepTime(endTime);
+
+        recordBean.setSleepTimeSecond("tomorrow_second");
+
+        if( !TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
+            if(!startDate.equals(endDate)) {
+                recordBean.setExceptionFlag("1"); //起床睡眠日期不是同一天.
+            } else {
+                // 同一天
+                if( !TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
+                    if(Integer.parseInt(startTime.split("\\:")[0])> Integer.parseInt(endTime.split("\\:")[0])
+                            || Integer.parseInt(startTime.split("\\:")[0]) == Integer.parseInt(endTime.split("\\:")[0])
+                            && Integer.parseInt(startTime.split("\\:")[1]) >= Integer.parseInt(endTime.split("\\:")[1])) {
+                        ToastUtil.toastShort(AddRecordActivity.this, "开始时间和结束时间有误");
+                        return;
+                    } else {
+                        recordBean.setExceptionFlag("0");
+                    }
+                } else {
+                    ToastUtil.toastShort(AddRecordActivity.this, "开始和结束时间不能为空");
+                    return;
+                }
+            }
+        } else {
+            ToastUtil.toastShort(AddRecordActivity.this, "开始和结束日期不能为空");
+            return;
+        }
+
+        String commentMsg = etCommnet.getText().toString();
+        if(!TextUtils.isEmpty(commentMsg)) {
+            recordBean.setRecordComment(commentMsg);
+        } else {
+            ToastUtil.toastLong(AddRecordActivity.this, R.string.comment_should_not_null);
+            return;
+        }
+
         mCommonAlertDialog.show();
         mCommonAlertDialog.setTitleVisibityGone();
-        mCommonAlertDialog.setMeaage("确定添加该条记录？");
+        mCommonAlertDialog.setMeaage(getResources().getString(R.string.confirm_add_this_record));
         mCommonAlertDialog.setComfirmText(R.string.ok);
         mCommonAlertDialog.setCancelText(R.string.cancel);
-
-//        new AlertView("上传头像", null, "取消", null,
-//                new String[]{"拍照", "从相册中选择"},
-//                this, AlertView.Style.Alert, new OnItemClickListener(){
-//            public void onItemClick(Object o,int position){
-//                if(position == 0) {
-//                    dbHelper.addRecord(recordBean);
-//                    AddRecordActivity.this.finish();
-//                }
-//            }
-//        }).show();
-
-//        new AlertView(null, null, null,
-//                new String[]{"高亮按钮1", "高亮按钮2"},
-//                new String[]{"其他按钮1", "其他按钮2"},
-//                AddRecordActivity.this, AlertView.Style.Alert, this).show();
     }
 
     @Override
@@ -278,11 +299,22 @@ public class AddRecordActivity extends Activity implements OnClickListener,
     @Override
     public void onSegmentControlClick(int index) {
         if (index == 0) {
-            //睡眠
-            recordBean.setRecordType("type_sleep");
+            recordBean.setRecordType(ESConstants.TYPE_SLEEP);
         } else if(index == 1) {
-            // 健身
-            recordBean.setRecordType("type_exercise");
+            recordBean.setRecordType(ESConstants.TYPE_EXERCISE);
+        }
+    }
+
+    @Override
+    public void setChanged(int state) {
+        switch (state) {
+            case CustomLayout.KEYBOARD_HIDE:
+                llStartTime.setVisibility(View.VISIBLE);
+                break;
+
+            case CustomLayout.KEYBOARD_SHOW:
+                llStartTime.setVisibility(View.GONE);
+                break;
         }
     }
 }

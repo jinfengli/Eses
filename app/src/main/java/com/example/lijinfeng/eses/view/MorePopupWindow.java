@@ -22,6 +22,8 @@ public class MorePopupWindow extends PopupWindow implements OnClickListener {
     
     private LinearLayout meLayout;
     private LinearLayout setLayout;
+    private LinearLayout switchThemelayout;
+
     private View mMenuView;
     private TextView userTextView;
     
@@ -48,30 +50,36 @@ public class MorePopupWindow extends PopupWindow implements OnClickListener {
     private void initView() {
         meLayout = (LinearLayout)mMenuView.findViewById(R.id.meLayout);
         setLayout = (LinearLayout)mMenuView.findViewById(R.id.setLayout);
+        switchThemelayout = (LinearLayout) mMenuView.findViewById(R.id.switch_theme);
+
         userTextView = (TextView)mMenuView.findViewById(R.id.userTV);
         userTextView.setText("关于");
         
         meLayout.setOnClickListener(this);
         setLayout.setOnClickListener(this);
+        switchThemelayout.setOnClickListener(this);
         
     }
     
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.meLayout:
-			// 个人信息
+            case R.id.meLayout:
 //			context.startActivity(new Intent().setClass(context, AboutActivity.class));
-			break;
+                break;
 
-		case R.id.setLayout:
-			Intent intent = new Intent(context, SettingsActivity.class);
-			context.startActivityForResult(intent, 0);
-			break;
+            case R.id.setLayout:
+                Intent intent = new Intent(context, SettingsActivity.class);
+                context.startActivityForResult(intent, 0);
+                break;
 
-		default:
-			break;
-		}
-		dismiss();
+            case R.id.switch_theme:
+//                changeThemeWithColorful();
+                break;
+            default:
+                break;
+        }
+        dismiss();
 	}
+
 }
