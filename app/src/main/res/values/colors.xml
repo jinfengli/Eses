@@ -36,4 +36,7 @@
     <color name="more_pop_item_nor">#22292C</color>
     <color name="more_pop_item_pre">#000000</color>
 
+    <color name="common_item_bg_normal">#FFFFFF</color>
+    <color name="common_item_bg_pressed">#F9F9FB</color>
+
 </resources>

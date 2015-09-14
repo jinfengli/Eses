@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F0EFF4"
     tools:context="com.example.lijinfeng.eses.activity.SettingsActivity">
 
     <include
@@ -12,7 +12,22 @@
     <LinearLayout
         android:layout_below="@id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_set_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/common_item_style"
+            android:text="@string/switch_theme" />
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_feedback"
+            style="@style/common_item_style" />
 
     </LinearLayout>
 
