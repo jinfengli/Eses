@@ -22,6 +22,8 @@ import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
+import com.example.lijinfeng.eses.colorful.Colorful;
+import com.example.lijinfeng.eses.colorful.setter.ViewGroupSetter;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
@@ -62,6 +64,9 @@ public class MainActivity extends BaseActivity {
 
 //    private Handler handler = new Handler();
 
+    Colorful mColorful;
+    boolean isNight = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +84,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initTitleView() {
         ivBack = (ImageView) findViewById(R.id.ivBack);
-        ivBack.setVisibility(View.GONE);
+//        ivBack.setVisibility(View.GONE);
+        ivBack.setOnClickListener(this);
         tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
         ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
     }
@@ -120,6 +126,8 @@ public class MainActivity extends BaseActivity {
         recordBeans = new ArrayList<RecordBean>();
         recordBeans = dbHelper.queryAllRecords();
 
+        setupColorful();
+
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
     }
@@ -134,10 +142,38 @@ public class MainActivity extends BaseActivity {
             case R.id.ivHeaderRight:
                 setPopwindowPosition();
                 break;
+            case R.id.ivBack:
+                changeThemeWithColorful();
+                break;
 
             default:
                 break;
         }
+    }
+
+    private void changeThemeWithColorful() {
+        if (!isNight) {
+            mColorful.setTheme(R.style.NightTheme);
+        } else {
+            mColorful.setTheme(R.style.DayTheme);
+        }
+        isNight = !isNight;
+    }
+
+    private void setupColorful() {
+        ViewGroupSetter listViewSetter = new ViewGroupSetter(lvRecords);
+        // 绑定ListView的Item View中的news_title视图，在换肤时修改它的text_color属性
+        listViewSetter.childViewTextColor(R.id.tv_item_start_time, R.attr.text_color);
+
+        // 构建Colorful对象来绑定View与属性的对象关系
+        mColorful = new Colorful.Builder(this)
+                .backgroundDrawable(R.id.fl_parent, R.attr.root_view_bg)
+                        // 设置view的背景图片
+//                .backgroundColor(R.id.change_btn, R.attr.btn_bg)
+                        // 设置背景色
+//                .textColor(R.id.textview, R.attr.text_color)
+                .setter(listViewSetter) // 手动设置setter
+                .create(); // 设置文本颜色
     }
 
     /**

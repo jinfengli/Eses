@@ -21,7 +21,9 @@
             android:paddingRight="10dp"
             android:paddingTop="13dp"
             android:text="A908653"
-            android:textColor="#575757"/>
+            android:textColor="?attr/text_color"
+            />
+        <!--android:textColor="#575757"-->
 
         <TextView
             android:id="@+id/tv_item_sleep_time"
@@ -31,7 +33,7 @@
             android:layout_below="@id/tv_item_start_time"
             android:layout_marginTop="5dp"
             android:paddingLeft="10dp"
-            android:textColor="#575757"
+            android:textColor="?attr/text_color"
             android:paddingRight="10dp"
             android:paddingBottom="13dp"
             android:text="单鞋" />
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="#575757"
+            android:textColor="?attr/text_color"
             android:text="已退货" />
     </RelativeLayout>
 
@@ -65,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#575757"
+            android:textColor="?attr/text_color"
             android:text="2h" />
     </RelativeLayout>
 

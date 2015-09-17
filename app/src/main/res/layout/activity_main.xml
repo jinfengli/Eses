@@ -32,8 +32,8 @@
         android:layout_below="@id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white">
-
+        android:background="?attr/root_view_bg">
+        <!--android:background="@android:color/white"-->
         <ListView
             android:id="@+id/lvESTime"
             android:layout_width="match_parent"

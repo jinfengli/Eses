@@ -35,4 +35,5 @@
 
     <string name="switch_theme">切换主题</string>
     <string name="txt_feedback">反馈</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

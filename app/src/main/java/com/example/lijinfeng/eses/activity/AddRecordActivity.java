@@ -1,7 +1,9 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +16,12 @@ import android.widget.Toast;
 
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.application.ESConstants;
+import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
+import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.CustomLayout;
 import com.example.lijinfeng.eses.view.SegmentControl;
@@ -48,6 +51,7 @@ public class AddRecordActivity extends BaseActivity implements
     private TextView tvEndTimePicker;
 
     private EditText etCommnet;
+    private TextView tvCommentNum;
     private EsesDBHelper dbHelper;
 
     private String startDate ="";
@@ -67,6 +71,9 @@ public class AddRecordActivity extends BaseActivity implements
 
     SegmentControl segmentControl;
     private CommonAlertDialog mCommonAlertDialog;
+
+    private static final int MAX_COUNT = 50;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +104,13 @@ public class AddRecordActivity extends BaseActivity implements
         tvEndDatePicker = (TextView) findViewById(R.id.tvEndDatePicker);
         tvEndTimePicker = (TextView) findViewById(R.id.tvEndTimePicker);
         etCommnet = (EditText) findViewById(R.id.et_comment);
-        segmentControl = (SegmentControl) findViewById(R.id.segment_control);
+        tvCommentNum = (TextView) findViewById(R.id.tv_comment_num);
+        etCommnet.addTextChangedListener(mTextWatcher);
+        etCommnet.setSelection(etCommnet.length());
 
+        setLeftCount();
+
+        segmentControl = (SegmentControl) findViewById(R.id.segment_control);
         resizeLayout = (CustomLayout) findViewById(R.id.custom_root_layout);
         llStartTime = (LinearLayout) findViewById(R.id.ll_start_date_time);
     }
@@ -316,5 +328,60 @@ public class AddRecordActivity extends BaseActivity implements
                 llStartTime.setVisibility(View.GONE);
                 break;
         }
+    }
+
+
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+
+        private int editStart;
+        private int editEnd;
+
+        public void afterTextChanged(Editable s) {
+            editStart = etCommnet.getSelectionStart();
+            editEnd = etCommnet.getSelectionEnd();
+
+            // 先去掉监听器，否则会出现栈溢出
+            etCommnet.removeTextChangedListener(mTextWatcher);
+
+            // 注意这里只能每次都对整个EditText的内容求长度，不能对删除的单个字符求长度
+            // 因为是中英文混合，单个字符而言，calculateLength函数都会返回1
+            while (CommonUtil.calculateLength(s.toString()) > MAX_COUNT) { // 当输入字符个数超过限制的大小时，进行截断操作
+                s.delete(editStart - 1, editEnd);
+                editStart--;
+                editEnd--;
+            }
+            // mEditText.setText(s);将这行代码注释掉就不会出现后面所说的输入法在数字界面自动跳转回主界面的问题了，多谢@ainiyidiandian的提醒
+//			mEditText.setText(s);
+            etCommnet.setSelection(editStart);
+
+            // 恢复监听器
+            etCommnet.addTextChangedListener(mTextWatcher);
+
+            setLeftCount();
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+    };
+
+    /**
+     * 刷新剩余可输入字数
+     */
+    private void setLeftCount() {
+        tvCommentNum.setText(String.valueOf((MAX_COUNT - getInputCount())));
+    }
+
+    /**
+     * 获取已经输入的内容长度
+     */
+    private long getInputCount() {
+        return CommonUtil.calculateLength(etCommnet.getText().toString());
     }
 }

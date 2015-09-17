@@ -24,7 +24,7 @@ import com.github.mikephil.charting.utils.PercentFormatter;
 import java.util.ArrayList;
 
 /*
- *  TODO:
+ *  TODO: 图表统计记录
  *
  *  Date: 15-9-1 下午11:26
  *  Copyright (c) li.jf All rights reserved.
@@ -188,14 +188,8 @@ public class ChartActivity extends DemoBase implements OnChartValueSelectedListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ivBack:
-                ChartActivity.this.finish();
-                break;
-
-            default:
-                break;
+        if(v.getId() == R.id.ivBack) {
+            ChartActivity.this.finish();
         }
-
     }
 }

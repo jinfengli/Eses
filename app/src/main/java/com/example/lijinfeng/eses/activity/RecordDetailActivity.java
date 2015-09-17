@@ -1,17 +1,12 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
-import com.example.lijinfeng.eses.bean.RecordBean;
 
 public class RecordDetailActivity extends BaseActivity {
 
