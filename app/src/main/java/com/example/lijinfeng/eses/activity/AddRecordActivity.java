@@ -14,11 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnDismissListener;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
+import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
 import com.example.lijinfeng.eses.util.CommonUtil;
@@ -41,7 +43,7 @@ public class AddRecordActivity extends BaseActivity implements
         CommonAlertDialog.OnSubmitListener,
         OnItemClickListener,
         SegmentControl.OnSegmentControlClickListener,
-        CustomLayout.KeyboardStateListener{
+        CustomLayout.KeyboardStateListener {
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
 
@@ -70,7 +72,7 @@ public class AddRecordActivity extends BaseActivity implements
     Calendar currentDate = Calendar.getInstance();
 
     SegmentControl segmentControl;
-    private CommonAlertDialog mCommonAlertDialog;
+    private AlertView mAlertView;
 
     private static final int MAX_COUNT = 50;
 
@@ -117,8 +119,13 @@ public class AddRecordActivity extends BaseActivity implements
 
     private void init() {
         dbHelper = new EsesDBHelper(this);
-        mCommonAlertDialog = new CommonAlertDialog(this);
         recordBean = new RecordBean();
+
+        mAlertView = new AlertView("添加记录", "是否添加该聊天记录？", "否", new String[]{"是"},
+                null,
+                this,
+                AlertView.Style.Alert, this).setCancelable(true);
+//                AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this).setont;
     }
 
     private void setListener() {
@@ -127,7 +134,6 @@ public class AddRecordActivity extends BaseActivity implements
 
         resizeLayout.setKeyboardStateListener(this);
         segmentControl.setmOnSegmentControlClickListener(this);
-        mCommonAlertDialog.setOnSubmitListener(this);
 
         tvStartDatePicker.setOnClickListener(this);
         tvStartTimePicker.setOnClickListener(this);
@@ -192,11 +198,8 @@ public class AddRecordActivity extends BaseActivity implements
             return;
         }
 
-        mCommonAlertDialog.show();
-        mCommonAlertDialog.setTitleVisibityGone();
-        mCommonAlertDialog.setMeaage(getResources().getString(R.string.confirm_add_this_record));
-        mCommonAlertDialog.setComfirmText(R.string.ok);
-        mCommonAlertDialog.setCancelText(R.string.cancel);
+        recordBean.setRecordType(ESConstants.TYPE_SLEEP);
+        mAlertView.show();
     }
 
     @Override
@@ -304,8 +307,14 @@ public class AddRecordActivity extends BaseActivity implements
     }
 
     @Override
-    public void onItemClick(Object o, int i) {
-        Toast.makeText(this, "点击了第" + i + "个", Toast.LENGTH_SHORT).show();
+    public void onItemClick(Object o, int position) {
+        // 点击取消时为-1，其他的从0开始算起
+        if(position == 0) {
+            dbHelper.addRecord(recordBean);
+            AddRecordActivity.this.finish();
+        } else {
+            mAlertView.dismiss();
+        }
     }
 
     @Override
@@ -330,13 +339,9 @@ public class AddRecordActivity extends BaseActivity implements
         }
     }
 
-
-
     private TextWatcher mTextWatcher = new TextWatcher() {
-
         private int editStart;
         private int editEnd;
-
         public void afterTextChanged(Editable s) {
             editStart = etCommnet.getSelectionStart();
             editEnd = etCommnet.getSelectionEnd();
@@ -384,4 +389,10 @@ public class AddRecordActivity extends BaseActivity implements
     private long getInputCount() {
         return CommonUtil.calculateLength(etCommnet.getText().toString());
     }
+
+//    @Override
+//    public void onDismiss(Object o) {
+//
+//
+//    }
 }

@@ -29,6 +29,20 @@
             android:text="@string/txt_feedback"
             style="@style/common_item_style" />
 
+        <TextView
+            android:id="@+id/tv_check_new_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/common_item_style"
+            android:text="@string/check_new_version" />
+
+        <TextView
+            android:id="@+id/tv_backup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/common_item_style"
+            android:text="备份"/>
+
     </LinearLayout>
 
 

@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.lijinfeng.eses.R;
+import com.example.lijinfeng.eses.activity.ChartActivity;
 import com.example.lijinfeng.eses.activity.MainActivity;
 import com.example.lijinfeng.eses.activity.SettingsActivity;
 
@@ -66,6 +67,7 @@ public class MorePopupWindow extends PopupWindow implements OnClickListener {
 		switch (v.getId()) {
             case R.id.meLayout:
 //			context.startActivity(new Intent().setClass(context, AboutActivity.class));
+                context.startActivity(new Intent(context, ChartActivity.class));
                 break;
 
             case R.id.setLayout:

@@ -1,5 +1,9 @@
 package com.example.lijinfeng.eses.util;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 /**
  * TODO：
  *
@@ -27,5 +31,23 @@ public class CommonUtil {
             }
         }
         return Math.round(len);
+    }
+
+    /**
+     * APP版本号
+     *
+     * @param context
+     * @return
+     */
+    public static String getAppVersionName(Context context) {
+        String versionName = "";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_CONFIGURATIONS);
+            versionName = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 }

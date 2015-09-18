@@ -34,6 +34,7 @@ public class ChartActivity extends DemoBase implements OnChartValueSelectedListe
     private ImageView ivHeaderBack;
     private TextView tvHeaderTitle;
     private ImageView ivHeaderRight;
+
     /** 饼状图 */
     private PieChart mChart;
 
@@ -94,8 +95,6 @@ public class ChartActivity extends DemoBase implements OnChartValueSelectedListe
 
     }
 
-
-
     @Override
     protected void initTitleView() {
         ivHeaderBack = (ImageView) findViewById(R.id.ivBack);
@@ -151,7 +150,6 @@ public class ChartActivity extends DemoBase implements OnChartValueSelectedListe
         dataSet.setSelectionShift(5f);
 
         // add a lot of colors
-
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
