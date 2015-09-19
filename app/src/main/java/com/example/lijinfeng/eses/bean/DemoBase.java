@@ -6,7 +6,7 @@ import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 
 /**
- * Baseclass of all Activities of the Demo Application.
+ * Baseclass of all Activities of the Demo ESApplication.
  * 
  * @author Philipp Jahoda
  */

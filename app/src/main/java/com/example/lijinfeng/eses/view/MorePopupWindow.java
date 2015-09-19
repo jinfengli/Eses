@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVUser;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.activity.ChartActivity;
+import com.example.lijinfeng.eses.activity.LoginActivity;
 import com.example.lijinfeng.eses.activity.MainActivity;
 import com.example.lijinfeng.eses.activity.SettingsActivity;
 
@@ -77,6 +79,10 @@ public class MorePopupWindow extends PopupWindow implements OnClickListener {
 
             case R.id.switch_theme:
 //                changeThemeWithColorful();
+                AVUser.logOut();
+                Intent loginIntent = new Intent(context, LoginActivity.class);
+                context.startActivity(loginIntent);
+                context.finish();
                 break;
             default:
                 break;

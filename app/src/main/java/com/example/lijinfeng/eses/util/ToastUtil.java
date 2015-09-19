@@ -36,6 +36,20 @@ public class ToastUtil {
         Toast.makeText(context, resContent, Toast.LENGTH_SHORT).show();
     }
 
+    public static void showCustomToast(Context context, String content) {
+        Toast toast = null;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+        TextView text = (TextView) layout.findViewById(R.id.tv_toast_content);
+        text.setText(content);
+        toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
+
+
 
 //    private void showToast3(){
 //        LayoutInflater inflater = getLayoutInflater();

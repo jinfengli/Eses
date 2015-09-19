@@ -9,6 +9,9 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
+import com.avos.avoscloud.AVAnalytics;
+import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.PushService;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 
@@ -29,8 +32,11 @@ public class SplashActivity extends BaseActivity {
         setttingNoTitle();
         setContentView(R.layout.activity_splash);
 
+        initAVCloud();
+
         initTitleView();
         initView();
+
         init();
     }
 
@@ -43,6 +49,13 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void initTitleView() {
 
+    }
+
+    private void initAVCloud() {
+        AVAnalytics.trackAppOpened(getIntent());
+        PushService.setDefaultPushCallback(this, SplashActivity.class);
+        PushService.subscribe(this, "public", SplashActivity.class);
+        AVInstallation.getCurrentInstallation().saveInBackground();
     }
 
     @Override
@@ -64,7 +77,11 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity();
+                if(getUserId() != null) {
+                    gotoMainActivity();
+                } else {
+                    gotoLoginActivity();
+                }
             }
 
             @Override
@@ -80,9 +97,17 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    private void startActivity() {
+    private void gotoLoginActivity() {
         SplashActivity.this.finish();
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    private void gotoMainActivity() {
+        if(getUserId() != null) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
     }
 
 }

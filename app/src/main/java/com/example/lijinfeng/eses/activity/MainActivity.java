@@ -26,6 +26,7 @@ import com.example.lijinfeng.eses.colorful.Colorful;
 import com.example.lijinfeng.eses.colorful.setter.ViewGroupSetter;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
+import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
 import com.github.clans.fab.FloatingActionButton;
 import com.umeng.update.UmengUpdateAgent;
@@ -107,7 +108,8 @@ public class MainActivity extends BaseActivity {
         lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, " 您点击的是" + position, Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this, " 您点击的是" + position, Toast.LENGTH_LONG).show();
+                ToastUtil.showCustomToast(MainActivity.this,"hello");
                 startActivity(new Intent(MainActivity.this, RecordDetailActivity.class));
             }
         });

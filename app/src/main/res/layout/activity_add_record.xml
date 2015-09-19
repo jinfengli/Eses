@@ -121,7 +121,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         android:text="123"
-                        android:textColor="#ff0000"/>
+                        android:textColor="#999"/>
                     <EditText
                         android:id="@+id/et_comment"
                         android:layout_width="match_parent"
