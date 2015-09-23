@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ @TODO:
+  ~ @author li.jf
+  ~ Copyright (C) 15-9-22 上午10:32 wonhigh.cn All rights reserved.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="#27ACFF" />
+
+    <corners android:radius="4dp" />
+
+</shape>

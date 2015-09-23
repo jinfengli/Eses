@@ -7,32 +7,32 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
-import com.avos.avoscloud.PushService;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
+import org.w3c.dom.Text;
+
 /*
- * TODO: 登录
+ * TODO: 登录ES
  * @author li.jf
- * Copyright (C) 15-9-19 下午3:09 li.jf All rights reserved.
+ * Copyright (C) 15-9-21 下午3:09 li.jf All rights reserved.
  */
 
 public class LoginActivity extends BaseActivity {
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     private EditText etUsername;
     private EditText etPassword;
 
     private Button btnLogin;
-
-    private Button btnRegister;
-    private Button btnForgetPassword;
+    private TextView tvRegister;
+    private TextView tvForgetPassword;
 
     private ProgressDialog progressDialog;
 
@@ -44,19 +44,7 @@ public class LoginActivity extends BaseActivity {
         initTitleView();
         initView();
         setlistener();
-
-//        gotoMainActivity();
     }
-
-
-
-//    private void gotoMainActivity() {
-//        if(getUserId() != null) {
-//            Intent intent = new Intent(this,MainActivity.class);
-//            startActivity(intent);
-//            this.finish();
-//        }
-//    }
 
     @Override
     protected void initTitleView() {
@@ -67,26 +55,24 @@ public class LoginActivity extends BaseActivity {
     protected void initView() {
         etUsername = (EditText) findViewById(R.id.et_login_username);
         etPassword = (EditText) findViewById(R.id.et_login_pwd);
-
         btnLogin = (Button) findViewById(R.id.btn_login);
-        btnRegister = (Button) findViewById(R.id.btn_register);
-        btnForgetPassword = (Button) findViewById(R.id.btn_forget_password);
+        tvRegister = (TextView) findViewById(R.id.tv_register);
+        tvForgetPassword = (TextView) findViewById(R.id.tv_forget_password);
     }
 
     private void setlistener() {
         btnLogin.setOnClickListener(this);
-        btnRegister.setOnClickListener(this);
-        btnForgetPassword.setOnClickListener(this);
+        tvRegister.setOnClickListener(this);
+        tvForgetPassword.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-
         if(view.getId() == R.id.btn_login) {
             login();
-        } else if(view.getId() == R.id.btn_register) {
+        } else if(view.getId() == R.id.tv_register) {
             gotoRegisterActivity();
-        } else if(view.getId() == R.id.btn_forget_password) {
+        } else if(view.getId() == R.id.tv_forget_password) {
             gotoForgetPwdActivity();
         }
     }
@@ -94,13 +80,11 @@ public class LoginActivity extends BaseActivity {
     private void gotoRegisterActivity() {
         Intent intent = new Intent(this,RegisterActivity.class);
         startActivity(intent);
-        LoginActivity.this.finish();
     }
 
     private void gotoForgetPwdActivity() {
         Intent intent = new Intent(this,ForgetPasswordActivity.class);
         startActivity(intent);
-        LoginActivity.this.finish();
     }
 
     private void login() {

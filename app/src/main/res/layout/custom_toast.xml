@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llToast"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/llToast"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/tv_toast_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_drawable_border"
+        android:paddingBottom="7dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="7dp"
-        android:paddingBottom="7dp"
-        android:background="@drawable/shape_drawable_border"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:text="hello"
         android:textColor="@color/white"
-        android:text="hello"/>
+        android:textSize="16sp" />
 
 </LinearLayout>

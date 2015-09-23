@@ -7,12 +7,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
+import com.example.lijinfeng.eses.constants.ESConstants;
+import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
 /*
@@ -22,6 +26,10 @@ import com.example.lijinfeng.eses.util.ToastUtil;
  */
 
 public class RegisterActivity extends BaseActivity {
+
+    private ImageView ivHeadBack;
+    private TextView tvHeadTitle;
+    private ImageView ivHeadRight;
 
     private EditText etUserName;
     private EditText etRegisterEmail;
@@ -48,7 +56,12 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initTitleView() {
-
+        ivHeadBack = (ImageView) findViewById(R.id.ivBack);
+        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
+        tvHeadTitle.setText("注册");
+        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
+//        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
+        ivHeadRight.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -57,11 +70,11 @@ public class RegisterActivity extends BaseActivity {
         etRegisterEmail = (EditText) findViewById(R.id.et_register_email);
         etPassword = (EditText) findViewById(R.id.et_register_pwd);
         etPasswordAgain = (EditText) findViewById(R.id.et_register_pwd_again);
-
         btnRegister = (Button) findViewById(R.id.btn_now_register);
     }
 
     private void setListener() {
+        ivHeadBack.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
     }
 
@@ -69,7 +82,16 @@ public class RegisterActivity extends BaseActivity {
     public void onClick(View view) {
         if(view.getId() == R.id.btn_now_register) {
             register();
+        } else if(view.getId() == R.id.ivBack) {
+            onBackPressed();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
     }
 
     private void register() {
@@ -103,6 +125,9 @@ public class RegisterActivity extends BaseActivity {
                 public void done(AVException e) {
                     progressDialogDismiss();
                     if (e == null) {
+                        PreferenceUtils.setPrefString(RegisterActivity.this, ESConstants.USER_NAME,userName);
+                        PreferenceUtils.setPrefString(RegisterActivity.this,ESConstants.USER_EMAIL,userEmail);
+
                         // 显示注册成功
                         Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(mainIntent);
@@ -112,8 +137,7 @@ public class RegisterActivity extends BaseActivity {
                             case 202:
 //                                用户名已被注册，请重新填写
                                 ToastUtil.showCustomToast(RegisterActivity.this,"该用户名已被占用，请选择其他的用户名");
-//                                showError(activity
-//                                        .getString(R.string.error_register_user_name_repeat));
+//                                showError(activity.getString(R.string.error_register_user_name_repeat));
                                 break;
                             case 203:
 //                                邮箱已被注册

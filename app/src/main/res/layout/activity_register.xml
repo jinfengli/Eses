@@ -1,54 +1,97 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.lijinfeng.eses.activity.RegisterActivity">
 
-    <EditText
-        android:id="@+id/et_register_userName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/login_input_user_name" >
-    </EditText>
+    <include
+        android:id="@+id/header"
+        layout="@layout/common_action_bar" />
 
-    <EditText
-        android:id="@+id/et_register_email"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_register_userName"
-        android:layout_below="@+id/et_register_userName"
-        android:ems="10"
-        android:hint="@string/register_input_user_email"
-        android:inputType="textEmailAddress" >
-    </EditText>
+        android:layout_below="@id/header"
+        android:orientation="vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
 
-    <EditText
-        android:id="@+id/et_register_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_register_email"
-        android:layout_below="@+id/et_register_email"
-        android:ems="10"
-        android:hint="@string/login_input_user_password"
-        android:inputType="textPassword" >
-    </EditText>
+        <EditText
+            android:id="@+id/et_register_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="帐号" />
 
-    <EditText
-        android:id="@+id/et_register_pwd_again"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_register_pwd"
-        android:layout_below="@+id/et_register_pwd"
-        android:ems="10"
-        android:hint="请再次输入密码"
-        android:inputType="textPassword" >
-    </EditText>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="2dp"
+            android:background="#8FD132" />
 
-    <Button
-        android:id="@+id/btn_now_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/et_register_pwd_again"
-        android:layout_below="@+id/et_register_pwd_again"
-        android:text="@string/login_button_register" />
+        <EditText
+            android:id="@+id/et_register_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="邮箱"
+            android:inputType="textEmailAddress" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/et_register_email"
+            android:layout_marginTop="2dp"
+            android:background="#8FD132" />
+
+        <EditText
+            android:id="@+id/et_register_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="@string/login_input_user_password"
+            android:inputType="textPassword" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/et_register_email"
+            android:layout_marginTop="2dp"
+            android:background="#8FD132" />
+
+        <EditText
+            android:id="@+id/et_register_pwd_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:ems="10"
+            android:hint="再输入密码"
+            android:inputType="textPassword" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/et_register_email"
+            android:layout_marginTop="2dp"
+            android:background="#8FD132" />
+
+        <Button
+            android:id="@+id/btn_now_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/login_btn_selector"
+            android:text="@string/login_button_register"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+
 </RelativeLayout>

@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
@@ -15,15 +17,18 @@ import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
 /*
- * @TODO:
+ * TODO：找回用户名或密码
  * @author li.jf
  * Copyright (C) 15-9-19 下午3:19 wonhigh.cn All rights reserved.
  */
 
 public class ForgetPasswordActivity extends BaseActivity {
 
+    private ImageView ivHeadBack;
+    private TextView tvHeadTitle;
+    private ImageView ivHeadRight;
+
     private EditText etForgetPwdEmail;
-    private Button btnSendForgetPwdMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,31 +43,38 @@ public class ForgetPasswordActivity extends BaseActivity {
     @Override
     protected void initTitleView() {
 
+        ivHeadBack = (ImageView) findViewById(R.id.ivBack);
+        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
+        tvHeadTitle.setText("找回帐号或密码");
+
+        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
+        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
     }
 
     @Override
     protected void initView() {
         etForgetPwdEmail = (EditText) findViewById(R.id.et_forget_pwd_email);
-        btnSendForgetPwdMail = (Button) findViewById(R.id.btn_find_password);
-
     }
 
     private void setListener() {
-        btnSendForgetPwdMail.setOnClickListener(this);
-    }
+        ivHeadBack.setOnClickListener(this);
+        ivHeadRight.setOnClickListener(this);
 
+    }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btn_find_password) {
+        if (view.getId() == R.id.ivHeaderRight) {
             sendFindPwdMail();
+        } else if(view.getId() == R.id.ivBack) {
+            onBackPressed();
         }
     }
 
     private void sendFindPwdMail() {
         String email = etForgetPwdEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showCustomToast(this, "邮件不能为空");
+            ToastUtil.showCustomToast(this, "邮箱不能为空");
             // 这儿最好是再判断一下邮件的格式是否正确
             return;
         }
@@ -91,5 +103,9 @@ public class ForgetPasswordActivity extends BaseActivity {
         this.finish();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

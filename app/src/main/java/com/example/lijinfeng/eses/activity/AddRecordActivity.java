@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVUser;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
@@ -22,6 +25,7 @@ import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
 import com.example.lijinfeng.eses.util.CommonUtil;
+import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.CustomLayout;
 import com.example.lijinfeng.eses.view.SegmentControl;
@@ -58,6 +62,8 @@ public class AddRecordActivity extends BaseActivity implements
     private String startTime = "";
     private String endDate = "";
     private String endTime = "";
+    private String secondSleepTime = "";
+    private String recordType = "";
 
     private ImageView ivBack;
     private TextView tvHeadTitle;
@@ -73,7 +79,6 @@ public class AddRecordActivity extends BaseActivity implements
     private AlertView mAlertView;
 
     private static final int MAX_COUNT = 50;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +172,7 @@ public class AddRecordActivity extends BaseActivity implements
         if( !TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
             if(!startDate.equals(endDate)) {
                 recordBean.setExceptionFlag("1"); //起床睡眠日期不是同一天.
+                secondSleepTime = endTime;   // 只记录时间，日期就是开始日期的第二天
             } else {
                 // 同一天
                 if( !TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
@@ -207,7 +213,8 @@ public class AddRecordActivity extends BaseActivity implements
                 AddRecordActivity.this.finish();
                 break;
             case R.id.ivHeaderRight:
-                saveRecordToDb();
+//                saveRecordToDb();
+                uploadRecord();
                 break;
             case R.id.tvStartDatePicker:
                 setStartDate();
@@ -225,6 +232,32 @@ public class AddRecordActivity extends BaseActivity implements
             default:
                 break;
         }
+    }
+
+    private void uploadRecord() {
+        String userName = PreferenceUtils.getPrefString(AddRecordActivity.this, ESConstants.USER_NAME,"");
+        String userEmail = PreferenceUtils.getPrefString(AddRecordActivity.this, ESConstants.USER_EMAIL,"");
+
+        AVObject record = new AVObject("Record");
+        record.put("userName", userName);
+        record.put("userEmail",userEmail);
+        record.put("startDate", startDate);
+        record.put("startTime", startTime);
+        record.put("sleepDate", endDate);
+        record.put("sleepTime", endTime);
+        if(!TextUtils.isEmpty(secondSleepTime)) {
+            record.put("sleepSecondTime",secondSleepTime);
+            record.put("exceptionFlag", true); // 这个记录有异常
+        } else {
+            record.put("sleepSecondTime","");
+            record.put("exceptionFlag",false);
+        }
+        record.put("recordComment", etCommnet.getText().toString());
+        record.put("recordType", recordType);
+
+        record.saveInBackground();
+
+
     }
     private void setStartDate() {
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -309,6 +342,8 @@ public class AddRecordActivity extends BaseActivity implements
         // 点击取消时为-1，其他的从0开始算起
         if(position == 0) {
             dbHelper.addRecord(recordBean);
+
+//            uploadRecord();
             AddRecordActivity.this.finish();
         } else {
             mAlertView.dismiss();
@@ -319,8 +354,10 @@ public class AddRecordActivity extends BaseActivity implements
     public void onSegmentControlClick(int index) {
         if (index == 0) {
             recordBean.setRecordType(ESConstants.TYPE_SLEEP);
+            recordType = ESConstants.TYPE_SLEEP;
         } else if(index == 1) {
             recordBean.setRecordType(ESConstants.TYPE_EXERCISE);
+            recordType = ESConstants.TYPE_EXERCISE;
         }
     }
 
