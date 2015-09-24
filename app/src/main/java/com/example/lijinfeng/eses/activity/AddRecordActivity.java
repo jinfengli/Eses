@@ -78,6 +78,7 @@ public class AddRecordActivity extends BaseActivity implements
     SegmentControl segmentControl;
     private AlertView mAlertView;
 
+    /** 备注中输入字符的最大数量 */
     private static final int MAX_COUNT = 50;
 
     @Override

@@ -1,5 +1,10 @@
 package com.example.lijinfeng.eses.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /*
  *  TODO:
  *
@@ -10,14 +15,13 @@ public class RecordBean {
 
     public int _id;
 
-    public int get_id() {
-        return _id;
-    }
-
     public void set_id(int _id) {
         this._id = _id;
     }
 
+    public int get_id() {
+        return _id;
+    }
     /** 记录编号 */
     private String RecordNo;
     /** 开始日期 */
@@ -128,4 +132,5 @@ public class RecordBean {
                 ", exceptionFlag='" + exceptionFlag + '\'' +
                 '}';
     }
+
 }

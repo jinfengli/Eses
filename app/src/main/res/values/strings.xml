@@ -40,4 +40,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>

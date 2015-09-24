@@ -8,7 +8,6 @@ import android.database.Cursor;
 
 import com.example.lijinfeng.eses.bean.RecordBean;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class EsesDBHelper {

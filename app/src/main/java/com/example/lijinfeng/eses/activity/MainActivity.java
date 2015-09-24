@@ -1,17 +1,27 @@
 package com.example.lijinfeng.eses.activity;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -29,8 +39,10 @@ import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
 import com.github.clans.fab.FloatingActionButton;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -40,10 +52,18 @@ import java.util.logging.Logger;
  *  Date: 15-8-23 下午5:53
  *  Copyright (c) li.jf All ri reserved.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton fabMenu;
+
+    //声明相关变量
+    private Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView lvLeftMenu;
+    private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04"};
+    private ArrayAdapter arrayAdapter;
 
     private MainAdapter mainAdapter;
     private ListView lvRecords;
@@ -63,17 +83,23 @@ public class MainActivity extends BaseActivity {
     private ContentObserver recordChangeObserver = new RecordChangeObserver(new Handler());
     private ContentResolver mContentResolver;
 
-//    private Handler handler = new Handler();
-
     Colorful mColorful;
     boolean isNight = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//       不要再设置Title了
+//       requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.statusbar_bg);
 
         initTitleView();
         initView();
@@ -82,34 +108,91 @@ public class MainActivity extends BaseActivity {
         setListener();
     }
 
-    @Override
-    protected void initTitleView() {
-        ivBack = (ImageView) findViewById(R.id.ivBack);
-//        ivBack.setVisibility(View.GONE);
-        ivBack.setOnClickListener(this);
-        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
-    @Override
+    protected void initTitleView() {
+        toolbar = (Toolbar) findViewById(R.id.tl_custom);
+        toolbar.setTitle("Toolbar");//设置Toolbar标题
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff")); //设置标题颜色
+        toolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        setSupportActionBar(toolbar);
+
+        toolbar.setOnMenuItemClickListener(onMenuItemClicker);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
+        lvLeftMenu = (ListView) findViewById(R.id.lv_left_menu);
+
+        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //创建返回键，并实现打开关/闭监听
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
+                R.string.open, R.string.close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+//                mAnimationDrawable.stop();
+            }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+//                mAnimationDrawable.start();
+            }
+        };
+        mDrawerToggle.syncState();
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //设置菜单列表
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lvs);
+        lvLeftMenu.setAdapter(arrayAdapter);
+
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+
+            String msg= "";
+
+            switch (item.getItemId()) {
+                case R.id.action_settings:
+                    msg += "Click setting";
+                    break;
+            }
+
+            ToastUtil.showCustomToast(MainActivity.this,msg +"");
+
+            return false;
+        }
+    };
+
     protected void initView() {
         fabMenu = (FloatingActionButton) findViewById(R.id.fab);
         lvRecords = (ListView) findViewById(R.id.lvESTime);
         lvRecords.setDivider(new ColorDrawable(Color.GRAY));
         lvRecords.setDividerHeight(1);
-        rlHeader = (RelativeLayout) findViewById(R.id.rl_header);
+//        rlHeader = (RelativeLayout) findViewById(R.id.rl_header);
     }
 
     private void setListener() {
-        ivBack.setOnClickListener(this);
-        ivHeadRight.setOnClickListener(this);
+//        ivBack.setOnClickListener(this);
+//        ivHeadRight.setOnClickListener(this);
         fabMenu.setOnClickListener(this);
 
         lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MainActivity.this, " 您点击的是" + position, Toast.LENGTH_LONG).show();
-                ToastUtil.showCustomToast(MainActivity.this,"hello");
+                Toast.makeText(MainActivity.this, " 您点击的是" + position, Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MainActivity.this, RecordDetailActivity.class));
             }
         });
@@ -141,12 +224,12 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(MainActivity.this, AddRecordActivity.class));
                 break;
 
-            case R.id.ivHeaderRight:
-                setPopwindowPosition();
-                break;
-            case R.id.ivBack:
-                changeThemeWithColorful();
-                break;
+//            case R.id.ivHeaderRight:
+//                setPopwindowPosition();
+//                break;
+//            case R.id.ivBack:
+//                changeThemeWithColorful();
+//                break;
 
             default:
                 break;
@@ -234,5 +317,25 @@ public class MainActivity extends BaseActivity {
             mainAdapter.setRecordDatas(recordBeans);
             lvRecords.setAdapter(mainAdapter);
         }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+         super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+//        if(id == android.R.id.se) {
+//            onBackPressed();
+//            return true;
+//        }
+        return super.onOptionsItemSelected(item);
     }
 }

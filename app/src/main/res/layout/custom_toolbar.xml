@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar android:id="@+id/tl_custom"
+                                   xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:background="?attr/colorPrimary"
+                                   android:fitsSystemWindows="true"
+                                   android:minHeight="?attr/actionBarSize"
+                                   app:popupTheme="@style/MyDarkToolBarStyle"
+                                   app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+</android.support.v7.widget.Toolbar>
+
+<!-- 注意，在此处设置 AppCompat.Dark  让文字（图片）是白色的， 那么对应的Theme就一定应该是黑色
+ ，这才是白底黑字的效果嘛-->
+
+    <!--@style/ThemeOverlay.AppCompat.Light-->

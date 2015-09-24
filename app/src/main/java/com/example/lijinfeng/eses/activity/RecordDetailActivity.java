@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 
+/**
+ * RecordDetailActivity (记录详情)
+ */
 public class RecordDetailActivity extends BaseActivity {
 
     private static final String TAG = RecordDetailActivity.class.getSimpleName();
@@ -16,15 +19,24 @@ public class RecordDetailActivity extends BaseActivity {
     private TextView tvHeadTitle;
     private ImageView ivHeadRight;
 
+    private String storeNo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_detail);
 
+        handleIntent();
+
         initTitleView();
         initView();
         setListener();
     }
+
+    private void handleIntent() {
+        storeNo = getIntent().getExtras().getString("recordNo");
+    }
+
 
     @Override
     protected void initTitleView() {
@@ -50,6 +62,5 @@ public class RecordDetailActivity extends BaseActivity {
         if(view.getId() == R.id.ivBack) {
             RecordDetailActivity.this.finish();
         }
-
     }
 }

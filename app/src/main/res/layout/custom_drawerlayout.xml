@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/dl_left"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--主布局-->
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_main"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+    </LinearLayout>-->
+
+    <!--android:layout_below="@id/rl_header"-->
+    <FrameLayout
+        android:id="@+id/fl_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--android:background="@android:color/white"-->
+        <ListView
+            android:id="@+id/lvESTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/add_bg"
+            fab:fab_colorNormal="@color/common_selector_color_normal"
+            fab:fab_colorPressed="@color/common_select_color_press"/>
+    </FrameLayout>
+    <!--侧滑菜单-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#fff">
+
+        <ListView
+            android:id="@+id/lv_left_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:text="DrawerLayout"/>
+    </LinearLayout>
+</android.support.v4.widget.DrawerLayout>
