@@ -1,6 +1,5 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.ContentObserver;
@@ -18,8 +17,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -28,23 +25,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.AVUser;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
-import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.colorful.Colorful;
 import com.example.lijinfeng.eses.colorful.setter.ViewGroupSetter;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
+import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
 import com.github.clans.fab.FloatingActionButton;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.update.UmengUpdateAgent;
 
-import java.security.KeyStore;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /*
  *  TODO: MainActivity
@@ -93,14 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //       requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
-
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.statusbar_bg);
-
         initTitleView();
         initView();
         init();
@@ -108,24 +97,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setListener();
     }
 
-
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
-
     protected void initTitleView() {
+        CommonUtil.configToolBarParams(MainActivity.this);
+
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         toolbar.setTitle("Toolbar");//设置Toolbar标题
-        toolbar.setTitleTextColor(Color.parseColor("#ffffff")); //设置标题颜色
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white)); //设置标题颜色
         toolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(toolbar);
 
@@ -161,17 +138,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-
-            String msg= "";
-
             switch (item.getItemId()) {
                 case R.id.action_settings:
-                    msg += "Click setting";
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                    break;
+
+                case R.id.action_about:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    break;
+                case R.id.action_exit:
+                    AVUser.logOut();
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    MainActivity.this.finish();
                     break;
             }
-
-            ToastUtil.showCustomToast(MainActivity.this,msg +"");
-
             return false;
         }
     };
@@ -181,22 +162,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lvRecords = (ListView) findViewById(R.id.lvESTime);
         lvRecords.setDivider(new ColorDrawable(Color.GRAY));
         lvRecords.setDividerHeight(1);
-//        rlHeader = (RelativeLayout) findViewById(R.id.rl_header);
     }
 
     private void setListener() {
-//        ivBack.setOnClickListener(this);
-//        ivHeadRight.setOnClickListener(this);
         fabMenu.setOnClickListener(this);
-
         lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, " 您点击的是" + position, Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MainActivity.this, RecordDetailActivity.class));
             }
         });
-
 //        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
     }
 
@@ -227,10 +202,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            case R.id.ivHeaderRight:
 //                setPopwindowPosition();
 //                break;
-//            case R.id.ivBack:
-//                changeThemeWithColorful();
-//                break;
-
             default:
                 break;
         }
@@ -281,10 +252,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
         recordBeans = new ArrayList<RecordBean>();
         recordBeans = dbHelper.queryAllRecords();
-
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
     }
@@ -318,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lvRecords.setAdapter(mainAdapter);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

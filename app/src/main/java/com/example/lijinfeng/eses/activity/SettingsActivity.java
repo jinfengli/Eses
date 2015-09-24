@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +15,6 @@ import android.widget.Toast;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
@@ -44,11 +45,10 @@ import jxl.write.WriteException;
  *  Copyright (C) li.jf All rights reserved.
  */
 
-public class SettingsActivity extends BaseActivity implements OnItemClickListener, UmengUpdateListener {
-    private ImageView ivBack;
-    private TextView tvHeadTitle;
-    private ImageView ivHeadRight;
+public class SettingsActivity extends AppCompatActivity implements
+        OnItemClickListener, UmengUpdateListener, View.OnClickListener{
 
+    private Toolbar mToolbar;
     private TextView tvSetTheme;
     private TextView tvFeedBack;
     private TextView tvCheckNewVersion;
@@ -81,32 +81,15 @@ public class SettingsActivity extends BaseActivity implements OnItemClickListene
         setListener();
     }
 
-    private void init() {
-        format = new WritableCellFormat(WritableWorkbook.ARIAL_10_PT);
-        try {
-            format.setWrap(true);
-            format.setBorder(Border.ALL, BorderLineStyle.THIN);
-
-            dateFormat = new WritableCellFormat(new DateFormat("yyyy-MM-dd"));
-            dateFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
-        } catch (WriteException e) {
-            e.printStackTrace();
-        }
-
-        dbHelper = new EsesDBHelper(this);
-
-    }
-
-    @Override
     protected void initTitleView() {
-        ivBack = (ImageView) findViewById(R.id.ivBack);
-        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-        tvHeadTitle.setText(R.string.title_activity_settings);
-        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
-        ivHeadRight.setVisibility(View.INVISIBLE);
+        CommonUtil.configToolBarParams(this);
+        mToolbar = (Toolbar) findViewById(R.id.tl_custom);
+        mToolbar.setTitle("设置");//设置Toolbar标题
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        setSupportActionBar(mToolbar);
     }
 
-    @Override
     protected void initView() {
         tvSetTheme = (TextView) findViewById(R.id.tv_set_theme);
         tvFeedBack = (TextView) findViewById(R.id.tv_feedback);
@@ -120,9 +103,22 @@ public class SettingsActivity extends BaseActivity implements OnItemClickListene
         // 3、记录备份 -->导出到excel文件中.
     }
 
+    private void init() {
+        format = new WritableCellFormat(WritableWorkbook.ARIAL_10_PT);
+        try {
+            format.setWrap(true);
+            format.setBorder(Border.ALL, BorderLineStyle.THIN);
+
+            dateFormat = new WritableCellFormat(new DateFormat("yyyy-MM-dd"));
+            dateFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+
+        dbHelper = new EsesDBHelper(this);
+    }
+
     private void setListener() {
-        ivBack.setOnClickListener(this);
-        ivHeadRight.setOnClickListener(this);
         tvSetTheme.setOnClickListener(this);
         tvFeedBack.setOnClickListener(this);
         tvCheckNewVersion.setOnClickListener(this);
@@ -136,9 +132,7 @@ public class SettingsActivity extends BaseActivity implements OnItemClickListene
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ivBack) {
-            onBackPressed();
-        } else if(view.getId() == R.id.tv_feedback) {
+        if(view.getId() == R.id.tv_feedback) {
             feedbackTOMe();
         } else if(view.getId() == R.id.tv_check_new_version) {
             UmengUpdateAgent.setUpdateAutoPopup(false);

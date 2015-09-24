@@ -3,7 +3,7 @@ package com.example.lijinfeng.eses.view;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 /**
  * TODO：自定义布局 (避免软键盘遮挡EditText,在AddRecordActivity中使用)
@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
  * @author: li.jf
  * @date 2015-09-11
  */
-public class CustomLayout extends RelativeLayout {
+public class CustomLayout extends LinearLayout {
 
     public static final int KEYBOARD_HIDE = 0;
     public static final int KEYBOARD_SHOW = 1;

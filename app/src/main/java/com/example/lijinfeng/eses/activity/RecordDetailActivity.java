@@ -1,6 +1,7 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import com.example.lijinfeng.eses.base.BaseActivity;
 /**
  * RecordDetailActivity (记录详情)
  */
-public class RecordDetailActivity extends BaseActivity {
+public class RecordDetailActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = RecordDetailActivity.class.getSimpleName();
 
@@ -27,7 +28,6 @@ public class RecordDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_record_detail);
 
         handleIntent();
-
         initTitleView();
         initView();
         setListener();
@@ -37,8 +37,6 @@ public class RecordDetailActivity extends BaseActivity {
         storeNo = getIntent().getExtras().getString("recordNo");
     }
 
-
-    @Override
     protected void initTitleView() {
         ivBack = (ImageView) findViewById(R.id.ivBack);
         tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
@@ -47,7 +45,6 @@ public class RecordDetailActivity extends BaseActivity {
         ivHeadRight.setVisibility(View.INVISIBLE);
     }
 
-    @Override
     protected void initView() {
 
     }

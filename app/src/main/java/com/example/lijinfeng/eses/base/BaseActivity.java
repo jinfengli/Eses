@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
@@ -31,7 +32,6 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         userId = null;
 
         AVUser user = AVUser.getCurrentUser();
-
         if(user != null) {
             userId = user.getObjectId();
         }

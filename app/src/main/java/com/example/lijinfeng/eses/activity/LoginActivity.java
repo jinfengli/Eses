@@ -16,8 +16,6 @@ import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
-import org.w3c.dom.Text;
-
 /*
  * TODO: 登录ES
  * @author li.jf

@@ -1,17 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.example.lijinfeng.eses.activity.RegisterActivity">
 
     <include
-        android:id="@+id/header"
-        layout="@layout/common_action_bar" />
+        layout="@layout/custom_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header"
         android:orientation="vertical"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp">
@@ -93,5 +93,4 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

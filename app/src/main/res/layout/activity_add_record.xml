@@ -3,16 +3,16 @@
     android:id="@+id/custom_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="com.example.lijinfeng.eses.activity.AddRecordActivity">
 
     <include
-        android:id="@+id/header"
-        layout="@layout/common_action_bar" />
+        layout="@layout/custom_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"

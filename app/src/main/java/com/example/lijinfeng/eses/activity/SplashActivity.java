@@ -19,9 +19,9 @@ import com.example.lijinfeng.eses.base.BaseActivity;
 /*
  * TODO: Splash page
  * @author li.jf
- * Copyright (C) 15-9-17 下午3:49 wonhigh.cn All rights reserved.
+ * @date 15-9-17 下午3:49
+ * Copyright(C) li.jf  All rights reserved.
  */
-
 public class SplashActivity extends BaseActivity {
 
     private ImageView ivSplash;
@@ -33,7 +33,6 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         initAVCloud();
-
         initTitleView();
         initView();
 
@@ -58,7 +57,6 @@ public class SplashActivity extends BaseActivity {
         AVInstallation.getCurrentInstallation().saveInBackground();
     }
 
-    @Override
     protected void initView() {
         ivSplash = (ImageView) findViewById(R.id.iv_splash);
     }

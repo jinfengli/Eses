@@ -3,6 +3,8 @@ package com.example.lijinfeng.eses.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import com.avos.avoscloud.SignUpCallback;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.constants.ESConstants;
+import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
@@ -25,11 +28,7 @@ import com.example.lijinfeng.eses.util.ToastUtil;
  * Copyright (C) 15-9-19 下午3:18 wonhigh.cn All rights reserved.
  */
 
-public class RegisterActivity extends BaseActivity {
-
-    private ImageView ivHeadBack;
-    private TextView tvHeadTitle;
-    private ImageView ivHeadRight;
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private EditText etUserName;
     private EditText etRegisterEmail;
@@ -44,6 +43,7 @@ public class RegisterActivity extends BaseActivity {
     private String passwordAgain;
     private String userEmail;
 
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,17 +54,16 @@ public class RegisterActivity extends BaseActivity {
         setListener();
     }
 
-    @Override
     protected void initTitleView() {
-        ivHeadBack = (ImageView) findViewById(R.id.ivBack);
-        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-        tvHeadTitle.setText("注册");
-        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
-//        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
-        ivHeadRight.setVisibility(View.INVISIBLE);
+        CommonUtil.configToolBarParams(this);
+
+        mToolbar = (Toolbar) findViewById(R.id.tl_custom);
+        mToolbar.setTitle("注册");//设置Toolbar标题
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        setSupportActionBar(mToolbar);
     }
 
-    @Override
     protected void initView() {
         etUserName = (EditText) findViewById(R.id.et_register_userName);
         etRegisterEmail = (EditText) findViewById(R.id.et_register_email);
@@ -74,16 +73,12 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void setListener() {
-        ivHeadBack.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
     }
 
-    @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btn_now_register) {
             register();
-        } else if(view.getId() == R.id.ivBack) {
-            onBackPressed();
         }
     }
 

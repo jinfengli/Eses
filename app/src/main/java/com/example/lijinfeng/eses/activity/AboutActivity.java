@@ -1,5 +1,6 @@
 package com.example.lijinfeng.eses.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.lijinfeng.eses.R;
+import com.example.lijinfeng.eses.util.CommonUtil;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /*
  *  TODO: AboutActivity
@@ -21,21 +24,17 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
         initTitleView();
-        initView();
     }
 
     private void initTitleView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        CommonUtil.configToolBarParams(this);
+
+        mToolbar = (Toolbar) findViewById(R.id.tl_custom);
+        mToolbar.setTitle(R.string.title_activity_about);//设置Toolbar标题
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(R.string.title_activity_about);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void initView() {
-
     }
 
     @Override

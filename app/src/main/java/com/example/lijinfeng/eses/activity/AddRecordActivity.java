@@ -1,6 +1,8 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -41,11 +43,12 @@ import java.util.Calendar;
  *  Date: 15-8-29 下午11:24
  *  Copyright (c) li.jf All rights reserved.
  */
-public class AddRecordActivity extends BaseActivity implements
+public class AddRecordActivity extends AppCompatActivity implements
         CommonAlertDialog.OnSubmitListener,
         OnItemClickListener,
         SegmentControl.OnSegmentControlClickListener,
-        CustomLayout.KeyboardStateListener {
+        CustomLayout.KeyboardStateListener,
+        View.OnClickListener{
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
 
@@ -81,11 +84,13 @@ public class AddRecordActivity extends BaseActivity implements
     /** 备注中输入字符的最大数量 */
     private static final int MAX_COUNT = 50;
 
+    private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_record);
 
         initTitleView();
@@ -94,16 +99,20 @@ public class AddRecordActivity extends BaseActivity implements
         setListener();
     }
 
-    @Override
     protected void initTitleView() {
-        ivBack = (ImageView) findViewById(R.id.ivBack);
-        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-        tvHeadTitle.setText(R.string.add_record);
-        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
-        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
+//        ivBack = (ImageView) findViewById(R.id.ivBack);
+//        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
+//        tvHeadTitle.setText(R.string.add_record);
+//        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
+//        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
+        CommonUtil.configToolBarParams(this);
+        mToolbar = (Toolbar) findViewById(R.id.tl_custom);
+        mToolbar.setTitle("添加记录");//设置Toolbar标题
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        setSupportActionBar(mToolbar);
     }
 
-    @Override
     protected void initView() {
         tvStartDatePicker = (TextView) findViewById(R.id.tvStartDatePicker);
         tvStartTimePicker = (TextView) findViewById(R.id.tvStartTimePicker);
@@ -133,8 +142,8 @@ public class AddRecordActivity extends BaseActivity implements
     }
 
     private void setListener() {
-        ivBack.setOnClickListener(this);
-        ivHeadRight.setOnClickListener(this);
+//        ivBack.setOnClickListener(this);
+//        ivHeadRight.setOnClickListener(this);
 
         resizeLayout.setKeyboardStateListener(this);
         segmentControl.setmOnSegmentControlClickListener(this);
@@ -210,13 +219,13 @@ public class AddRecordActivity extends BaseActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ivBack:
-                AddRecordActivity.this.finish();
-                break;
-            case R.id.ivHeaderRight:
-//                saveRecordToDb();
-                uploadRecord();
-                break;
+//            case R.id.ivBack:
+//                AddRecordActivity.this.finish();
+//                break;
+//            case R.id.ivHeaderRight:
+////                saveRecordToDb();
+//                uploadRecord();
+//                break;
             case R.id.tvStartDatePicker:
                 setStartDate();
                 break;
