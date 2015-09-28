@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 /**
  * TODO：自定义布局 (避免软键盘遮挡EditText,在AddRecordActivity中使用)
@@ -11,12 +13,12 @@ import android.widget.LinearLayout;
  * @author: li.jf
  * @date 2015-09-11
  */
-public class CustomLayout extends LinearLayout {
+public class CustomLayout extends RelativeLayout {
 
     public static final int KEYBOARD_HIDE = 0;
     public static final int KEYBOARD_SHOW = 1;
 
-    public static final int SOFT_KEYBOARD_MIN_HEIGHT = 40;
+    public static final int SOFT_KEYBOARD_MIN_HEIGHT = 50;
 
     private KeyboardStateListener keyboardStateListener;
 
@@ -50,6 +52,7 @@ public class CustomLayout extends LinearLayout {
                 } else {
                     if(keyboardStateListener != null) {
                         keyboardStateListener.setChanged(KEYBOARD_HIDE);
+
                     }
                 }
             }

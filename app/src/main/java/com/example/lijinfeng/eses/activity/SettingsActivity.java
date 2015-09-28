@@ -133,7 +133,7 @@ public class SettingsActivity extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.tv_feedback) {
-            feedbackTOMe();
+            CommonUtil.feedbackTOMe(SettingsActivity.this);
         } else if(view.getId() == R.id.tv_check_new_version) {
             UmengUpdateAgent.setUpdateAutoPopup(false);
             UmengUpdateAgent.setUpdateListener(this);
@@ -252,7 +252,7 @@ public class SettingsActivity extends AppCompatActivity implements
 
         sheet.addCell(new Label(RECORD_TYPE_INDEX,row,record.getRecordType(),format));
         sheet.addCell(new Label(RECORD_COMMENT_INDEX,row,record.getRecordComment() ,format));
-        sheet.addCell(new Label(EXCEPTION_FLAG_INDEX,row,record.getExceptionFlag() ,format));
+        sheet.addCell(new Label(EXCEPTION_FLAG_INDEX, row, record.getExceptionFlag(), format));
     }
 
     private void showNoUpdateAlertDialog() {
@@ -264,19 +264,6 @@ public class SettingsActivity extends AppCompatActivity implements
                 SettingsActivity.this,
                 AlertView.Style.Alert,
                 this).show();
-    }
-
-    private void feedbackTOMe() {
-        Intent data=new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse("mailto:lijinfeng_ljf@foxmail.com"));
-        //  Build.MODEL: H60-L01  Device: hwH60  release 4.4.2
-        data.putExtra(Intent.EXTRA_SUBJECT, "来自 "
-                +  Build.DEVICE
-                + "("
-                + Build.VERSION.RELEASE
-                + ") 的反馈");
-        data.putExtra(Intent.EXTRA_TEXT, "输入反馈内容...");
-        startActivity(data);
     }
 
     @Override

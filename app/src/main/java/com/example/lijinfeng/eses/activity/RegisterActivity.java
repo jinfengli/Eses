@@ -86,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-
     }
 
     private void register() {

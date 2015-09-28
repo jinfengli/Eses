@@ -1,11 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.lijinfeng.eses.activity.AddRecordActivity">
 
     <item android:id="@+id/add_record"
         android:icon="@drawable/ic_check_ok"
         android:title="save"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
 </menu>
 <!--
     xmlns:app="http://schemas.android.com/apk/res-auto"-->

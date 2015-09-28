@@ -3,8 +3,10 @@ package com.example.lijinfeng.eses.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,10 +61,25 @@ public class CommonUtil {
         return versionName;
     }
 
+    /**
+     * 信息反馈
+     * @param activity
+     */
+    public static void feedbackTOMe(Activity activity) {
+        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse("mailto:lijinfeng_ljf@foxmail.com"));
+        //  Build.MODEL: H60-L01  Device: hwH60  release 4.4.2
+        data.putExtra(Intent.EXTRA_SUBJECT, "来自 "
+                +  Build.DEVICE
+                + "("
+                + Build.VERSION.RELEASE
+                + ") 的反馈");
+        data.putExtra(Intent.EXTRA_TEXT, "输入反馈内容...");
+        activity.startActivity(data);
+    }
 
     /**
      * 配置沉浸式状态栏信息
-     *
      * @param activity
      */
     public static void configToolBarParams(Activity activity) {
@@ -87,6 +104,5 @@ public class CommonUtil {
         }
         win.setAttributes(winParams);
     }
-
 
 }

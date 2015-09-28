@@ -4,15 +4,17 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_chart"
-        app:showAsAction="never"
+        app:showAsAction="always"
         android:title="图表"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@drawable/icon_head_chart"
+
         />
-    <item
+   <!-- <item
+   android:icon="@android:drawable/ic_lock_idle_lock"
         android:id="@+id/action_settings"
         app:showAsAction="never"
         android:orderInCategory="100"
-        android:title="设置" />
+        android:title="设置" />-->
     <item
         android:id="@+id/action_about"
         app:showAsAction="never"

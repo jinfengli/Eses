@@ -1,17 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.lijinfeng.eses.activity.AboutActivity">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/common_action_bar"/>
+    <include layout="@layout/custom_toolbar" />
 
     <com.github.mikephil.charting.charts.PieChart
-        android:layout_below="@id/header"
         android:id="@+id/spread_pie_chart"
-        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="320dp"
         android:layout_height="320dp" />
 
-</RelativeLayout>
+</LinearLayout>

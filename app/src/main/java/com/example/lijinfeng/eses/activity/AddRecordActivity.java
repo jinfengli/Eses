@@ -1,6 +1,8 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -9,19 +11,16 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVUser;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
@@ -52,6 +51,8 @@ public class AddRecordActivity extends AppCompatActivity implements
 
     private static final String TAG = AddRecordActivity.class.getSimpleName();
 
+    private ScrollView scrollView;
+
     private TextView tvStartDatePicker;
     private TextView tvStartTimePicker;
     private TextView tvEndDatePicker;
@@ -67,10 +68,6 @@ public class AddRecordActivity extends AppCompatActivity implements
     private String endTime = "";
     private String secondSleepTime = "";
     private String recordType = "";
-
-    private ImageView ivBack;
-    private TextView tvHeadTitle;
-    private ImageView ivHeadRight;
 
     private CustomLayout resizeLayout;
     private LinearLayout llStartTime;
@@ -89,8 +86,6 @@ public class AddRecordActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_record);
 
         initTitleView();
@@ -100,17 +95,16 @@ public class AddRecordActivity extends AppCompatActivity implements
     }
 
     protected void initTitleView() {
-//        ivBack = (ImageView) findViewById(R.id.ivBack);
-//        tvHeadTitle = (TextView) findViewById(R.id.tvHeaderTitle);
-//        tvHeadTitle.setText(R.string.add_record);
-//        ivHeadRight = (ImageView) findViewById(R.id.ivHeaderRight);
-//        ivHeadRight.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_ok));
         CommonUtil.configToolBarParams(this);
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
-        mToolbar.setTitle("添加记录");//设置Toolbar标题
+
+        mToolbar.setTitle(R.string.add_record);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(mToolbar);
+
+        mToolbar.setOnMenuItemClickListener(onMenuItemClicker);
+//        mToolbar.setNavigationIcon(R.drawable.ic_check_ok);
     }
 
     protected void initView() {
@@ -128,7 +122,23 @@ public class AddRecordActivity extends AppCompatActivity implements
         segmentControl = (SegmentControl) findViewById(R.id.segment_control);
         resizeLayout = (CustomLayout) findViewById(R.id.custom_root_layout);
         llStartTime = (LinearLayout) findViewById(R.id.ll_start_date_time);
+        llStartTime.setVisibility(View.GONE);
+
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
     }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.add_record:
+                    saveRecordToDb();
+//                    uploadRecord();
+                    break;
+            }
+            return false;
+        }
+    };
 
     private void init() {
         dbHelper = new EsesDBHelper(this);
@@ -142,9 +152,6 @@ public class AddRecordActivity extends AppCompatActivity implements
     }
 
     private void setListener() {
-//        ivBack.setOnClickListener(this);
-//        ivHeadRight.setOnClickListener(this);
-
         resizeLayout.setKeyboardStateListener(this);
         segmentControl.setmOnSegmentControlClickListener(this);
 
@@ -156,7 +163,9 @@ public class AddRecordActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_add_record, menu);
+        return true;
     }
 
     @Override
@@ -219,13 +228,7 @@ public class AddRecordActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.ivBack:
-//                AddRecordActivity.this.finish();
-//                break;
-//            case R.id.ivHeaderRight:
-////                saveRecordToDb();
-//                uploadRecord();
-//                break;
+
             case R.id.tvStartDatePicker:
                 setStartDate();
                 break;
@@ -379,6 +382,7 @@ public class AddRecordActivity extends AppCompatActivity implements
                 break;
 
             case CustomLayout.KEYBOARD_SHOW:
+//                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                 llStartTime.setVisibility(View.GONE);
                 break;
         }

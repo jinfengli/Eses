@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -23,9 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
@@ -35,10 +32,8 @@ import com.example.lijinfeng.eses.colorful.setter.ViewGroupSetter;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.util.CommonUtil;
-import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
 import com.github.clans.fab.FloatingActionButton;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.ArrayList;
@@ -59,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView lvLeftMenu;
-    private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04"};
+    private String[] lvs = {"List Item 01", "List Item 02", "设置", "反馈"};
     private ArrayAdapter arrayAdapter;
 
     private MainAdapter mainAdapter;
@@ -69,12 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** 数据库操作工具类 */
     private EsesDBHelper dbHelper;
 
-    private ImageView ivBack;
-    private TextView tvHeadTitle;
-    private ImageView ivHeadRight;
-
     private MorePopupWindow morePopupWindow;
-
     private RelativeLayout rlHeader;
 
     private ContentObserver recordChangeObserver = new RecordChangeObserver(new Handler());
@@ -86,14 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//       不要再设置Title了
-//       requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         initTitleView();
         initView();
         init();
-
         setListener();
     }
 
@@ -101,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         CommonUtil.configToolBarParams(MainActivity.this);
 
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
-        toolbar.setTitle("Toolbar");//设置Toolbar标题
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white)); //设置标题颜色
+        toolbar.setTitle("ES");
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         toolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(toolbar);
 
@@ -132,17 +119,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //设置菜单列表
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lvs);
         lvLeftMenu.setAdapter(arrayAdapter);
-
     }
 
     private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.action_settings:
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                case R.id.action_chart:
+                    startActivity(new Intent(MainActivity.this, ChartActivity.class));
                     break;
-
                 case R.id.action_about:
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                     break;
@@ -173,6 +158,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 //        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
+
+        lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(position == 2) {
+                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                } else if(position == 3) {
+                    CommonUtil.feedbackTOMe(MainActivity.this);
+                }
+            }
+        });
     }
 
     private void init() {

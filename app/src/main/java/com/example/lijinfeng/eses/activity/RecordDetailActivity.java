@@ -15,7 +15,6 @@ import com.example.lijinfeng.eses.base.BaseActivity;
 public class RecordDetailActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = RecordDetailActivity.class.getSimpleName();
-
     private ImageView ivBack;
     private TextView tvHeadTitle;
     private ImageView ivHeadRight;
@@ -34,7 +33,7 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void handleIntent() {
-        storeNo = getIntent().getExtras().getString("recordNo");
+//        storeNo = getIntent().getExtras().getString("recordNo");
     }
 
     protected void initTitleView() {
