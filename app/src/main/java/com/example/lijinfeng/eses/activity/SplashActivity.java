@@ -62,7 +62,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void init() {
-        final ScaleAnimation scaleAnim = new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
+    /*    final ScaleAnimation scaleAnim = new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
         scaleAnim.setFillAfter(true);
@@ -87,7 +87,13 @@ public class SplashActivity extends BaseActivity {
 
             }
         });
-        ivSplash.startAnimation(scaleAnim);
+        ivSplash.startAnimation(scaleAnim);*/
+
+        if(getUserId() != null) {
+            gotoMainActivity();
+        } else {
+            gotoLoginActivity();
+        }
     }
 
     @Override

@@ -277,7 +277,7 @@ public class AddRecordActivity extends AppCompatActivity implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
-                        tvStartDatePicker.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+                        setDateFormat(tvStartDatePicker, year, monthOfYear, dayOfMonth);
                         startDate = tvStartDatePicker.getText().toString();
                     }
                 },
@@ -294,7 +294,7 @@ public class AddRecordActivity extends AppCompatActivity implements
 
                     @Override
                     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minuteOfhour) {
-                        tvStartTimePicker.setText(hour + ":" + minuteOfhour);
+                        setTimeFormat(tvStartTimePicker, hour, minuteOfhour);
                         startTime = tvStartTimePicker.getText().toString();
                     }
                 },
@@ -310,7 +310,7 @@ public class AddRecordActivity extends AppCompatActivity implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
-                        tvEndDatePicker.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+                        setDateFormat(tvEndDatePicker, year, monthOfYear, dayOfMonth);
                         endDate = tvEndDatePicker.getText().toString();
                     }
                 },
@@ -327,7 +327,8 @@ public class AddRecordActivity extends AppCompatActivity implements
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minuteOfhour) {
-                        tvEndTimePicker.setText(hour + ":" + minuteOfhour);
+//                        tvEndTimePicker.setText(hour + ":" + minuteOfhour);
+                        setTimeFormat(tvEndTimePicker, hour, minuteOfhour);
                         endTime = tvEndTimePicker.getText().toString();
                     }
                 },
@@ -338,6 +339,39 @@ public class AddRecordActivity extends AppCompatActivity implements
         tpd.setThemeDark(false);
         tpd.show(getFragmentManager(), "Timepickerdialog");
     }
+
+
+    private void setDateFormat(TextView tvDate, int year, int monthOfYear, int dayOfMonth) {
+        if(monthOfYear < 10 || dayOfMonth < 10) {
+            if(monthOfYear < 10 && dayOfMonth < 10) {
+                tvDate.setText(year + "/0" + monthOfYear + "/0" + dayOfMonth);
+            } else if(monthOfYear < 10 && dayOfMonth >= 10) {
+                tvDate.setText(year + "/0" + monthOfYear + "/" + dayOfMonth);
+            } else {
+                // month >= 10 && day < 10
+                tvDate.setText(year + "/" + monthOfYear + "/0" + dayOfMonth);
+            }
+
+        } else {
+            tvDate.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+        }
+    }
+
+    private void setTimeFormat(TextView tvTime, int hour, int minuteOfhour) {
+        if(hour < 10 || minuteOfhour < 10) {
+            if(hour < 10 && minuteOfhour < 10) {
+                tvTime.setText("0" + hour + ":0" + minuteOfhour);
+            } else if(hour < 10 && minuteOfhour >= 10) {
+                tvTime.setText("0" + hour + ":" + minuteOfhour);
+            } else if(hour >= 10 && minuteOfhour < 10) {
+                tvTime.setText(hour + ":0" + minuteOfhour);
+            }
+        } else {
+            tvTime.setText(hour + ":" + minuteOfhour);
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {

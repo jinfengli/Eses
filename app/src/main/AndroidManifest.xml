@@ -19,7 +19,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name="com.example.lijinfeng.eses.ESApplication"
+        android:name=".ESApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/es_logo"
@@ -91,12 +91,18 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activity.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+
+        <!-- <service android:name="com.avos.avoscloud.PushService"/> -->
+        <activity
+            android:name=".activity.EditRecordActivity"
+            android:label="@string/title_activity_edit_record" >
         </activity>
     </application>
 

@@ -74,7 +74,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     private void sendFindPwdMail() {
         String email = etForgetPwdEmail.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showCustomToast(this, "邮箱不能为空");
+            ToastUtil.showCustomToastL(this, "邮箱不能为空");
             // 这儿最好是再判断一下邮件的格式是否正确
             return;
         }
@@ -85,12 +85,12 @@ public class ForgetPasswordActivity extends BaseActivity {
                 // 回调无异常
                 if (e == null) {
                     // 邮件发送成功，到邮件收取邮件重新登录
-                    ToastUtil.showCustomToast(ForgetPasswordActivity.this, "邮件发送成功，请检查邮件并重置密码");
+                    ToastUtil.showCustomToastL(ForgetPasswordActivity.this, "邮件发送成功，请检查邮件并重置密码");
                     gotoLoginActivity();
 
                 } else {
                     // 邮件发送异常，请检查您的邮件地址
-                    ToastUtil.showCustomToast(ForgetPasswordActivity.this, "邮件发送失败，请检查邮件地址");
+                    ToastUtil.showCustomToastL(ForgetPasswordActivity.this, "邮件发送失败，请检查邮件地址");
 
                 }
             }

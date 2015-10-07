@@ -1,14 +1,15 @@
 package com.example.lijinfeng.eses.activity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import jxl.Workbook;
@@ -41,23 +43,27 @@ import jxl.write.WriteException;
 /*
  *  TODO:SettingsActivity
  *
- *  Date: 15-9-2 上午6:58
+ *  Date: 15-9-12 上午6:58
  *  Copyright (C) li.jf All rights reserved.
  */
-
 public class SettingsActivity extends AppCompatActivity implements
-        OnItemClickListener, UmengUpdateListener, View.OnClickListener{
+        OnItemClickListener, UmengUpdateListener, View.OnClickListener {
 
     private Toolbar mToolbar;
     private TextView tvSetTheme;
     private TextView tvFeedBack;
     private TextView tvCheckNewVersion;
     private TextView tvBackup;
+    private TextView tvAboutApp;
 
     private EsesDBHelper dbHelper;
 
+    private ProgressDialog progressDialog;
+
     private WritableCellFormat format;
     private WritableCellFormat dateFormat;
+
+    private Context mContext;
 
     private static final int ID_INDEX = 0;
     private static final int NO_INDEX = 1;
@@ -75,6 +81,8 @@ public class SettingsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        mContext = SettingsActivity.this;
+
         initTitleView();
         initView();
         init();
@@ -84,7 +92,7 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void initTitleView() {
         CommonUtil.configToolBarParams(this);
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
-        mToolbar.setTitle("设置");//设置Toolbar标题
+        mToolbar.setTitle(getResources().getString(R.string.title_activity_settings));//设置Toolbar标题
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(mToolbar);
@@ -98,9 +106,10 @@ public class SettingsActivity extends AppCompatActivity implements
         tvCheckNewVersion.setText(String.format(s, CommonUtil.getAppVersionName(this)));
 
         tvBackup = (TextView) findViewById(R.id.tv_backup);
+        tvAboutApp = (TextView) findViewById(R.id.tv_about_app);
         // 1、添加修改主题
         // 2、umeng检查更新
-        // 3、记录备份 -->导出到excel文件中.
+        // 3、记录备份 --> 导出到excel文件中.
     }
 
     private void init() {
@@ -116,6 +125,7 @@ public class SettingsActivity extends AppCompatActivity implements
         }
 
         dbHelper = new EsesDBHelper(this);
+
     }
 
     private void setListener() {
@@ -123,6 +133,7 @@ public class SettingsActivity extends AppCompatActivity implements
         tvFeedBack.setOnClickListener(this);
         tvCheckNewVersion.setOnClickListener(this);
         tvBackup.setOnClickListener(this);
+        tvAboutApp.setOnClickListener(this);
     }
 
     @Override
@@ -137,15 +148,41 @@ public class SettingsActivity extends AppCompatActivity implements
         } else if(view.getId() == R.id.tv_check_new_version) {
             UmengUpdateAgent.setUpdateAutoPopup(false);
             UmengUpdateAgent.setUpdateListener(this);
-            UmengUpdateAgent.update(this); // 不要把下面这行写在 onUpdateReturned()回调函数中，否则不起作用.
+            UmengUpdateAgent.update(this); // 不要把下面这行放在 onUpdateReturned()回调函数中，否则不起作用.
         } else if(view.getId() == R.id.tv_backup) {
             try {
-                // 备份到Excel文件
-                generateExcelReport(RecordProvider.TABLE_NAME);
+                showProgressDialog();
+//                progressDialog = ProgressDialog.show(SettingsActivity.this, "", "正在备份到Excel中...", true, false);
+                handleExcel();
+//                try {
+//                    generateExcelReport(RecordProvider.TABLE_NAME);
+////                    msgHandler.sendEmptyMessage(0);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             } catch (Exception e) {
                 e.printStackTrace();
+                progressDialog.dismiss();
+                ToastUtil.showCustomToastS(SettingsActivity.this, "备份失败：" + e.getLocalizedMessage());
             }
+        } else if(view.getId() == R.id.tv_about_app) {
+            startActivity(new Intent(SettingsActivity.this,AboutActivity.class));
         }
+    }
+
+    private void handleExcel() {
+        new Thread() {
+            @Override
+            public void run() {
+                // 备份到Excel文件
+                try {
+
+                    msgHandler.sendEmptyMessage(0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     /**
@@ -164,7 +201,7 @@ public class SettingsActivity extends AppCompatActivity implements
 
         // 创建workbook
         WritableWorkbook workbook = Workbook.createWorkbook(
-                getFilePath(Environment.getExternalStorageDirectory() + "/es_backup/",tablename +".xls"));
+                getFilePath(Environment.getExternalStorageDirectory() + "/es_backup/", tablename + ".xls"));
 
         // 创建 Sheet
         WritableSheet reportSheet = workbook.createSheet("report", 0);
@@ -173,8 +210,8 @@ public class SettingsActivity extends AppCompatActivity implements
 
         int row = 0;
         setTitle(reportSheet, row++);
-
         List<RecordBean> recordBeans = dbHelper.queryAllRecords();
+
         if(recordBeans.size() > 0) {
             for (RecordBean recordBean :recordBeans) {
                 setRow(reportSheet, row++, recordBean);
@@ -182,9 +219,11 @@ public class SettingsActivity extends AppCompatActivity implements
 
             // 从内存中写入到文件中
             workbook.write();
-            ToastUtil.toastShort(this,"数据备份成功");
+            ToastUtil.showCustomToastS(this, "备份成功");
+//            progressDialog.dismiss();
         } else {
-            ToastUtil.toastLong(this,"数据项为空，不需要备份");
+            ToastUtil.showCustomToastS(this, "数据项为空，不需要备份");
+//            progressDialog.dismiss();
         }
 
         workbook.close();
@@ -250,8 +289,8 @@ public class SettingsActivity extends AppCompatActivity implements
         sheet.addCell(new Label(SLEEP_TIME_INDEX, row, record.getSleepTime(), format));
         sheet.addCell(new Label(SLEEP_TIME_SECOND_INDEX, row, record.getSleepTimeSecond(), format));
 
-        sheet.addCell(new Label(RECORD_TYPE_INDEX,row,record.getRecordType(),format));
-        sheet.addCell(new Label(RECORD_COMMENT_INDEX,row,record.getRecordComment() ,format));
+        sheet.addCell(new Label(RECORD_TYPE_INDEX, row, record.getRecordType(), format));
+        sheet.addCell(new Label(RECORD_COMMENT_INDEX, row, record.getRecordComment(), format));
         sheet.addCell(new Label(EXCEPTION_FLAG_INDEX, row, record.getExceptionFlag(), format));
     }
 
@@ -288,6 +327,36 @@ public class SettingsActivity extends AppCompatActivity implements
                 break;
         }
     }
+
+    private void showProgressDialog() {
+        progressDialog = ProgressDialog.show(SettingsActivity.this, "", "正在备份到Excel中...", true, false);
+
+    }
+
+    /**
+     * 使用Handler来对UI进行更新
+     */
+    private Handler msgHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if(progressDialog != null) {
+//                progressDialog.dismiss();
+//            }
+            switch (msg.arg1) {
+                case 0:
+                    try {
+                        generateExcelReport(RecordProvider.TABLE_NAME);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    progressDialog.dismiss();
+                    break;
+            }
+
+
+        }
+    };
 
 
 }

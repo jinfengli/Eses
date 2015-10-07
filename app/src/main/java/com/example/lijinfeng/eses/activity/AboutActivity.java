@@ -1,6 +1,5 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +8,6 @@ import android.view.MenuItem;
 
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.util.CommonUtil;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 /*
  *  TODO: AboutActivity
@@ -19,7 +17,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  */
 public class AboutActivity extends AppCompatActivity {
 
+    private static final String TAG = AboutActivity.class.getSimpleName();
+
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,7 @@ public class AboutActivity extends AppCompatActivity {
         CommonUtil.configToolBarParams(this);
 
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
-        mToolbar.setTitle(R.string.title_activity_about);//设置Toolbar标题
+        mToolbar.setTitle(R.string.title_activity_about);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
         setSupportActionBar(mToolbar);

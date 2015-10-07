@@ -9,14 +9,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SignUpCallback;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
@@ -98,14 +95,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 || TextUtils.isEmpty(password)
                 || TextUtils.isEmpty(passwordAgain)
                 || TextUtils.isEmpty(userEmail)) {
-            ToastUtil.showCustomToast(this, "请检查输入项");
+            ToastUtil.showCustomToastS(this, "请检查输入项");
         } else {
             if (password.equals(passwordAgain)) {
                 progressDialogShow();
                 registerLeanCloud();
             } else {
                 // 两次输入的密码不一致
-                ToastUtil.showCustomToast(RegisterActivity.this, "两次输入密码不一致");
+                ToastUtil.showCustomToastS(RegisterActivity.this, "两次输入密码不一致");
             }
         }
     }
@@ -130,15 +127,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         switch (e.getCode()) {
                             case 202:
 //                                用户名已被注册，请重新填写
-                                ToastUtil.showCustomToast(RegisterActivity.this,"该用户名已被占用，请选择其他的用户名");
+                                ToastUtil.showCustomToastS(RegisterActivity.this,"该用户名已被占用，请选择其他的用户名");
 //                                showError(activity.getString(R.string.error_register_user_name_repeat));
                                 break;
                             case 203:
 //                                邮箱已被注册
-                                ToastUtil.showCustomToast(RegisterActivity.this,"邮箱已被占用，请通过找回密码进行后续操作");
+                                ToastUtil.showCustomToastS(RegisterActivity.this,"邮箱已被占用，请通过找回密码进行后续操作");
                                 break;
                             default:
-                                ToastUtil.showCustomToast(RegisterActivity.this, "网络错误，请检查网络连接");
+                                ToastUtil.showCustomToastS(RegisterActivity.this, "网络错误，请检查网络连接");
                                 break;
                         }
                     }

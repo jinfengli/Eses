@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,35 +7,64 @@
     android:orientation="vertical"
     tools:context="com.example.lijinfeng.eses.activity.SettingsActivity">
 
-    <include layout="@layout/custom_toolbar" />
+    <!--<include layout="@layout/custom_toolbar" />-->
 
-    <TextView
-        android:id="@+id/tv_set_theme"
-        style="@style/common_item_style"
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tl_custom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/switch_theme" />
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/MyDarkToolBarStyle"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <TextView
-        android:id="@+id/tv_feedback"
-        style="@style/common_item_style"
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_feedback" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/tl_custom"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_check_new_version"
-        style="@style/common_item_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/check_new_version" />
-
-    <TextView
-        android:id="@+id/tv_backup"
-        style="@style/common_item_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="备份" />
+        <TextView
+            android:id="@+id/tv_set_theme"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_theme"
+            android:visibility="gone" />
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_backup"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="备份" />
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_feedback" />
+
+        <TextView
+            android:id="@+id/tv_check_new_version"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/check_new_version" />
+
+
+        <TextView
+            android:id="@+id/tv_about_app"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="关于" />
+    </LinearLayout>
+
+</RelativeLayout>

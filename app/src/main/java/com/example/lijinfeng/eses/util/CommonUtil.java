@@ -14,6 +14,11 @@ import android.view.WindowManager;
 import com.example.lijinfeng.eses.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * TODO：
  *
@@ -103,6 +108,98 @@ public class CommonUtil {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    /***********************************/
+
+    /**
+     * 分享功能
+     *
+     * @param context
+     *		  上下文
+     * @param activityTitle
+     *		  Activity的名字
+     * @param msgTitle
+     *		  消息标题
+     * @param msgText
+     *		  消息内容
+     * @param imgPath
+     *		  图片路径，不分享图片则传null
+     */
+    public static void shareMsg(Context context,
+            String activityTitle,
+                         String msgTitle,
+                         String msgText,
+                         String imgPath) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        if (imgPath == null || imgPath.equals("")) {
+            intent.setType("text/plain"); // 纯文本
+        } else {
+            File f = new File(imgPath);
+            // f!=null 实际不需要进行判断
+            if (f != null && f.exists() && f.isFile()) {
+                intent.setType("image/jpg");
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(Intent.EXTRA_STREAM, u);
+            }
+        }
+        intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle);
+        intent.putExtra(Intent.EXTRA_TEXT, msgText);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(Intent.createChooser(intent, activityTitle));
+    }
+
+    public static void shareText(Context context){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "ES APP, keep up with your sleep and start up time");
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "分享到"));
+    }
+
+    /**
+     * 获取两个格式化的String类型的时间之间的差值(毫秒数)
+     * @param timestart
+     * @param timeEnd
+     * @return
+     */
+    public static long getStringFormatTimeMillDiff(String timestart, String timeEnd) {
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        long diff = 0L;
+        try {
+            Date dTimeEnd = df.parse(timeEnd);
+            Date dTImeStart = df.parse(timestart);
+            diff = dTimeEnd.getTime() - dTImeStart.getTime();
+//            long days = diff / (1000 * 60 * 60 * 24);
+        } catch (Exception e) {
+
+        }
+        return diff;
+    }
+
+    /**
+     * 获取两个String类型时间之间差值的 小时:分钟
+     * @param timestart
+     * @param timeEnd
+     * @return
+     */
+    public static String getDiffHourMinutes(String timestart, String timeEnd) {
+        long hours = 0L;
+        long minutes = 0L;
+        long diffMill = getStringFormatTimeMillDiff(timestart,timeEnd);
+
+        hours = diffMill / (1000 * 60 * 60);
+//        diffMill = diffMill/ (1000 * 60 * 60);
+        minutes = diffMill / (1000 * 60) % 60;
+        if(hours == 0) {
+            return minutes + "分钟";
+        }
+
+        if(minutes == 0) {
+            return hours + "小时";
+        }
+
+        return hours +"h" + minutes + "mins";
     }
 
 }

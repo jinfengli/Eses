@@ -3,11 +3,12 @@ package com.example.lijinfeng.eses;
 import android.app.Application;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.example.lijinfeng.eses.constants.ESConstants;
 
 /*
- * @TODO:
- * @author li.jf
- * Copyright (C) 15-9-19 下午3:14 wonhigh.cn All rights reserved.
+ * TODO: ESApplication
+ *
+ * Copyright (C) 15-9-19 下午3:14 li.jf All rights reserved.
  */
 public class ESApplication extends Application {
 
@@ -16,6 +17,8 @@ public class ESApplication extends Application {
         super.onCreate();
 
         AVOSCloud.useAVCloudCN();
-        AVOSCloud.initialize(ESApplication.this, "XrARrV25Agqi3mfaQVY3uO3y","ATIbQxIBymfdHHhWCK3hWYHk");
+//        AVOSCloud.initialize(ESApplication.this, "XrARrV25Agqi3mfaQVY3uO3y","ATIbQxIBymfdHHhWCK3hWYHk");
+        AVOSCloud.initialize(ESApplication.this, ESConstants.APPLICATION_ID,
+                ESConstants.CLIENT_KEY);
     }
 }

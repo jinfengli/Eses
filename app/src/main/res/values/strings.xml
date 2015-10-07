@@ -7,6 +7,8 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_pie_chat">PieChatActivity</string>
     <string name="add_record">添加记录</string>
+    <string name="record_detail">记录详情</string>
+    <string name="edit_record">编辑记录</string>
 
     <string name="title_activity_chart">chart</string>
     <string name="title_activity_add_record">添加记录</string>
@@ -16,8 +18,21 @@
     <string name="title_activity_settings">设置</string>
 
    <!-- ：lijinfeng.ljf@gmail.com\n个人网站：jinfengli.github.io-->
-    <string name="contract">联系方式：lijinfeng.ljf@gmail.com</string>
-    <string name="copyright">Copyright(C) Li Jinfeng All Rights Reserved</string>
+    <string name="contract">联系方式：lijinfeng_ljf@foxmail.com</string>
+    <string name="copyright">Copyright(C) Kingfeng All Rights Reserved</string>
+
+
+    <string name="start_detail_date_time">开始时间：%1$s</string>
+    <string name="sleep_detail_date_time">结束时间：%1$s</string>
+    <string name="record_status">记录状态：%1$s</string>
+    <string name="sleep_detail_record_comment">备注：%1$s</string>
+    <string name ="sleep_detail_total_time">睡眠总时间：%1$s</string>
+    <string name ="sleep_detail_status">睡眠状态：</string>
+
+
+
+    <string name="register_time">注册时间：%1$s</string>
+
 
     <!--@2015 Jinfengli-->
     <string name="setting_arrow">setting_arrow</string>
@@ -43,4 +58,5 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="title_activity_edit_record">EditRecordActivity</string>
 </resources>

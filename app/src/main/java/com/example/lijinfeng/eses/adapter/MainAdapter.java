@@ -1,6 +1,7 @@
 package com.example.lijinfeng.eses.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.bean.RecordBean;
+import com.example.lijinfeng.eses.util.CommonUtil;
 
 import java.util.ArrayList;
 
@@ -77,11 +79,20 @@ public class MainAdapter extends BaseAdapter {
         }
 
         if(recordDatas != null && recordDatas.size() > 0) {
+            String str1, str2;
             RecordBean recordBean = recordDatas.get(position);
-            holder.tvStartTime.setText(recordBean.getStartDate() +" "+ recordBean.getStartTime());
-            holder.tvSleepTime.setText(recordBean.getSleepDate() +" "+ recordBean.getSleepTime());
-            holder.tvDiffTime.setText("time diff");
-            holder.tvExceptionFlag.setText(recordBean.getExceptionFlag());
+            str1 = recordBean.getStartDate() + " " + recordBean.getStartTime();
+            str2 = recordBean.getSleepDate() +" "+ recordBean.getSleepTime();
+            holder.tvStartTime.setText(str1);
+            holder.tvSleepTime.setText(str2);
+            holder.tvDiffTime.setText(CommonUtil.getDiffHourMinutes(str1, str2));
+            if(recordBean.getExceptionFlag().equals("0")) {
+                holder.tvExceptionFlag.setText("正常");
+            } else if(recordBean.getExceptionFlag().equals("1")) {
+                holder.tvExceptionFlag.setText("异常");
+                holder.tvExceptionFlag.setTextColor(Color.RED);
+            }
+
         }
         return convertView;
     }

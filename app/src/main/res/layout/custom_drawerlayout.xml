@@ -1,54 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-    android:id="@+id/dl_left"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dl_left"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--主布局-->
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/iv_main"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-    </LinearLayout>-->
 
-    <!--android:layout_below="@id/rl_header"-->
-    <FrameLayout
-        android:id="@+id/fl_parent"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--android:background="@android:color/white"-->
-        <ListView
-            android:id="@+id/lvESTime"
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tl_custom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/add_bg"
-            fab:fab_colorNormal="@color/common_selector_color_normal"
-            fab:fab_colorPressed="@color/common_select_color_press"/>
-    </FrameLayout>
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/MyDarkToolBarStyle"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/fl_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tl_custom">
+            <com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuListView
+                android:id="@+id/lvESTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/add_bg"
+                fab:fab_colorNormal="@color/common_selector_color_normal"
+                fab:fab_colorPressed="@color/common_select_color_press" />
+        </FrameLayout>
+
+    </RelativeLayout>
     <!--侧滑菜单-->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#fff">
 
-        <ListView
+        android:layout_gravity="start"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <!--<ListView
             android:id="@+id/lv_left_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:text="DrawerLayout"/>
+            android:text="DrawerLayout"/>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:paddingLeft="30dp"
+            android:clickable="true"
+            android:background="@color/Indigo_colorPrimaryDark">
+
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/tv_register_time"
+                android:layout_below="@id/tv_username"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@android:color/white"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_main_setting"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tv_main_feedback"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="反馈" />
+
+        <TextView
+            android:id="@+id/tv_main_share"
+            style="@style/common_item_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="分享" />
+
+
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

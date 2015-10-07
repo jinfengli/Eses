@@ -12,27 +12,32 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.colorful.Colorful;
-import com.example.lijinfeng.eses.colorful.setter.ViewGroupSetter;
+import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.util.CommonUtil;
+import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.view.MorePopupWindow;
+import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenu;
+import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuCreator;
+import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuItem;
+import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuListView;
 import com.github.clans.fab.FloatingActionButton;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -44,21 +49,19 @@ import java.util.ArrayList;
  *  Date: 15-8-23 下午5:53
  *  Copyright (c) li.jf All ri reserved.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
     private FloatingActionButton fabMenu;
 
     //声明相关变量
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView lvLeftMenu;
-    private String[] lvs = {"List Item 01", "List Item 02", "设置", "反馈"};
-    private ArrayAdapter arrayAdapter;
 
     private MainAdapter mainAdapter;
-    private ListView lvRecords;
+    private SwipeMenuListView lvRecords;
 
     private ArrayList<RecordBean> recordBeans;
     /** 数据库操作工具类 */
@@ -69,6 +72,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ContentObserver recordChangeObserver = new RecordChangeObserver(new Handler());
     private ContentResolver mContentResolver;
+
+    private AlertView mAlertView;
+
+    private TextView tvRegisterTime;
+    private TextView tvUsername;
+    private TextView tvSetting;
+    private TextView tvFeedback;
+    private TextView tvShare;
 
     Colorful mColorful;
     boolean isNight = false;
@@ -96,10 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setOnMenuItemClickListener(onMenuItemClicker);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
-        lvLeftMenu = (ListView) findViewById(R.id.lv_left_menu);
 
-        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //创建返回键，并实现打开关/闭监听
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
                 R.string.open, R.string.close) {
@@ -116,9 +126,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        //设置菜单列表
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, lvs);
-        lvLeftMenu.setAdapter(arrayAdapter);
     }
 
     private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
@@ -132,10 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(MainActivity.this, AboutActivity.class));
                     break;
                 case R.id.action_exit:
-                    AVUser.logOut();
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(loginIntent);
-                    MainActivity.this.finish();
+                    mAlertView.show();
                     break;
             }
             return false;
@@ -144,9 +148,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void initView() {
         fabMenu = (FloatingActionButton) findViewById(R.id.fab);
-        lvRecords = (ListView) findViewById(R.id.lvESTime);
+        lvRecords = (SwipeMenuListView) findViewById(R.id.lvESTime);
         lvRecords.setDivider(new ColorDrawable(Color.GRAY));
         lvRecords.setDividerHeight(1);
+
+        tvUsername = (TextView) findViewById(R.id.tv_username);
+        tvRegisterTime = (TextView) findViewById(R.id.tv_register_time);
+        tvUsername.setText(PreferenceUtils.getPrefString(this,ESConstants.USER_NAME,"")
+        +" (" +PreferenceUtils.getPrefString(this,ESConstants.USER_EMAIL,"")+ ")");
+        tvRegisterTime.setText(String.format(getResources().getString(R.string.register_time),
+                PreferenceUtils.getPrefString(this, ESConstants.USER_REGISTER_TIME, "")) );
+
+        tvSetting = (TextView) findViewById(R.id.tv_main_setting);
+        tvFeedback = (TextView) findViewById(R.id.tv_main_feedback);
+        tvShare = (TextView) findViewById(R.id.tv_main_share);
+
     }
 
     private void setListener() {
@@ -154,21 +170,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this, RecordDetailActivity.class));
-            }
-        });
-//        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
+                Intent intent = new Intent(MainActivity.this, RecordDetailActivity.class);
+                intent.putExtra(ESConstants.START_DATE_TIME, recordBeans.get(position).getStartDate()
+                        + "  " + recordBeans.get(position).getStartTime());
+                intent.putExtra(ESConstants.SLEEP_DATE_TIME, recordBeans.get(position).getSleepDate()
+                        + "  " + recordBeans.get(position).getSleepTime());
+                intent.putExtra(ESConstants.RECORD_COMMENT, recordBeans.get(position).getRecordComment());
+                intent.putExtra(ESConstants.EXCEPTION_FLAG, recordBeans.get(position).getExceptionFlag());
+                intent.putExtra(ESConstants.SLEEP_TIME_SECOND, recordBeans.get(position).getSleepTimeSecond());
 
-        lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(position == 2) {
-                    startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                } else if(position == 3) {
-                    CommonUtil.feedbackTOMe(MainActivity.this);
-                }
+                startActivity(intent);
             }
         });
+
+        tvFeedback.setOnClickListener(this);
+        tvShare.setOnClickListener(this);
+        tvSetting.setOnClickListener(this);
+//        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
     }
 
     private void init() {
@@ -182,10 +200,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recordBeans = new ArrayList<RecordBean>();
         recordBeans = dbHelper.queryAllRecords();
 
-        setupColorful();
-
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
+
+
+        // step 1. create a MenuCreator
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                createMenu1(menu);
+            }
+
+            private void createMenu1(SwipeMenu menu) {
+                SwipeMenuItem item1 = new SwipeMenuItem(getApplicationContext());
+                item1.setBackground(new ColorDrawable(Color.rgb(0xE5, 0x18,
+                        0x5E)));
+                item1.setWidth(dp2px(90));
+                item1.setIcon(R.drawable.ic_action_discard);
+                menu.addMenuItem(item1);
+                SwipeMenuItem item2 = new SwipeMenuItem(
+                        getApplicationContext());
+                item2.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
+                        0xCE)));
+                item2.setWidth(dp2px(90));
+                item2.setTitleSize(16);
+                item2.setTitleColor(Color.RED);
+                item2.setTitle("修改");
+                menu.addMenuItem(item2);
+            }
+        };
+        // set creator
+        lvRecords.setMenuCreator(creator);
+
+        // step 2. listener item click event
+        lvRecords.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                RecordBean item = recordBeans.get(position);
+                switch (index) {
+                    case 0:
+
+                        dbHelper.deleteRecord(item.getRecordNo());
+//                        recordBeans.remove(position);
+                        mainAdapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        // update
+                        Intent intent = new Intent(MainActivity.this,EditRecordActivity.class);
+                        intent.putExtra(ESConstants.RECORD_NO, recordBeans.get(position).getRecordNo());
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        mAlertView = new AlertView("提示", "退出后需重新登陆，确定退出？", "否", new String[]{"是"},
+                null,
+                this,
+                AlertView.Style.Alert, this).setCancelable(true);
     }
 
     @Override
@@ -195,37 +269,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, AddRecordActivity.class));
                 break;
 
+            case R.id.tv_main_setting:
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+            case R.id.tv_main_feedback:
+                CommonUtil.feedbackTOMe(MainActivity.this);
+                break;
+            case R.id.tv_main_share:
+                CommonUtil.shareText(MainActivity.this);
+                break;
+
 //            case R.id.ivHeaderRight:
 //                setPopwindowPosition();
 //                break;
+
             default:
                 break;
         }
-    }
-
-    private void changeThemeWithColorful() {
-        if (!isNight) {
-            mColorful.setTheme(R.style.NightTheme);
-        } else {
-            mColorful.setTheme(R.style.DayTheme);
-        }
-        isNight = !isNight;
-    }
-
-    private void setupColorful() {
-        ViewGroupSetter listViewSetter = new ViewGroupSetter(lvRecords);
-        // 绑定ListView的Item View中的news_title视图，在换肤时修改它的text_color属性
-        listViewSetter.childViewTextColor(R.id.tv_item_start_time, R.attr.text_color);
-
-        // 构建Colorful对象来绑定View与属性的对象关系
-        mColorful = new Colorful.Builder(this)
-                .backgroundDrawable(R.id.fl_parent, R.attr.root_view_bg)
-                        // 设置view的背景图片
-//                .backgroundColor(R.id.change_btn, R.attr.btn_bg)
-                        // 设置背景色
-//                .textColor(R.id.textview, R.attr.text_color)
-                .setter(listViewSetter) // 手动设置setter
-                .create(); // 设置文本颜色
     }
 
     /**
@@ -265,6 +325,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mContentResolver.unregisterContentObserver(recordChangeObserver);
     }
 
+    @Override
+    public void onItemClick(Object o, int position) {
+        // 点击取消为-1，其他的从0开始算起
+        if(position == 0) {
+            AVUser.logOut();
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            MainActivity.this.finish();
+        } else if(position == -1) {
+            mAlertView.dismiss();
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mAlertView.isShowing()) {
+            mAlertView.dismiss();
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
     private class RecordChangeObserver extends ContentObserver {
 
         public RecordChangeObserver(Handler handler){
@@ -286,20 +370,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-         super.onCreateOptionsMenu(menu);
-
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_main,menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-//        if(id == android.R.id.se) {
-//            onBackPressed();
-//            return true;
-//        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 }

@@ -157,7 +157,7 @@ public class RecordProvider extends ContentProvider {
 
         public static ArrayList<String> getRequiredColumns() {
             ArrayList<String> tmpList = new ArrayList<String>();
-            tmpList.add(RECORD_NO);
+//            tmpList.add(RECORD_NO);
             tmpList.add(START_DATE);
             tmpList.add(START_TIME);
             tmpList.add(SLEEP_DATE);

@@ -46,6 +46,19 @@ public class RecordBean {
     public RecordBean() {
     }
 
+    public RecordBean(int _id,String recordNo, String startDate, String startTime, String sleepDate, String sleepTime, String sleepTimeSecond, String recordType, String recordComment, String exceptionFlag) {
+        this._id = _id;
+        this.RecordNo = recordNo;
+        this.startDate = startDate;
+        this.startTime = startTime;
+        this.sleepDate = sleepDate;
+        this.sleepTime = sleepTime;
+        this.sleepTimeSecond = sleepTimeSecond;
+        this.recordType = recordType;
+        this.recordComment = recordComment;
+        this.exceptionFlag = exceptionFlag;
+    }
+
     public String getRecordNo() {
         return RecordNo;
     }

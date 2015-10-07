@@ -19,6 +19,9 @@ import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /*
  * TODO: Login ES
  *
@@ -94,12 +97,12 @@ public class LoginActivity extends BaseActivity {
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
         if(TextUtils.isEmpty(username)) {
-            ToastUtil.showCustomToast(this, "用户名不能为空");
+            ToastUtil.showCustomToastS(this, "用户名不能为空");
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            ToastUtil.showCustomToast(this, "密码不能为空");
+            ToastUtil.showCustomToastS(this, "密码不能为空");
             return;
         }
 
@@ -118,15 +121,21 @@ public class LoginActivity extends BaseActivity {
                     Log.d(TAG, avUser.getEmail());
                     dismissProgressDialog();
                     PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_NAME, username);
-                    PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_PWD,password);
+                    PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_PWD, password);
+                    PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_EMAIL, avUser.getEmail());
+                    Date date = avUser.getCreatedAt();
+                    String str = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 
-                    ToastUtil.showCustomToast(LoginActivity.this, "登录成功");
+                    PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_REGISTER_TIME, str);
+
+
+                    ToastUtil.showCustomToastS(LoginActivity.this, "登录成功");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     LoginActivity.this.finish();
                 } else {
                     dismissProgressDialog();
-                    ToastUtil.showCustomToast(LoginActivity.this, "登录失败,请确认用户名和密码后重试.");
+                    ToastUtil.showCustomToastS(LoginActivity.this, "登录失败,请确认用户名和密码后重试.");
                 }
             }
         });
