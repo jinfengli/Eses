@@ -1,13 +1,59 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!--<include layout="@layout/custom_toolbar" />-->
+  <!--  <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?android:attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="16dp"
+        android:background="@color/primary_dark" />-->
+<!--    android:layout_below="@id/toolbar"-->
+    <!--<RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/common_action_bar"/>
+    </RelativeLayout>-->
+
+   <!-- <include layout="@layout/custom_toolbar" />-->
 
     <include layout="@layout/custom_drawerlayout" />
+
+   <!-- <FrameLayout
+        android:id="@+id/fl_parent"
+        android:layout_below="@id/rl_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/root_view_bg">
+        &lt;!&ndash;android:background="@android:color/white"&ndash;&gt;
+        <ListView
+            android:id="@+id/lvESTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/add_bg"
+            fab:fab_colorNormal="@color/common_selector_color_normal"
+            fab:fab_colorPressed="@color/common_select_color_press" />
+    </FrameLayout>-->
 
 </LinearLayout>

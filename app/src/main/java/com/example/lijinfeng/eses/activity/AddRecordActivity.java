@@ -53,6 +53,8 @@ public class AddRecordActivity extends AppCompatActivity implements
 
     private ScrollView scrollView;
 
+    private Handler mHandler = new Handler();
+
     private TextView tvStartDatePicker;
     private TextView tvStartTimePicker;
     private TextView tvEndDatePicker;
@@ -87,6 +89,7 @@ public class AddRecordActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_record);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         initTitleView();
         initView();
@@ -416,7 +419,6 @@ public class AddRecordActivity extends AppCompatActivity implements
                 break;
 
             case CustomLayout.KEYBOARD_SHOW:
-//                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                 llStartTime.setVisibility(View.GONE);
                 break;
         }

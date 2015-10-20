@@ -60,7 +60,9 @@ public class CustomLayout extends RelativeLayout {
     }
 
     public interface KeyboardStateListener {
-        // 键盘状态改变时回调
-        public void setChanged(int state);
+        /**
+         * 键盘状态改变时回调该方法
+          */
+        void setChanged(int state);
     }
 }

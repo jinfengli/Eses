@@ -1,15 +1,28 @@
-<com.example.lijinfeng.eses.view.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/custom_root_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.example.lijinfeng.eses.activity.AddRecordActivity">
 
-    <include
+    <android.support.v7.widget.Toolbar
         android:id="@+id/tl_custom"
-        layout="@layout/custom_toolbar" />
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/MyDarkToolBarStyle"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+    </android.support.v7.widget.Toolbar>
+
+    <com.example.lijinfeng.eses.view.CustomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/custom_root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tl_custom">
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_below="@id/tl_custom"
@@ -49,7 +62,7 @@
                     android:gravity="center"
                     android:paddingBottom="20dp"
                     android:paddingTop="20dp"
-                    android:text="时间"
+                    android:text="开始时间"
                     android:textColor="@android:color/black" />
             </LinearLayout>
 
@@ -153,4 +166,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</com.example.lijinfeng.eses.view.CustomLayout>
+    </com.example.lijinfeng.eses.view.CustomLayout>
+</RelativeLayout>

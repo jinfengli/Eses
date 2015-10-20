@@ -12,12 +12,12 @@ import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
 
 /**
- * RecordDetailActivity (记录详情)
+ * TODO: RecordDetailActivity (记录详情)
  *
- * @date: 2015-10-04
+ * @date 2015-10-04
+ * @author li.jf
  */
 public class RecordDetailActivity extends AppCompatActivity implements View.OnClickListener {
-
     private static final String TAG = RecordDetailActivity.class.getSimpleName();
 
     private Toolbar mToolbar;

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/es_logo" />
 
+   <!-- android:textCursorDrawable="@null"    让光标的颜色与文本的颜色相同 -->
     <EditText
         android:id="@+id/et_login_username"
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:ems="10"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:textCursorDrawable="@null"
         android:background="@null"
         android:textSize="14sp"
         android:hint="@string/login_username_hint" />
@@ -43,6 +45,7 @@
         android:layout_alignLeft="@+id/et_login_username"
         android:layout_below="@id/view_bg_1"
         android:background="@null"
+        android:textCursorDrawable="@null"
         android:ems="10"
         android:hint="@string/login_password_hint"
         android:inputType="textPassword"

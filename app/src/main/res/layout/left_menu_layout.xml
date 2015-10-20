@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="280dp"
+    android:layout_gravity="start"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+  <LinearLayout
+      android:id="@+id/ll"
+      android:layout_width="fill_parent"
+      android:layout_height="160dp"
+      android:orientation="vertical"
+      android:layout_alignParentTop="true"
+      android:background="#4CAF50"/>
+
+    <TextView
+        android:id="@+id/tv_home"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/menuitem_selector"
+        android:paddingLeft="20dp"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:layout_below="@id/ll"
+        android:drawableLeft="@drawable/slidemenu_main"
+        android:drawablePadding="15dp"
+        android:text="首页"
+        android:layout_width="fill_parent"
+        android:clickable="true"
+        android:layout_height="48dp"/>
+
+  <TextView
+      android:gravity="center_vertical"
+      android:paddingLeft="20dp"
+      android:layout_below="@id/tv_home"
+      android:background="@drawable/menuitem_selector"
+      android:drawableLeft="@drawable/slidemenu_main"
+      android:id="@+id/tv_collect"
+      android:singleLine="true"
+      android:textSize="18sp"
+      android:text="收藏"
+      android:drawablePadding="15dp"
+      android:clickable="true"
+      android:layout_width="fill_parent"
+      android:layout_height="48dp"
+      />
+
+  <TextView
+      android:gravity="center_vertical"
+      android:layout_below="@id/tv_collect"
+      android:background="@drawable/menuitem_selector"
+      android:paddingLeft="20dp"
+      android:id="@+id/tv_setting"
+      android:singleLine="true"
+      android:textSize="18sp"
+      android:text="设置"
+      android:drawableLeft="@drawable/slidemenu_setting"
+      android:drawablePadding="15dp"
+      android:clickable="true"
+      android:layout_width="fill_parent"
+      android:layout_height="48dp"
+      />
+
+    <TextView
+        android:background="@drawable/menuitem_selector"
+        android:visibility="visible"
+        android:id="@+id/tv_charts"
+        android:layout_below="@id/tv_setting"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:drawableLeft="@drawable/slidemenu_send_email"
+        android:drawablePadding="15dp"
+        android:text="图表"
+        android:paddingLeft="20dp"
+        android:clickable="true"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp" />
+
+  <View
+      android:layout_below="@id/tv_setting"
+      android:layout_width="fill_parent"
+      android:layout_height="2dp"
+      android:textColor="#999999"
+      android:layout_marginTop="16dp"
+      />
+
+  <LinearLayout
+      android:layout_marginBottom="8dp"
+      android:layout_alignParentBottom="true"
+      android:layout_width="fill_parent"
+      android:gravity="center_horizontal"
+      android:orientation="vertical"
+      android:layout_gravity="bottom"
+      android:layout_height="wrap_content"
+      >
+
+    <TextView
+        android:textColor="@android:color/darker_gray"
+        android:id="@+id/tv_version"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:textColor="@android:color/darker_gray"
+        android:text="2015年博客园非官方开发小组"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        />
+  </LinearLayout>
+
+
+</RelativeLayout>

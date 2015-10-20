@@ -4,11 +4,17 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_chart"
-        app:showAsAction="always"
+        app:showAsAction="never"
         android:title="图表"
         android:icon="@drawable/icon_head_chart"
 
         />
+  <item
+      android:id="@+id/ab_search"
+      android:orderInCategory="80"
+      android:title="搜索"
+      android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+      app:showAsAction="always" />
    <!-- <item
    android:icon="@android:drawable/ic_lock_idle_lock"
         android:id="@+id/action_settings"
