@@ -20,16 +20,17 @@ import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
 /*
- * TODO:
+ * TODO: 用户注册
+ *
  * @author li.jf
- * Copyright (C) 15-9-19 下午3:18 wonhigh.cn All rights reserved.
+ * @date 15-9-19 下午3:18
  */
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
-
+    private Toolbar mToolbar;
     private EditText etUserName;
     private EditText etRegisterEmail;
-    private  EditText etPassword;
+    private EditText etPassword;
     private EditText etPasswordAgain;
 
     private Button btnRegister;
@@ -40,7 +41,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String passwordAgain;
     private String userEmail;
 
-    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

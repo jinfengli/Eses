@@ -46,21 +46,18 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         handleIntent();
         initTitleView();
         initView();
-        setListener();
     }
 
     private void handleIntent() {
         startTime = getIntent().getStringExtra(ESConstants.START_DATE_TIME);
         sleepTime =  getIntent().getStringExtra(ESConstants.SLEEP_DATE_TIME);
         // 总睡眠时间等于两个时间相减
-
+        totalSleepTime= CommonUtil.getDiffHourMinutes(startTime,sleepTime);
         comment = getIntent().getStringExtra(ESConstants.RECORD_COMMENT);
         status = getIntent().getStringExtra(ESConstants.EXCEPTION_FLAG);
-
-        totalSleepTime= CommonUtil.getDiffHourMinutes(startTime,sleepTime);
     }
 
-    protected void initTitleView() {
+    private void initTitleView() {
         CommonUtil.configToolBarParams(RecordDetailActivity.this);
 
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
@@ -70,7 +67,7 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         setSupportActionBar(mToolbar);
     }
 
-    protected void initView() {
+    private void initView() {
         tvStartDateTime = (TextView) findViewById(R.id.tv_detail_startDateTime);
         tvSleepDateTime = (TextView) findViewById(R.id.tv_detail_sleepDateTime);
         tvTotalSleepTime = (TextView) findViewById(R.id.tv_detail_daily_sleep_time);
@@ -98,10 +95,6 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
             tvRecordStatus.setText("异常");
             tvRecordStatus.setTextColor(Color.RED);
         }
-
-    }
-
-    private void setListener() {
 
     }
 

@@ -54,8 +54,7 @@
 
         <activity
             android:name=".activity.AddRecordActivity"
-            android:label="@string/title_activity_add_record"
-            android:windowSoftInputMode="stateHidden" >
+            android:label="@string/title_activity_add_record">
         </activity>
         <activity
             android:name=".activity.SettingsActivity"

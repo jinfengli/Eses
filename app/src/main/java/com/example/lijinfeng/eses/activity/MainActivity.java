@@ -1,6 +1,8 @@
 package com.example.lijinfeng.eses.activity;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Color;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
 import com.bigkoo.alertview.AlertView;
@@ -27,7 +30,6 @@ import com.bigkoo.alertview.OnItemClickListener;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.adapter.MainAdapter;
 import com.example.lijinfeng.eses.bean.RecordBean;
-import com.example.lijinfeng.eses.colorful.Colorful;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
@@ -46,8 +48,8 @@ import java.util.ArrayList;
 /*
  *  TODO: MainActivity
  *
- *  Date: 15-8-23 下午5:53
- *  Copyright (c) li.jf All ri reserved.
+ *  @date: 15-8-23 下午5:53
+ *  @author li.jf
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnItemClickListener {
 
@@ -81,9 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvFeedback;
     private TextView tvShare;
 
-    Colorful mColorful;
-    boolean isNight = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setListener();
     }
 
-    protected void initTitleView() {
+    private void initTitleView() {
         CommonUtil.configToolBarParams(MainActivity.this);
 
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
@@ -128,25 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_chart:
-                    startActivity(new Intent(MainActivity.this, ChartActivity.class));
-                    break;
-                case R.id.action_about:
-                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
-                    break;
-                case R.id.action_exit:
-                    mAlertView.show();
-                    break;
-            }
-            return false;
-        }
-    };
-
-    protected void initView() {
+    private void initView() {
         fabMenu = (FloatingActionButton) findViewById(R.id.fab);
         lvRecords = (SwipeMenuListView) findViewById(R.id.lvESTime);
         lvRecords.setDivider(new ColorDrawable(Color.GRAY));
@@ -154,10 +135,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         tvUsername = (TextView) findViewById(R.id.tv_username);
         tvRegisterTime = (TextView) findViewById(R.id.tv_register_time);
-        tvUsername.setText(PreferenceUtils.getPrefString(this,ESConstants.USER_NAME,"")
-        +" (" +PreferenceUtils.getPrefString(this,ESConstants.USER_EMAIL,"")+ ")");
+        tvUsername.setText(PreferenceUtils.getPrefString(this, ESConstants.USER_NAME, "")
+                + " (" + PreferenceUtils.getPrefString(this, ESConstants.USER_EMAIL, "") + ")");
         tvRegisterTime.setText(String.format(getResources().getString(R.string.register_time),
-                PreferenceUtils.getPrefString(this, ESConstants.USER_REGISTER_TIME, "")) );
+                PreferenceUtils.getPrefString(this, ESConstants.USER_REGISTER_TIME, "")));
 
         tvSetting = (TextView) findViewById(R.id.tv_main_setting);
         tvFeedback = (TextView) findViewById(R.id.tv_main_feedback);
@@ -219,10 +200,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 item1.setWidth(dp2px(90));
                 item1.setIcon(R.drawable.ic_action_discard);
                 menu.addMenuItem(item1);
-                SwipeMenuItem item2 = new SwipeMenuItem(
-                        getApplicationContext());
-                item2.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
+
+                SwipeMenuItem item2 = new SwipeMenuItem(getApplicationContext());
+                item2.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 item2.setWidth(dp2px(90));
                 item2.setTitleSize(16);
                 item2.setTitleColor(Color.RED);
@@ -236,14 +216,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // step 2. listener item click event
         lvRecords.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                RecordBean item = recordBeans.get(position);
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                final RecordBean item = recordBeans.get(position);
                 switch (index) {
                     case 0:
+                        // delete
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                        builder.setIcon(R.drawable.ic_launcher);
+                        builder.setTitle("提示");
+                        builder.setMessage("确定删除吗？");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dbHelper.deleteRecord(item.getRecordNo());
+                                recordBeans.remove(position);
+//                                mainAdapter.notifyDataSetChanged();
+                                mainAdapter.setRecordDatas(recordBeans);
+                                lvRecords.setAdapter(mainAdapter);
+                            }
+                        });
+                        //    设置一个NegativeButton
+                        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                Toast.makeText(MainActivity.this, "negative: " + which, Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                        dbHelper.deleteRecord(item.getRecordNo());
-//                        recordBeans.remove(position);
-                        mainAdapter.notifyDataSetChanged();
+                        builder.show();
+
                         break;
                     case 1:
                         // update
@@ -256,7 +258,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        mAlertView = new AlertView("提示", "退出后需重新登陆，确定退出？", "否", new String[]{"是"},
+        mAlertView = new AlertView("提示", "退出后需重新登陆，确定退出？", "否",
+                new String[]{"是"},
                 null,
                 this,
                 AlertView.Style.Alert, this).setCancelable(true);
@@ -268,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fab:
                 startActivity(new Intent(MainActivity.this, AddRecordActivity.class));
                 break;
-
             case R.id.tv_main_setting:
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 break;
@@ -279,35 +281,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CommonUtil.shareText(MainActivity.this);
                 break;
 
-//            case R.id.ivHeaderRight:
-//                setPopwindowPosition();
-//                break;
-
             default:
                 break;
         }
     }
 
-    /**
-     * 设置popwindow在屏幕上显示deep位置
-     */
-    private void setPopwindowPosition() {
-        if (morePopupWindow.isShowing()) {
-            return;
-        }
-        // morePopupWindow.setWidth((int) (window_w * 0.4));
-        // 是宽度大小根据屏幕density进行设定
-        morePopupWindow.setWidth((int) (380));
-        int[] location = new int[2];
-        rlHeader.getLocationOnScreen(location);
-        int y = location[1] + rlHeader.getHeight() -2;
-        morePopupWindow.showAtLocation(MainActivity.this.findViewById(R.id.ivHeaderRight),
-                Gravity.TOP | Gravity.RIGHT, 20, y);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
+        // 记录添加完成之后会执行MainActivity的onResume().
         recordBeans = new ArrayList<RecordBean>();
         recordBeans = dbHelper.queryAllRecords();
         mainAdapter.setRecordDatas(recordBeans);
@@ -379,6 +361,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClicker = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_chart:
+                    startActivity(new Intent(MainActivity.this, ChartActivity.class));
+                    break;
+                case R.id.action_about:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    break;
+                case R.id.action_exit:
+                    mAlertView.show();
+                    break;
+            }
+            return false;
+        }
+    };
 
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,

@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
 /**
- * TODO：自定义布局 (避免软键盘遮挡EditText,在AddRecordActivity中使用)
+ * TODO：自定义布局 (避免软键盘遮挡EditText,在添加和编辑记录中使用)
  *
  * @author: li.jf
  * @date 2015-09-11

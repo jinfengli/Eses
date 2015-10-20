@@ -7,11 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.bean.DemoBase;
 import com.example.lijinfeng.eses.util.CommonUtil;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -33,8 +30,8 @@ import java.util.Set;
 /*
  *  TODO: 图表统计记录
  *
- *  Date: 15-9-1 下午11:26
- *  Copyright (c) li.jf All rights reserved.
+ *  @Date: 15-9-1 下午11:26
+ *  Copyright (C) li.jf All rights reserved.
  */
 public class ChartActivity extends AppCompatActivity implements OnChartValueSelectedListener, View.OnClickListener {
 
