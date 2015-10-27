@@ -50,9 +50,8 @@ public class CommonUtil {
 
     /**
      * APP版本号
-     *
-     * @param context
-     * @return
+     * @param context Activity 上下文对象
+     * @return versionName
      */
     public static String getAppVersionName(Context context) {
         String versionName = "";
@@ -178,10 +177,10 @@ public class CommonUtil {
     }
 
     /**
-     * 获取两个String类型时间之间差值的 小时:分钟
+     * 获取两个String类型时间之间差值的 h:mins
      * @param timestart
      * @param timeEnd
-     * @return
+     * @return 时间差
      */
     public static String getDiffHourMinutes(String timestart, String timeEnd) {
         long hours = 0L;
@@ -189,17 +188,14 @@ public class CommonUtil {
         long diffMill = getStringFormatTimeMillDiff(timestart,timeEnd);
 
         hours = diffMill / (1000 * 60 * 60);
-//        diffMill = diffMill/ (1000 * 60 * 60);
         minutes = diffMill / (1000 * 60) % 60;
+        // 在添加记录的时候不可能出现0h0mins的 情况
         if(hours == 0) {
-            return minutes + "分钟";
+            return minutes + "mins";
         }
-
         if(minutes == 0) {
-            return hours + "小时";
+            return hours + "h";
         }
-
         return hours +"h" + minutes + "mins";
     }
-
 }

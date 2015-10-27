@@ -69,6 +69,7 @@ public class EsesDBHelper {
         values.put(RecordProvider.RecordConstants.START_TIME, recordBean.getStartTime());
         values.put(RecordProvider.RecordConstants.SLEEP_DATE, recordBean.getSleepDate());
         values.put(RecordProvider.RecordConstants.SLEEP_TIME,  recordBean.getSleepTime());
+        values.put(RecordProvider.RecordConstants.TIME_DIFF,  recordBean.getTimeDiff());
         values.put(RecordProvider.RecordConstants.SLEEP_TIME_SECOND, recordBean.getSleepTimeSecond());
         values.put(RecordProvider.RecordConstants.RECORD_TYPE, recordBean.getRecordType());
         values.put(RecordProvider.RecordConstants.RECORD_COMMENT, recordBean.getRecordComment());
@@ -91,6 +92,7 @@ public class EsesDBHelper {
                 RecordProvider.RecordConstants.START_TIME,
                 RecordProvider.RecordConstants.SLEEP_DATE,
                 RecordProvider.RecordConstants.SLEEP_TIME,
+                RecordProvider.RecordConstants.TIME_DIFF,
                 RecordProvider.RecordConstants.SLEEP_TIME_SECOND,
                 RecordProvider.RecordConstants.RECORD_TYPE,
                 RecordProvider.RecordConstants.RECORD_COMMENT,
@@ -102,11 +104,17 @@ public class EsesDBHelper {
         while (!cursor.isAfterLast()) {
             RecordBean recordBean = new RecordBean();
             recordBean.set_id(cursor.getInt(cursor.getColumnIndex(RecordProvider.RecordConstants._ID)));
-            recordBean.setRecordNo(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.RECORD_NO)));
-            recordBean.setStartDate(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_DATE)));
-            recordBean.setStartTime(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_TIME)));
-            recordBean.setSleepDate(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.SLEEP_DATE)));
-            recordBean.setSleepTime(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.SLEEP_TIME)));
+            recordBean.setRecordNo(
+                cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.RECORD_NO)));
+            recordBean.setStartDate(
+                cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_DATE)));
+            recordBean.setStartTime(
+                cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.START_TIME)));
+            recordBean.setSleepDate(
+                cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.SLEEP_DATE)));
+            recordBean.setSleepTime(
+                cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.SLEEP_TIME)));
+            recordBean.setTimeDiff(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.TIME_DIFF)));
             recordBean.setSleepTimeSecond(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.SLEEP_TIME_SECOND)));
             recordBean.setRecordType(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.RECORD_TYPE)));
             recordBean.setRecordComment(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.RECORD_COMMENT)));
@@ -155,6 +163,24 @@ public class EsesDBHelper {
         resolver.update(RecordProvider.CONTENT_URI,values,where, selectionArgs);
     }*/
 
+  /**
+   * 获取时间差值列表
+   * @return
+   */
+  public ArrayList<String> getTimeDiffs() {
+    ArrayList<String> recordTimeDiffs = new ArrayList<String>();
+
+    Cursor cursor = resolver.query(RecordProvider.CONTENT_URI, null, null, null, null);
+    cursor.moveToFirst();
+    while (!cursor.isAfterLast()) {
+      recordTimeDiffs.add(cursor.getString(cursor.getColumnIndex(RecordProvider.RecordConstants.TIME_DIFF)));
+      cursor.moveToNext();
+    }
+
+    cursor.close();
+
+    return recordTimeDiffs;
+  }
 
 
 }

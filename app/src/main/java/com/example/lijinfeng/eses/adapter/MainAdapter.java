@@ -79,13 +79,15 @@ public class MainAdapter extends BaseAdapter {
         }
 
         if(recordDatas != null && recordDatas.size() > 0) {
-            String str1, str2;
+            String startDateTime;
+            String sleepDateTime;
             RecordBean recordBean = recordDatas.get(position);
-            str1 = recordBean.getStartDate() + " " + recordBean.getStartTime();
-            str2 = recordBean.getSleepDate() +" "+ recordBean.getSleepTime();
-            holder.tvStartTime.setText(str1);
-            holder.tvSleepTime.setText(str2);
-            holder.tvDiffTime.setText(CommonUtil.getDiffHourMinutes(str1, str2));
+            startDateTime = recordBean.getStartDate() + " " + recordBean.getStartTime();
+            sleepDateTime = recordBean.getSleepDate() +" "+ recordBean.getSleepTime();
+            holder.tvStartTime.setText(startDateTime);
+            holder.tvSleepTime.setText(sleepDateTime);
+            holder.tvDiffTime.setText(CommonUtil.getDiffHourMinutes(startDateTime, sleepDateTime));
+
             if(recordBean.getExceptionFlag().equals("0")) {
                 holder.tvExceptionFlag.setText("正常");
             } else if(recordBean.getExceptionFlag().equals("1")) {

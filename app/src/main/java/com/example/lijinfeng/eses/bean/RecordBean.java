@@ -38,6 +38,9 @@ public class RecordBean {
     /** 记录类型 */
     private String recordType;
 
+
+    private String timeDiff;
+
     /** 记录备注 */
     private String recordComment;
     /** 异常标识 （通宵等）*/
@@ -123,6 +126,15 @@ public class RecordBean {
         this.recordType = recordType;
     }
 
+    public String getTimeDiff() {
+        return timeDiff;
+    }
+
+    public void setTimeDiff(String timeDiff) {
+        this.timeDiff = timeDiff;
+    }
+
+
     public String getRecordComment() {
         return recordComment;
     }
@@ -134,16 +146,17 @@ public class RecordBean {
     @Override
     public String toString() {
         return "RecordBean{" +
-                "RecordNo='" + RecordNo + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", startTime='" + startTime + '\'' +
-                ", sleepDate='" + sleepDate + '\'' +
-                ", sleepTime='" + sleepTime + '\'' +
-                ", sleepTimeSecond='" + sleepTimeSecond + '\'' +
-                ", recordType='" + recordType + '\'' +
-                ", recordComment='" + recordComment + '\'' +
-                ", exceptionFlag='" + exceptionFlag + '\'' +
-                '}';
+            "_id=" + _id +
+            ", RecordNo='" + RecordNo + '\'' +
+            ", startDate='" + startDate + '\'' +
+            ", startTime='" + startTime + '\'' +
+            ", sleepDate='" + sleepDate + '\'' +
+            ", sleepTime='" + sleepTime + '\'' +
+            ", sleepTimeSecond='" + sleepTimeSecond + '\'' +
+            ", recordType='" + recordType + '\'' +
+            ", timeDiff='" + timeDiff + '\'' +
+            ", recordComment='" + recordComment + '\'' +
+            ", exceptionFlag='" + exceptionFlag + '\'' +
+            '}';
     }
-
 }

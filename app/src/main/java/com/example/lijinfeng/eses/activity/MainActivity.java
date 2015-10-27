@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    //private ListView lvLeftMenu;
+    //private String[] lvs = {"List Item 01", "List Item 02", "设置", "反馈"};
+    //private ArrayAdapter arrayAdapter;
 
     private MainAdapter mainAdapter;
     private SwipeMenuListView lvRecords;
@@ -240,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
-                                Toast.makeText(MainActivity.this, "negative: " + which, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "negative: " + which, Toast.LENGTH_SHORT).show();
                             }
                         });
 

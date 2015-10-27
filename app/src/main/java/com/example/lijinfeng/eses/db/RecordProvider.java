@@ -119,6 +119,7 @@ public class RecordProvider extends ContentProvider {
                     .append(RecordConstants.START_TIME).append("  TEXT,")
                     .append(RecordConstants.SLEEP_DATE).append("  TEXT,")
                     .append(RecordConstants.SLEEP_TIME).append("  TEXT,")
+                    .append(RecordConstants.TIME_DIFF).append("  TEXT,")
                     .append(RecordConstants.SLEEP_TIME_SECOND).append("  TEXT,")
                     .append(RecordConstants.RECORD_TYPE).append("  TEXT,")
                     .append(RecordConstants.RECORD_COMMENT).append("  TEXT,")
@@ -149,6 +150,7 @@ public class RecordProvider extends ContentProvider {
         public static final String START_TIME = "start_time";// 起床时间
         public static final String SLEEP_DATE = "sleep_date";// 睡眠日期
         public static final String SLEEP_TIME = "sleep_time";// 睡眠时间
+        public static final String TIME_DIFF = "time_diff"; // 睡眠时长
         public static final String SLEEP_TIME_SECOND = "sleep_time_second";// 睡眠时间（凌晨后）
         public static final String RECORD_TYPE = "record_type";// 记录类型
         public static final String RECORD_COMMENT = "record_comment"; // 记录备注
@@ -162,6 +164,7 @@ public class RecordProvider extends ContentProvider {
             tmpList.add(START_TIME);
             tmpList.add(SLEEP_DATE);
             tmpList.add(SLEEP_TIME);
+            tmpList.add(TIME_DIFF);
             tmpList.add(SLEEP_TIME_SECOND);
             tmpList.add(RECORD_TYPE);
             tmpList.add(RECORD_COMMENT);

@@ -188,6 +188,9 @@ public class AddRecordActivity extends AppCompatActivity implements
         recordBean.setSleepDate(endDate);
         endTime = TextUtils.isEmpty(endTime)? "" : endTime;
         recordBean.setSleepTime(endTime);
+        String time_diff = CommonUtil.getDiffHourMinutes(startTime, endTime);
+        recordBean.setTimeDiff(CommonUtil.getDiffHourMinutes(startDate+ " " +startTime,
+            endDate +" " + endTime));
 
         recordBean.setSleepTimeSecond("tomorrow_second");
 
@@ -272,8 +275,6 @@ public class AddRecordActivity extends AppCompatActivity implements
         record.put("recordType", recordType);
 
         record.saveInBackground();
-
-
     }
     private void setStartDate() {
         DatePickerDialog dpd = DatePickerDialog.newInstance(
