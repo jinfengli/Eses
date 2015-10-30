@@ -2,14 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0EFF4"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.lijinfeng.eses.activity.SettingsActivity">
 
     <!--<include layout="@layout/custom_toolbar" />-->
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tl_custom"
         android:layout_width="match_parent"
@@ -20,7 +19,8 @@
         app:popupTheme="@style/MyDarkToolBarStyle"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    </android.support.v7.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>-->
+    <include layout="@layout/common_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,40 +31,29 @@
         <TextView
             android:id="@+id/tv_set_theme"
             style="@style/common_item_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/switch_theme"
             android:visibility="gone" />
-
 
         <TextView
             android:id="@+id/tv_backup"
             style="@style/common_item_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="备份" />
+            android:text="@string/backup" />
 
         <TextView
             android:id="@+id/tv_feedback"
             style="@style/common_item_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/txt_feedback" />
 
         <TextView
             android:id="@+id/tv_check_new_version"
             style="@style/common_item_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/check_new_version" />
 
 
         <TextView
             android:id="@+id/tv_about_app"
             style="@style/common_item_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="关于" />
+            android:text="@string/about" />
     </LinearLayout>
 
 </RelativeLayout>

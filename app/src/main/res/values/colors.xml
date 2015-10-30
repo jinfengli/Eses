@@ -1,57 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="login_setting_bg_normal">#666666</color>
-    <color name="login_setting_bg_pressed">#ff0000</color>
-    <color name="common_selector_color_normal">#008CEE</color>
-    <color name="transparent">#00000000</color>
-    <color name="main_bottom_btn_normal">#666666</color>
+  <color name="transparent">#00000000</color>
 
-    <!--fab:fab_colorNormal="#008CEE"
-    fab:fab_colorPressed="#0081DB"-->
+  <!-- gray scale -->
+  <color name="pure_black">#000000</color>
+  <color name="deep_gray">#666666</color>
+  <color name="gray">#999999</color>
+  <color name="light_gray">#dfdfdf</color>
+  <color name="light_white">#F9F9FB</color>
+  <color name="white">#ffffff</color>
 
-    <!--<color name="primary">#37474f</color>-->
-    <!--<color name="primary_dark">#263238</color>-->
-
-    <color name="common_select_color_press">#0068B1</color>
-
-
-    <color name="toolbar_title">#ffffff</color>
-    <color name="primary">#999999</color>  <!-- 008CEE-->
-    <color name="primary_dark">#0081DB</color>
-    <color name="accent">#008CEE</color>
-    <color name="control_normal">#ffffff</color>
-
-    <color name="blue">#ffffff</color>
-    <!--#083a8a-->
-    <!--  listview的item背景 -->
-    <color name="common_list_pre">#fbecf0</color>
-    <color name="common_list_nor">#ffffff</color>
+  <!-- bule scale -->
+  <color name="light_blue">#008CEE</color>
+  <color name="blue">#0081DB</color>
+  <color name="deep_blue">#303f9f</color>
 
 
-    <color name="light_gray">#dfdfdf</color>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="green">#00ff00</color>
+  <!-- basic colors -->
+  <color name="red">#ff0000</color>
 
-    <color name="more_pop_item_nor">#22292C</color>
-    <color name="more_pop_item_pre">#000000</color>
-
-    <color name="common_item_bg_normal">#FFFFFF</color>
-    <color name="common_item_bg_pressed">#F9F9FB</color>
-
-
-    <!-- 日间模式 -->
-    <color name="white_btn_color">#3BB32E</color>
-    <color name="black_tx_color">#333333</color>
-
-    <!-- 夜间模式 -->
-    <color name="black_btn_color">#aa7788</color>
-    <color name="white_tx_color">#f0f0f0</color>
-
-    <color name="statusbar_bg">#008CEE</color>
-
-    <color name="Indigo_colorPrimaryDark">#303f9f</color>
-    <color name="Indigo_colorPrimary">#3f51b5</color>
-    <color name="Indigo_nav_color">#4675FF</color>
+  <!-- 自定义popwindow弹出颜色值，暂时不用 -->
+  <color name="more_pop_item_nor">#22292C</color>
+  <color name="more_pop_item_pre">#000000</color>
 
 </resources>

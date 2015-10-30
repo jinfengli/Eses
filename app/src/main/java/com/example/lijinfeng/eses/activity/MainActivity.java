@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         toolbar.setTitle("ES");
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        toolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(toolbar);
 
         toolbar.setOnMenuItemClickListener(onMenuItemClicker);

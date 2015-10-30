@@ -109,7 +109,7 @@ public class EditRecordActivity extends AppCompatActivity implements
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
         mToolbar.setTitle(R.string.edit_record);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
         mToolbar.setOnMenuItemClickListener(onMenuItemClicker);
     }
@@ -139,6 +139,7 @@ public class EditRecordActivity extends AppCompatActivity implements
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.update_record:
+                  CommonUtil.hideSoftKeyBoard(EditRecordActivity.this);
                     updateRecordToDb();
 //                    uploadRecord();
                     break;

@@ -8,9 +8,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import android.view.inputmethod.InputMethodManager;
 import com.example.lijinfeng.eses.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
@@ -93,7 +95,7 @@ public class CommonUtil {
 
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         tintManager.setStatusBarTintEnabled(true);
-        tintManager.setStatusBarTintResource(R.color.statusbar_bg);
+        tintManager.setStatusBarTintResource(R.color.blue);
     }
 
     @TargetApi(19)
@@ -197,5 +199,30 @@ public class CommonUtil {
             return hours + "h";
         }
         return hours +"h" + minutes + "mins";
+    }
+
+    /**
+     * 隐藏页面显示出的软键盘
+     *
+     * @param mActivity
+     */
+    public static void hideSoftKeyBoard(Activity mActivity) {
+        if (mActivity.getCurrentFocus() != null) {
+            ((InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                mActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } else {
+            mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        }
+
+    }
+
+    /**
+     * view获取焦点,显示软键盘
+     *
+     * @param mActivity
+     */
+    public static void showSoftKeyBoard(Activity mActivity, View mView) {
+        ((InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE)).showSoftInput(mView,
+            InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

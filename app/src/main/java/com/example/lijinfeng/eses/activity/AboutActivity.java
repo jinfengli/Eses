@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
         mToolbar.setTitle(R.string.title_activity_about);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
     }
 

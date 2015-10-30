@@ -40,7 +40,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
         mToolbar.setTitle("找回帐号或密码");
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
         mToolbar.setOnMenuItemClickListener(onMenuItemClicker);
     }

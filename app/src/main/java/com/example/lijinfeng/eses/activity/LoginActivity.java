@@ -16,6 +16,7 @@ import com.avos.avoscloud.LogInCallback;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.constants.ESConstants;
+import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
@@ -94,6 +95,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        // 隐藏弹出的软键盘
+        CommonUtil.hideSoftKeyBoard(LoginActivity.this);
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
         if(TextUtils.isEmpty(username)) {

@@ -103,7 +103,7 @@ public class AddRecordActivity extends AppCompatActivity implements
 
         mToolbar.setTitle(R.string.add_record);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
 
         mToolbar.setOnMenuItemClickListener(onMenuItemClicker);
@@ -135,6 +135,7 @@ public class AddRecordActivity extends AppCompatActivity implements
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.add_record:
+                    CommonUtil.hideSoftKeyBoard(AddRecordActivity.this);
                     saveRecordToDb();
 //                    uploadRecord();
                     break;
@@ -281,12 +282,13 @@ public class AddRecordActivity extends AppCompatActivity implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
-                        setDateFormat(tvStartDatePicker, year, monthOfYear, dayOfMonth);
+                        setDateFormat(tvStartDatePicker, year, monthOfYear + 1, dayOfMonth);
                         startDate = tvStartDatePicker.getText().toString();
+
                     }
                 },
                 currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH) + 1,
+                currentDate.get(Calendar.MONTH),
                 currentDate.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");
@@ -314,12 +316,12 @@ public class AddRecordActivity extends AppCompatActivity implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog datePickerDialog, int year, int monthOfYear, int dayOfMonth) {
-                        setDateFormat(tvEndDatePicker, year, monthOfYear, dayOfMonth);
+                        setDateFormat(tvEndDatePicker, year, monthOfYear + 1, dayOfMonth);
                         endDate = tvEndDatePicker.getText().toString();
                     }
                 },
                 currentDate.get(Calendar.YEAR),
-                currentDate.get(Calendar.MONTH) + 1,
+                currentDate.get(Calendar.MONTH),
                 currentDate.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getFragmentManager(), "Datepickerdialog");

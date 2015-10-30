@@ -88,7 +88,7 @@ public class ChartActivity extends AppCompatActivity implements OnChartValueSele
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         toolbar.setTitle("图表");
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        toolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(toolbar);
     }
 

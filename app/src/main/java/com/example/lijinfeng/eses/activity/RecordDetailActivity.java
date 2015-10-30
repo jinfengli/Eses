@@ -63,7 +63,7 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
         mToolbar.setTitle(getResources().getString(R.string.record_detail));
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.statusbar_bg));
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
     }
 
