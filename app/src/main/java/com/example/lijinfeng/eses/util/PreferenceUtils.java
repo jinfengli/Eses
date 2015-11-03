@@ -7,9 +7,10 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 /*
- * @TODO:
+ * TODO: sharepreference 工具类
+ *
  * @author li.jf
- * Copyright (C) 15-9-22 下午4:34 wonhigh.cn All rights reserved.
+ * @date 15-9-22
  */
 public class PreferenceUtils {
     public static String getPrefString(Context context, String key,

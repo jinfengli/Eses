@@ -18,4 +18,5 @@
 
     <string name="login_username_hint">用户名/邮箱</string>
     <string name="login_password_hint">密码</string>
+
 </resources>

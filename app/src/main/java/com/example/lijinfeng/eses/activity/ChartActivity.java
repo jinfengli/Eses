@@ -67,7 +67,7 @@ public class ChartActivity extends AppCompatActivity implements OnChartValueSele
         dbHelper = new EsesDBHelper(this);
         timeDiffs = new ArrayList<String>();
         timeDiffs = dbHelper.getTimeDiffs();
-        Log.e(TAG,"timeDiffs ========================"+timeDiffs);
+        Log.d(TAG, "timeDiffs ========================"+timeDiffs);
         mParties = getStringTimeDiffs();
     }
 

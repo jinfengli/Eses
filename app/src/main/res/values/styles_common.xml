@@ -1,19 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- 设置中使用 -->
-    <style name ="common_item_style" >
-        <item name="android:textColor">@color/pure_black</item>
-        <item name="android:paddingLeft">19dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/common_item_bg_selector</item>
-    </style>
+  <!-- 设置中使用 -->
+  <style name="common_item_style">
+    <item name="android:textColor">@color/pure_black</item>
+    <item name="android:paddingLeft">19dp</item>
+    <item name="android:paddingTop">16dp</item>
+    <item name="android:paddingBottom">16dp</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:layout_marginTop">20dp</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:background">@drawable/common_item_bg_selector</item>
+  </style>
 
+  <!-- edittext 公共样式 -->
+  <style name="edittext_common_style">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:ems">10</item>
+    <item name="android:background">@null</item>
+    <item name="android:layout_marginTop">20dp</item>
+  </style>
+
+  <!-- android:textCursorDrawable="@null"
+     让光标的颜色与文本的颜色相同
+  -->
+  <!-- 登录页面中的Editext样式 -->
+  <style name="edittext_login_common_style" parent="edittext_common_style">
+    <item name="android:textCursorDrawable">@null</item>
+    <item name="android:layout_marginLeft">12dp</item>
+    <item name="android:layout_marginRight">12dp</item>
+
+  </style>
+
+  <!-- edittext 的底部背景 -->
+  <style name="edittext_bg_line_style">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">1dp</item>
+    <item name="android:background">@color/edittext_bg_color</item>
+    <item name="android:layout_marginTop">2dp</item>
+    <item name="android:layout_marginLeft">10dp</item>
+    <item name="android:layout_marginRight">10dp</item>
+  </style>
+
+  <!-- 登录、注册按钮样式 -->
+  <style name="login_btn_style">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_marginTop">20dp</item>
+    <item name="android:paddingTop">5dp</item>
+    <item name="android:paddingBottom">5dp</item>
+    <item name="android:background">@drawable/login_btn_selector</item>
+    <item name="android:textColor">@color/white</item>
+    <item name="android:textSize">18sp</item>
+  </style>
 
 
 </resources>

@@ -17,22 +17,22 @@ import com.example.lijinfeng.eses.R;
  */
 public class ToastUtil {
 
-    public static void toastLong(Context context, int resId) {
-        Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
-    }
-
-    public static void toastLong(Context context, String resContent) {
-        Toast.makeText(context, resContent, Toast.LENGTH_LONG).show();
-    }
-
-
-    public static void toastShort(Context context, int resId) {
-        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
-    }
-
-    public static void toastShort(Context context, String resContent) {
-        Toast.makeText(context, resContent, Toast.LENGTH_SHORT).show();
-    }
+    //public static void toastLong(Context context, int resId) {
+    //    Toast.makeText(context, resId, Toast.LENGTH_LONG).show();
+    //}
+    //
+    //public static void toastLong(Context context, String resContent) {
+    //    Toast.makeText(context, resContent, Toast.LENGTH_LONG).show();
+    //}
+    //
+    //
+    //public static void toastShort(Context context, int resId) {
+    //    Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
+    //}
+    //
+    //public static void toastShort(Context context, String resContent) {
+    //    Toast.makeText(context, resContent, Toast.LENGTH_SHORT).show();
+    //}
 
     public static void showCustomToastL(Context context, String content) {
         Toast toast = null;
@@ -47,12 +47,53 @@ public class ToastUtil {
         toast.show();
     }
 
+    /**
+     * 展示Long Toast
+     * @param context
+     * @param contentId
+     */
+    public static void showCustomToastL(Context context, int contentId) {
+        Toast toast = null;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+        TextView text = (TextView) layout.findViewById(R.id.tv_toast_content);
+        text.setText(context.getString(contentId));
+        toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    /**
+     * 展示 Short Toast
+     * @param context
+     * @param content toast的内容
+     */
     public static void showCustomToastS(Context context, String content) {
         Toast toast = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
         TextView text = (TextView) layout.findViewById(R.id.tv_toast_content);
         text.setText(content);
+        toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 200);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    /**
+     * 展示 Short Toast
+     * @param context
+     * @param contentId 展示内容的id
+     */
+    public static void showCustomToastS(Context context, int contentId) {
+        Toast toast = null;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+        TextView text = (TextView) layout.findViewById(R.id.tv_toast_content);
+        text.setText(context.getResources().getString(contentId));
         toast = new Toast(context.getApplicationContext());
         toast.setGravity(Gravity.CENTER | Gravity.BOTTOM, 0, 200);
         toast.setDuration(Toast.LENGTH_SHORT);

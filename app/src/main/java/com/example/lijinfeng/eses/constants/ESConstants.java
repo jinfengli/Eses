@@ -25,7 +25,6 @@ public class ESConstants {
     public static final String CLIENT_KEY = "ATIbQxIBymfdHHhWCK3hWYHk";
 
 
-
     public static final String START_DATE_TIME = "start_date_time";
     public static final String SLEEP_DATE_TIME = "sleep_date_time";
     public static final String SLEEP_TIME_SECOND = "sleep_time_second";
@@ -38,7 +37,13 @@ public class ESConstants {
     public static final String SLEEP_TIME = "sleep_time";
     public static final String RECORD_NO = "record_no";
 
+    /** 匹配邮件格式的正则表达式 */
+    public static final String EMAIL_REGEX_1 = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
 
-
+    /**
+     * 正则表达式匹配
+     *  ref: http://blog.csdn.net/fatherican/article/details/8853062
+     * */
+    public static final String EMAIL_REGEX  = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
 }

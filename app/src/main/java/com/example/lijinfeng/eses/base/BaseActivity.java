@@ -20,7 +20,6 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     private String userId;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

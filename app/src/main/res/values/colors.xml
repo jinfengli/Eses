@@ -19,6 +19,8 @@
   <!-- basic colors -->
   <color name="red">#ff0000</color>
 
+  <color name="edittext_bg_color">#8FD132</color>
+
   <!-- 自定义popwindow弹出颜色值，暂时不用 -->
   <color name="more_pop_item_nor">#22292C</color>
   <color name="more_pop_item_pre">#000000</color>

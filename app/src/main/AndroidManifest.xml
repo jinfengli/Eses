@@ -37,8 +37,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".activity.ChartActivity"
-            android:label="@string/title_activity_chart" >
+            android:name=".activity.ChartActivity">
         </activity>
         <activity
             android:name=".activity.AboutActivity"
@@ -57,8 +56,7 @@
             android:label="@string/title_activity_add_record">
         </activity>
         <activity
-            android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:name=".activity.SettingsActivity">
         </activity>
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
@@ -84,24 +82,20 @@
             android:label="@string/title_activity_record_detail" >
         </activity>
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:name=".activity.LoginActivity">
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activity.ForgetPasswordActivity"
-            android:label="@string/title_activity_forget_password"
             android:windowSoftInputMode="stateHidden" >
         </activity>
 
         <!-- <service android:name="com.avos.avoscloud.PushService"/> -->
         <activity
-            android:name=".activity.EditRecordActivity"
-            android:label="@string/title_activity_edit_record" >
+            android:name=".activity.EditRecordActivity">
         </activity>
 
     </application>

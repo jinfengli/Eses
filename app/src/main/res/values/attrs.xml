@@ -16,6 +16,19 @@
     </declare-styleable>
 
 
+
+    <!-- 字体样式 -->
+    <declare-styleable name="tvFontStyle">
+        <attr name="fontType" format="string" />
+        <!--
+            <attr name="exampleDimension" format="dimension"/>
+             <attr name="exampleColor" format="color"/>
+            <attr name="exampleDrawable" format="color|reference"/>
+        -->
+    </declare-styleable>
+
+
+
     <!-- 自定义属性,用在切换主题中 -->
     <attr name="root_view_bg" format="reference|color" />
     <attr name="btn_bg" format="reference|color" />

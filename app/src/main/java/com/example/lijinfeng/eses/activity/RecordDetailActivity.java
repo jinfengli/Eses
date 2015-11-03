@@ -12,7 +12,7 @@ import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
 
 /**
- * TODO: RecordDetailActivity (记录详情)
+ * TODO: Record Detail
  *
  * @date 2015-10-04
  * @author li.jf
@@ -61,7 +61,7 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         CommonUtil.configToolBarParams(RecordDetailActivity.this);
 
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
-        mToolbar.setTitle(getResources().getString(R.string.record_detail));
+        mToolbar.setTitle(R.string.record_detail);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
@@ -90,9 +90,9 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
 //        String recordStatusFormat = getResources().getString(R.string.sleep_detail_status);
 //        tvRecordStatus.setText(String.format(recordStatusFormat, status));
         if(Integer.valueOf(status) == 0) {
-            tvRecordStatus.setText("正常");
+            tvRecordStatus.setText(R.string.normal);
         } else {
-            tvRecordStatus.setText("异常");
+            tvRecordStatus.setText(R.string.abnormal);
             tvRecordStatus.setTextColor(Color.RED);
         }
 

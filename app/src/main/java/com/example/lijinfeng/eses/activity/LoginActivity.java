@@ -26,8 +26,8 @@ import java.util.Date;
 /*
  * TODO: Login ES
  *
- * @date 15-9-21 下午9:09
- * Copyright (C) li.jf All rights reserved.
+ * @author li.jf
+ * @date 15-9-21
  */
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
 
     private String username;
     private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +55,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initTitleView() {
-        // 登录界面隐藏头部
-    }
+    protected void initTitleView() {}
 
     @Override
     protected void initView() {
@@ -90,22 +89,22 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void gotoForgetPwdActivity() {
-        Intent intent = new Intent(this,ForgetPasswordActivity.class);
+        Intent intent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
         startActivity(intent);
     }
 
     private void login() {
-        // 隐藏弹出的软键盘
+        // hide soft keyboard when click login button.
         CommonUtil.hideSoftKeyBoard(LoginActivity.this);
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
         if(TextUtils.isEmpty(username)) {
-            ToastUtil.showCustomToastS(this, "用户名不能为空");
+            ToastUtil.showCustomToastL(this, R.string.username_should_not_null);
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            ToastUtil.showCustomToastS(this, "密码不能为空");
+            ToastUtil.showCustomToastL(this, R.string.pwd_should_not_null);
             return;
         }
 
@@ -114,14 +113,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     /**
-     * 登录LeanCloud后台
+     * login LeanCloud background server
      */
     private void loginLeanCloudServer() {
         AVUser.logInInBackground(username, password, new LogInCallback<AVUser>() {
-            @Override
-            public void done(AVUser avUser, AVException e) {
+            @Override public void done(AVUser avUser, AVException e) {
                 if (avUser != null) {
-                    Log.d(TAG, avUser.getEmail());
+                    Log.d(TAG, "avUser.getEmail = " + avUser.getEmail());
                     dismissProgressDialog();
                     PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_NAME, username);
                     PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_PWD, password);
@@ -131,21 +129,26 @@ public class LoginActivity extends BaseActivity {
 
                     PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_REGISTER_TIME, str);
 
-
-                    ToastUtil.showCustomToastS(LoginActivity.this, "登录成功");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    LoginActivity.this.finish();
+                    ToastUtil.showCustomToastS(LoginActivity.this, R.string.login_success);
+                    // after login success
+                    gotoMainActivity();
                 } else {
                     dismissProgressDialog();
-                    ToastUtil.showCustomToastS(LoginActivity.this, "登录失败,请确认用户名和密码后重试.");
+                    ToastUtil.showCustomToastS(LoginActivity.this, R.string.login_error);
                 }
             }
         });
     }
 
+    private void gotoMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        LoginActivity.this.finish();
+    }
+
     private void showProgressDialog() {
-        progressDialog = ProgressDialog.show(this, "", "登录中...", true, false);
+        progressDialog = ProgressDialog.show(this, "",
+            getResources().getString(R.string.logining), true, false);
     }
 
     private void dismissProgressDialog() {
