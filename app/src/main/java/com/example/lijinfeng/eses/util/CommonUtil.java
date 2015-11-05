@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -218,11 +219,21 @@ public class CommonUtil {
 
     /**
      * view获取焦点,显示软键盘
-     *
      * @param mActivity
      */
     public static void showSoftKeyBoard(Activity mActivity, View mView) {
         ((InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE)).showSoftInput(mView,
             InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
+     * 单位换算 dp --> px
+     * @param context
+     * @param dp
+     * @return
+     */
+    public static int dp2px(Context context, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+            context.getResources().getDisplayMetrics());
     }
 }

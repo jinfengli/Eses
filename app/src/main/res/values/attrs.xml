@@ -16,7 +16,6 @@
     </declare-styleable>
 
 
-
     <!-- 字体样式 -->
     <declare-styleable name="tvFontStyle">
         <attr name="fontType" format="string" />

@@ -48,8 +48,11 @@
   <string name="network_error">网络错误，请检查网络连接</string>
   <string name="normal">正常</string>
   <string name="abnormal">异常</string>
+  <string name="tips">提示</string>
   <string name="ok">确定</string>
   <string name="cancel">取消</string>
+  <string name="yes">是</string>
+  <string name="no">否</string>
 
   <string name="another_press_to_exit">再按一次退出程序</string>
 
@@ -75,5 +78,9 @@
   <string name="error_register_username_repeat">该用户名已被占用，请选择其他的用户名</string>
   <string name="email_has_registered">邮箱已被占用，请通过找回密码进行后续操作</string>
 
+  <!-- MainActivity -->
+  <string name="sure_to_delete">确定删除吗？</string>
+  <string name="confirm_to_quit">退出后需重新登陆，确定退出？</string>
+  <string name="modify">修改</string>
 
 </resources>

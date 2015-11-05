@@ -4,9 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.widget.TextView;
-
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
@@ -17,7 +16,7 @@ import com.example.lijinfeng.eses.util.CommonUtil;
  * @date 2015-10-04
  * @author li.jf
  */
-public class RecordDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class RecordDetailActivity extends AppCompatActivity {
     private static final String TAG = RecordDetailActivity.class.getSimpleName();
 
     private Toolbar mToolbar;
@@ -37,6 +36,8 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
     private String comment;
     /** 记录状态是否正常 */
     private String status;
+    /** 正常订单 */
+    private static final int NORMAL_RECORD = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +56,19 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         totalSleepTime= CommonUtil.getDiffHourMinutes(startTime,sleepTime);
         comment = getIntent().getStringExtra(ESConstants.RECORD_COMMENT);
         status = getIntent().getStringExtra(ESConstants.EXCEPTION_FLAG);
+        Log.d(TAG, "startTime:" + startTime);
+        Log.d(TAG, "sleepTime:" + sleepTime);
+        Log.d(TAG, "totalSleepTime:" + totalSleepTime);
+        Log.d(TAG, "comment:" + comment);
+        Log.d(TAG, "status:" + status);
+
     }
 
     private void initTitleView() {
         CommonUtil.configToolBarParams(RecordDetailActivity.this);
-
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
         mToolbar.setTitle(R.string.record_detail);
-        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(mToolbar);
     }
@@ -73,8 +79,6 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
         tvTotalSleepTime = (TextView) findViewById(R.id.tv_detail_daily_sleep_time);
         String sleepTotalDateFormat = getResources().getString(R.string.sleep_detail_total_time);
         tvTotalSleepTime.setText(String.format(sleepTotalDateFormat,totalSleepTime));
-//        tvTotalSleepTime.setText(totalSleepTime);
-
         tvComment = (TextView) findViewById(R.id.tv_detail_sleep_comment);
         tvRecordStatus = (TextView) findViewById(R.id.tv_record_status);
 
@@ -86,20 +90,12 @@ public class RecordDetailActivity extends AppCompatActivity implements View.OnCl
 
         String commentFormat = getResources().getString(R.string.sleep_detail_record_comment);
         tvComment.setText(String.format(commentFormat,comment));
-
-//        String recordStatusFormat = getResources().getString(R.string.sleep_detail_status);
-//        tvRecordStatus.setText(String.format(recordStatusFormat, status));
-        if(Integer.valueOf(status) == 0) {
+        if(NORMAL_RECORD == Integer.valueOf(status)) {
             tvRecordStatus.setText(R.string.normal);
         } else {
             tvRecordStatus.setText(R.string.abnormal);
             tvRecordStatus.setTextColor(Color.RED);
         }
-
     }
 
-    @Override
-    public void onClick(View view) {
-
-    }
 }

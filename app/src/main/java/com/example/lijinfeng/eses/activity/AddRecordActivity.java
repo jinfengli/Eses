@@ -37,7 +37,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import java.util.Calendar;
 
 /*
- *  TODO: 添加记录
+ *  TODO: Add Record
  *
  *  Date: 15-8-29 下午11:24
  *  Copyright (c) li.jf All rights reserved.

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.lijinfeng.eses" >
+    package="com.example.lijinfeng.eses"
+    android:versionCode="1"
+    android:versionName="1.0.0">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,13 +23,12 @@
         android:name=".ESApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/es_logo1"
+        android:icon="@drawable/es_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity android:name=".activity.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -78,8 +78,7 @@
         </meta-data>
 
         <activity
-            android:name=".activity.RecordDetailActivity"
-            android:label="@string/title_activity_record_detail" >
+            android:name=".activity.RecordDetailActivity">
         </activity>
         <activity
             android:name=".activity.LoginActivity">
@@ -93,7 +92,6 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
 
-        <!-- <service android:name="com.avos.avoscloud.PushService"/> -->
         <activity
             android:name=".activity.EditRecordActivity">
         </activity>
