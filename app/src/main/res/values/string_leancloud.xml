@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ @TODO:
-  ~ @author li.jf
-  ~ Copyright (C) 15-9-19 下午3:32 wonhigh.cn All rights reserved.
-  -->
-
 <resources>
 
     <string name="login_input_user_name">请输入名字</string>

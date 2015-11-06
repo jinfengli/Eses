@@ -31,21 +31,17 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         initAVCloud();
-        initTitleView();
         initView();
-
         init();
     }
 
+    /**
+     * 全屏效果
+     */
     private void setttingNoTitle() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    }
-
-    @Override
-    protected void initTitleView() {
-
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     private void initAVCloud() {
@@ -101,7 +97,7 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoLoginActivity() {
         SplashActivity.this.finish();
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
     }
 
     private void gotoMainActivity() {

@@ -49,13 +49,10 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        initTitleView();
         initView();
         setlistener();
     }
 
-    @Override
-    protected void initTitleView() {}
 
     @Override
     protected void initView() {

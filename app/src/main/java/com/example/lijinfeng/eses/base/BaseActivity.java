@@ -17,7 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 public abstract class BaseActivity extends Activity implements View.OnClickListener {
 
     private Context context;
-    private String userId;
+    private String userId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +26,18 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        init();
+    }
+
+    private void init() {
         context = BaseActivity.this;
-        userId = null;
 
         AVUser user = AVUser.getCurrentUser();
         if(user != null) {
             userId = user.getObjectId();
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -50,7 +54,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         AVAnalytics.onPause(this);
     }
 
-    protected abstract void initTitleView();
+    //protected abstract void initTitleView();
 
     protected abstract void initView();
 

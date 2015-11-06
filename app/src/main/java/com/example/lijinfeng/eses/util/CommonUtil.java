@@ -214,7 +214,6 @@ public class CommonUtil {
         } else {
             mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         }
-
     }
 
     /**

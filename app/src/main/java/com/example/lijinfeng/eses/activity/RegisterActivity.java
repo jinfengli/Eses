@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * register
+     * register ES
      */
     private void register() {
         CommonUtil.hideSoftKeyBoard(RegisterActivity.this);
@@ -117,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * 注册ES用户到LeanCloud
+     * 注册ES用户到LeanCloud server
      */
     private void signUpLeanCloudServer(AVUser user) {
         user.signUpInBackground(new SignUpCallback() {

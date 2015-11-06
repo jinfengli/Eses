@@ -1,8 +1,17 @@
+/*
+ *  Copyright (C) 2015, Kingfeng, All Rights Reserved
+ *  Author:  Li Jinfeng(lijinfeng.ljf@gmail.com)
+ *
+ *  https://github.com/jinfengli/ES
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; version 2 of the License.
+ */
 package com.example.lijinfeng.eses.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -40,7 +49,7 @@ import java.util.Calendar;
  *  TODO: Add Record
  *
  *  Date: 15-8-29 下午11:24
- *  Copyright (c) li.jf All rights reserved.
+ *  Copyright (C) 2015, li.jf,  All rights reserved.
  */
 public class AddRecordActivity extends AppCompatActivity implements
         CommonAlertDialog.OnSubmitListener,
