@@ -1,8 +1,5 @@
 <component name="CopyrightManager">
   <settings default="">
-    <module2copyright>
-      <element module="All" copyright="class_comment" />
-    </module2copyright>
     <LanguageOptions name="JAVA">
       <option name="fileLocation" value="3" />
     </LanguageOptions>
