@@ -1,15 +1,10 @@
 package com.example.lijinfeng.eses.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
-
 /*
- *  TODO:
+ *  TODO: 记录实体类
  *
- *  Date: 15-9-1 下午11:27
- *  Copyright (c) li.jf All rights reserved.
+ *  @author：Jinfeng Lee
+ *
  */
 public class RecordBean {
 

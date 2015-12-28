@@ -109,7 +109,6 @@ public class AddRecordActivity extends AppCompatActivity implements
     protected void initTitleView() {
         CommonUtil.configToolBarParams(this);
         mToolbar = (Toolbar) findViewById(R.id.tl_custom);
-
         mToolbar.setTitle(R.string.add_record);
         mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         mToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
@@ -214,18 +213,18 @@ public class AddRecordActivity extends AppCompatActivity implements
                     if(Integer.parseInt(startTime.split("\\:")[0])> Integer.parseInt(endTime.split("\\:")[0])
                             || Integer.parseInt(startTime.split("\\:")[0]) == Integer.parseInt(endTime.split("\\:")[0])
                             && Integer.parseInt(startTime.split("\\:")[1]) >= Integer.parseInt(endTime.split("\\:")[1])) {
-                        ToastUtil.showCustomToastS(AddRecordActivity.this, "开始时间和结束时间有误");
+                        ToastUtil.showToastS(AddRecordActivity.this, "开始时间和结束时间有误");
                         return;
                     } else {
                         recordBean.setExceptionFlag("0");
                     }
                 } else {
-                    ToastUtil.showCustomToastS(AddRecordActivity.this, "开始和结束时间不能为空");
+                    ToastUtil.showToastS(AddRecordActivity.this, "开始和结束时间不能为空");
                     return;
                 }
             }
         } else {
-            ToastUtil.showCustomToastS(AddRecordActivity.this, "开始和结束日期不能为空");
+            ToastUtil.showToastS(AddRecordActivity.this, "开始和结束日期不能为空");
             return;
         }
 
@@ -233,7 +232,7 @@ public class AddRecordActivity extends AppCompatActivity implements
         if(!TextUtils.isEmpty(commentMsg)) {
             recordBean.setRecordComment(commentMsg);
         } else {
-            ToastUtil.showCustomToastS(AddRecordActivity.this, R.string.comment_should_not_null);
+            ToastUtil.showToastS(AddRecordActivity.this, R.string.comment_should_not_null);
             return;
         }
 
@@ -244,7 +243,6 @@ public class AddRecordActivity extends AppCompatActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.tvStartDatePicker:
                 setStartDate();
                 break;

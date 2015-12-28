@@ -94,15 +94,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 || TextUtils.isEmpty(password)
                 || TextUtils.isEmpty(passwordAgain)
                 || TextUtils.isEmpty(userEmail)) {
-            ToastUtil.showCustomToastL(this, R.string.please_check_input);
+            ToastUtil.showToastL(this, R.string.please_check_input);
         } else {
             if (password.equals(passwordAgain)) {
                 progressDialogShow();
                 registerLeanCloud();
             } else {
                 // twice password unequal.
-                ToastUtil.showCustomToastS(RegisterActivity.this,
-                    getResources().getString(R.string.twice_pwd_not_equal));
+                ToastUtil.showToastS(RegisterActivity.this,
+                        getResources().getString(R.string.twice_pwd_not_equal));
             }
         }
     }
@@ -136,14 +136,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     switch (e.getCode()) {
                         case 202:
-                            ToastUtil.showCustomToastS(RegisterActivity.this, R.string.error_register_username_repeat);
+                            ToastUtil.showToastS(RegisterActivity.this, R.string.error_register_username_repeat);
                             break;
                         case 203:
-                            ToastUtil.showCustomToastS(RegisterActivity.this,
-                                R.string.email_has_registered);
+                            ToastUtil.showToastS(RegisterActivity.this,
+                                    R.string.email_has_registered);
                             break;
                         default:
-                            ToastUtil.showCustomToastS(RegisterActivity.this, R.string.network_error);
+                            ToastUtil.showToastS(RegisterActivity.this, R.string.network_error);
                             break;
                     }
                 }

@@ -1,33 +1,27 @@
 package com.example.lijinfeng.eses.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.example.lijinfeng.eses.R;
-
-
-
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.avos.avoscloud.AVObject;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.bean.RecordBean;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.util.CommonAlertDialog;
 import com.example.lijinfeng.eses.util.CommonUtil;
-import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.CustomLayout;
 import com.example.lijinfeng.eses.view.SegmentControl;
@@ -216,18 +210,18 @@ public class EditRecordActivity extends AppCompatActivity implements
                     if(Integer.parseInt(startTime.split("\\:")[0])> Integer.parseInt(endTime.split("\\:")[0])
                             || Integer.parseInt(startTime.split("\\:")[0]) == Integer.parseInt(endTime.split("\\:")[0])
                             && Integer.parseInt(startTime.split("\\:")[1]) >= Integer.parseInt(endTime.split("\\:")[1])) {
-                        ToastUtil.showCustomToastS(EditRecordActivity.this, "开始时间和结束时间有误");
+                        ToastUtil.showToastS(EditRecordActivity.this, "开始时间和结束时间有误");
                         return;
                     } else {
                         recordBean.setExceptionFlag("0");
                     }
                 } else {
-                    ToastUtil.showCustomToastS(EditRecordActivity.this, "开始和结束时间不能为空");
+                    ToastUtil.showToastS(EditRecordActivity.this, "开始和结束时间不能为空");
                     return;
                 }
             }
         } else {
-            ToastUtil.showCustomToastS(EditRecordActivity.this, "开始和结束日期不能为空");
+            ToastUtil.showToastS(EditRecordActivity.this, "开始和结束日期不能为空");
             return;
         }
 
@@ -235,7 +229,7 @@ public class EditRecordActivity extends AppCompatActivity implements
         if(!TextUtils.isEmpty(commentMsg)) {
             recordBean.setRecordComment(commentMsg);
         } else {
-            ToastUtil.showCustomToastL(EditRecordActivity.this, R.string.comment_should_not_null);
+            ToastUtil.showToastL(EditRecordActivity.this, R.string.comment_should_not_null);
             return;
         }
 

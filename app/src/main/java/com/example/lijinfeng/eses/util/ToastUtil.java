@@ -34,7 +34,7 @@ public class ToastUtil {
     //    Toast.makeText(context, resContent, Toast.LENGTH_SHORT).show();
     //}
 
-    public static void showCustomToastL(Context context, String content) {
+    public static void showToastL(Context context, String content) {
         Toast toast = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
@@ -52,7 +52,7 @@ public class ToastUtil {
      * @param context
      * @param contentId
      */
-    public static void showCustomToastL(Context context, int contentId) {
+    public static void showToastL(Context context, int contentId) {
         Toast toast = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
@@ -70,7 +70,7 @@ public class ToastUtil {
      * @param context
      * @param content toast的内容
      */
-    public static void showCustomToastS(Context context, String content) {
+    public static void showToastS(Context context, String content) {
         Toast toast = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
@@ -88,7 +88,7 @@ public class ToastUtil {
      * @param context
      * @param contentId 展示内容的id
      */
-    public static void showCustomToastS(Context context, int contentId) {
+    public static void showToastS(Context context, int contentId) {
         Toast toast = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);

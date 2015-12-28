@@ -1,7 +1,6 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,7 +26,6 @@ import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import jxl.Workbook;
@@ -43,13 +41,14 @@ import jxl.write.WriteException;
 /*
  *  TODO:SettingsActivity
  *
- *  Date: 15-9-12 上午6:58
- *  Copyright (C) li.jf All rights reserved.
+ *  @date: 15-9-12 上午6:58
+ *  @author: Jinfeng Lee
  */
 public class SettingsActivity extends AppCompatActivity implements
         OnItemClickListener, UmengUpdateListener, View.OnClickListener {
 
     private Toolbar mToolbar;
+
     private TextView tvSetTheme;
     private TextView tvFeedBack;
     private TextView tvCheckNewVersion;
@@ -62,8 +61,6 @@ public class SettingsActivity extends AppCompatActivity implements
 
     private WritableCellFormat format;
     private WritableCellFormat dateFormat;
-
-    private Context mContext;
 
     private static final int ID_INDEX = 0;
     private static final int NO_INDEX = 1;
@@ -80,8 +77,6 @@ public class SettingsActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        mContext = SettingsActivity.this;
 
         initTitleView();
         initView();
@@ -125,7 +120,6 @@ public class SettingsActivity extends AppCompatActivity implements
         }
 
         dbHelper = new EsesDBHelper(this);
-
     }
 
     private void setListener() {
@@ -163,7 +157,7 @@ public class SettingsActivity extends AppCompatActivity implements
             } catch (Exception e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                ToastUtil.showCustomToastS(SettingsActivity.this, "备份失败：" + e.getLocalizedMessage());
+                ToastUtil.showToastS(SettingsActivity.this, "备份失败：" + e.getLocalizedMessage());
             }
         } else if(view.getId() == R.id.tv_about_app) {
             startActivity(new Intent(SettingsActivity.this,AboutActivity.class));
@@ -176,7 +170,6 @@ public class SettingsActivity extends AppCompatActivity implements
             public void run() {
                 // 备份到Excel文件
                 try {
-
                     msgHandler.sendEmptyMessage(0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -219,10 +212,10 @@ public class SettingsActivity extends AppCompatActivity implements
 
             // 从内存中写入到文件中
             workbook.write();
-            ToastUtil.showCustomToastS(this, "备份成功");
+            ToastUtil.showToastS(this, "备份成功");
 //            progressDialog.dismiss();
         } else {
-            ToastUtil.showCustomToastS(this, "数据项为空，不需要备份");
+            ToastUtil.showToastS(this, "数据项为空，不需要备份");
 //            progressDialog.dismiss();
         }
 
@@ -303,6 +296,7 @@ public class SettingsActivity extends AppCompatActivity implements
                 SettingsActivity.this,
                 AlertView.Style.Alert,
                 this).show();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -317,6 +311,13 @@ public class SettingsActivity extends AppCompatActivity implements
                 UmengUpdateAgent.showUpdateDialog(SettingsActivity.this, updateResponse);
                 break;
             case UpdateStatus.No: // 没有新版本
+                showProgressDialog();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 showNoUpdateAlertDialog();
                 break;
             case UpdateStatus.NoneWifi: // none wifi

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
 import com.avos.avoscloud.AVUser;
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnItemClickListener;
@@ -30,13 +32,13 @@ import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
-import com.example.lijinfeng.eses.util.ToastUtil;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenu;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuCreator;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuItem;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuListView;
 import com.github.clans.fab.FloatingActionButton;
 import com.umeng.update.UmengUpdateAgent;
+
 import java.util.ArrayList;
 
 /*
@@ -45,7 +47,7 @@ import java.util.ArrayList;
  *  @date: 15-8-23 下午5:53
  *  @author li.jf
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private FloatingActionButton fabMenu;
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvUsername = (TextView) findViewById(R.id.tv_username);
         tvRegisterTime = (TextView) findViewById(R.id.tv_register_time);
         tvUsername.setText(PreferenceUtils.getPrefString(this, ESConstants.USER_NAME, "") + " ("
-            + PreferenceUtils.getPrefString(this, ESConstants.USER_EMAIL, "") + ")");
+                + PreferenceUtils.getPrefString(this, ESConstants.USER_EMAIL, "") + ")");
         tvRegisterTime.setText(String.format(getResources().getString(R.string.register_time),
             PreferenceUtils.getPrefString(this, ESConstants.USER_REGISTER_TIME, "")));
 
@@ -139,26 +141,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setListener() {
         fabMenu.setOnClickListener(this);
-        lvRecords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, RecordDetailActivity.class);
-                RecordBean recordBean = recordBeans.get(position);
-                intent.putExtra(ESConstants.START_DATE_TIME,
-                    recordBean.getStartDate() + "  " + recordBean.getStartTime());
-                intent.putExtra(ESConstants.SLEEP_DATE_TIME,
-                    recordBean.getSleepDate() + "  " + recordBean.getSleepTime());
-                intent.putExtra(ESConstants.RECORD_COMMENT, recordBean.getRecordComment());
-                intent.putExtra(ESConstants.EXCEPTION_FLAG, recordBean.getExceptionFlag());
-                intent.putExtra(ESConstants.SLEEP_TIME_SECOND, recordBean.getSleepTimeSecond());
-                startActivity(intent);
-            }
-        });
-
+        lvRecords.setOnItemClickListener(this);
         tvFeedback.setOnClickListener(this);
         tvShare.setOnClickListener(this);
         tvSetting.setOnClickListener(this);
-//        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
+        mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(MainActivity.this, RecordDetailActivity.class);
+        RecordBean recordBean = recordBeans.get(position);
+        intent.putExtra(ESConstants.START_DATE_TIME,
+                recordBean.getStartDate() + "  " + recordBean.getStartTime());
+        intent.putExtra(ESConstants.SLEEP_DATE_TIME,
+                recordBean.getSleepDate() + "  " + recordBean.getSleepTime());
+        intent.putExtra(ESConstants.RECORD_COMMENT, recordBean.getRecordComment());
+        intent.putExtra(ESConstants.EXCEPTION_FLAG, recordBean.getExceptionFlag());
+        intent.putExtra(ESConstants.SLEEP_TIME_SECOND, recordBean.getSleepTimeSecond());
+        startActivity(intent);
     }
 
     private void init() {
@@ -231,9 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAlertView = new AlertView(getResources().getString(R.string.tips),
             getResources().getString(R.string.confirm_to_quit), getResources().getString(R.string.no),
             new String[]{getResources().getString(R.string.yes)},
-            null,
-            this,
-            AlertView.Style.Alert, listener).setCancelable(true);
+            null, this, AlertView.Style.Alert, listener).setCancelable(true);
     }
 
     private OnItemClickListener listener = new OnItemClickListener() {
@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(i == -1) {
                 mAlertView.dismiss();
             } else if(i == 0) {
-                ToastUtil.showCustomToastL(MainActivity.this,o.getClass() +"");
+//                ToastUtil.showToastL(MainActivity.this, o.getClass() + "");
                 AVUser.logOut();
                 MainActivity.this.finish();
 
@@ -325,9 +325,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mAlertView.dismiss();
             return;
         }
+        // 侧滑处于开启状态时，点击返回键，先关闭侧滑(不是直接和Activity一起关闭)
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
 
         super.onBackPressed();
     }
+
 
     private class RecordChangeObserver extends ContentObserver {
         public RecordChangeObserver(Handler handler){

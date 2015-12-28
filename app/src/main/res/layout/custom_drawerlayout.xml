@@ -67,7 +67,7 @@
             android:paddingBottom="40dp"
             android:paddingLeft="30dp"
             android:clickable="true"
-            android:background="@color/deep_blue">
+            android:background="@color/blue">
 
             <TextView
                 android:id="@+id/tv_username"

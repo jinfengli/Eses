@@ -8,8 +8,6 @@ package com.example.lijinfeng.eses.constants;
  *  Copyright (c) li.jf All rights reserved.
  */
 
-import org.w3c.dom.Comment;
-
 public class ESConstants {
 
     public static final String TYPE_SLEEP = "type_sleep";
@@ -23,7 +21,6 @@ public class ESConstants {
     // 使用LeanCloud的初始化配置
     public static final String APPLICATION_ID = "XrARrV25Agqi3mfaQVY3uO3y";
     public static final String CLIENT_KEY = "ATIbQxIBymfdHHhWCK3hWYHk";
-
 
     public static final String START_DATE_TIME = "start_date_time";
     public static final String SLEEP_DATE_TIME = "sleep_date_time";

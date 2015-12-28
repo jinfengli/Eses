@@ -27,7 +27,6 @@ import java.util.Date;
  * TODO: Login ES
  *
  * @author li.jf
- * @date 15-9-21
  */
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -52,7 +51,6 @@ public class LoginActivity extends BaseActivity {
         initView();
         setlistener();
     }
-
 
     @Override
     protected void initView() {
@@ -96,12 +94,12 @@ public class LoginActivity extends BaseActivity {
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
         if(TextUtils.isEmpty(username)) {
-            ToastUtil.showCustomToastL(this, R.string.username_should_not_null);
+            ToastUtil.showToastL(this, R.string.username_should_not_null);
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            ToastUtil.showCustomToastL(this, R.string.pwd_should_not_null);
+            ToastUtil.showToastL(this, R.string.pwd_should_not_null);
             return;
         }
 
@@ -126,12 +124,12 @@ public class LoginActivity extends BaseActivity {
 
                     PreferenceUtils.setPrefString(LoginActivity.this, ESConstants.USER_REGISTER_TIME, str);
 
-                    ToastUtil.showCustomToastS(LoginActivity.this, R.string.login_success);
+                    ToastUtil.showToastS(LoginActivity.this, R.string.login_success);
                     // after login success
                     gotoMainActivity();
                 } else {
                     dismissProgressDialog();
-                    ToastUtil.showCustomToastS(LoginActivity.this, R.string.login_error);
+                    ToastUtil.showToastS(LoginActivity.this, R.string.login_error);
                 }
             }
         });

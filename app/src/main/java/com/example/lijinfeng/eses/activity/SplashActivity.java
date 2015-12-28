@@ -13,16 +13,15 @@ import com.avos.avoscloud.PushService;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 
-
 /*
  * TODO: Splash page
+ *
  * @author li.jf
- * @date 15-9-17 下午3:49
- * Copyright(C) li.jf  All rights reserved.
  */
 public class SplashActivity extends BaseActivity {
 
     private ImageView ivSplash;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,8 +101,7 @@ public class SplashActivity extends BaseActivity {
 
     private void gotoMainActivity() {
         if(getUserId() != null) {
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this,MainActivity.class));
             this.finish();
         }
     }
