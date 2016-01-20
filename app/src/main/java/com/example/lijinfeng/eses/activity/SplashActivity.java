@@ -3,8 +3,6 @@ package com.example.lijinfeng.eses.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.avos.avoscloud.AVAnalytics;
@@ -12,6 +10,7 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.PushService;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
+import com.example.lijinfeng.eses.util.CommonUtil;
 
 /*
  * TODO: Splash page
@@ -26,21 +25,12 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setttingNoTitle();
+        CommonUtil.settingWindowNoTitle(this);
         setContentView(R.layout.activity_splash);
 
         initAVCloud();
         initView();
         init();
-    }
-
-    /**
-     * 全屏效果
-     */
-    private void setttingNoTitle() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     private void initAVCloud() {
@@ -55,33 +45,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void init() {
-    /*    final ScaleAnimation scaleAnim = new ScaleAnimation(1.0f, 1.2f, 1.0f, 1.2f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-                0.5f);
-        scaleAnim.setFillAfter(true);
-        scaleAnim.setDuration(2000);
-        scaleAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                if(getUserId() != null) {
-                    gotoMainActivity();
-                } else {
-                    gotoLoginActivity();
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        ivSplash.startAnimation(scaleAnim);*/
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if(getUserId() != null) {
             gotoMainActivity();
         } else {
@@ -95,8 +63,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void gotoLoginActivity() {
-        SplashActivity.this.finish();
         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        SplashActivity.this.finish();
     }
 
     private void gotoMainActivity() {

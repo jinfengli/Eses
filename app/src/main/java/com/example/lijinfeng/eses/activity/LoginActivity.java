@@ -17,6 +17,7 @@ import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
+import com.example.lijinfeng.eses.util.NetworkUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.util.ToastUtil;
 
@@ -89,17 +90,24 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
-        // hide soft keyboard when click login button.
         CommonUtil.hideSoftKeyBoard(LoginActivity.this);
+
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
+
+        // check network, uername, password
+        if(!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showToastS(this, R.string.network_unconnect);
+            return;
+        }
+
         if(TextUtils.isEmpty(username)) {
-            ToastUtil.showToastL(this, R.string.username_should_not_null);
+            ToastUtil.showToastS(this, R.string.username_should_not_null);
             return;
         }
 
         if(TextUtils.isEmpty(password)) {
-            ToastUtil.showToastL(this, R.string.pwd_should_not_null);
+            ToastUtil.showToastS(this, R.string.pwd_should_not_null);
             return;
         }
 
