@@ -63,15 +63,13 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void gotoLoginActivity() {
-        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-        SplashActivity.this.finish();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     private void gotoMainActivity() {
-        if(getUserId() != null) {
-            startActivity(new Intent(this,MainActivity.class));
-            this.finish();
-        }
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 }

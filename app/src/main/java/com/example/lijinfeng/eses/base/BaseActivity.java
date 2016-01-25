@@ -13,6 +13,8 @@ import com.umeng.analytics.MobclickAgent;
 
 /**
  * base 工具类
+ *
+ * @author li.jf
  */
 public abstract class BaseActivity extends Activity implements View.OnClickListener {
 
@@ -53,8 +55,6 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         MobclickAgent.onPause(this);
         AVAnalytics.onPause(this);
     }
-
-    //protected abstract void initTitleView();
 
     protected abstract void initView();
 
