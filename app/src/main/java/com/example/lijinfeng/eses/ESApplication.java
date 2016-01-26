@@ -19,6 +19,7 @@ public class ESApplication extends Application {
 
         AVOSCloud.useAVCloudCN();
 
-        AVOSCloud.initialize(ESApplication.this, ESConstants.APPLICATION_ID, ESConstants.CLIENT_KEY);
+        AVOSCloud.initialize(ESApplication.this, ESConstants.APPLICATION_ID, ESConstants.CLIENT_KEY); // //
+        // test hello world next
     }
 }
