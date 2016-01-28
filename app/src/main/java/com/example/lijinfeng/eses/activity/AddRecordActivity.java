@@ -100,7 +100,7 @@ public class AddRecordActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_add_record);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        initTitleView(); //
+        initTitleView(); ////
         initView();
         init();
         setListener();
