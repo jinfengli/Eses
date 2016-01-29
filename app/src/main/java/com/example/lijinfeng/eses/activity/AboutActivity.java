@@ -19,7 +19,7 @@ public class AboutActivity extends AppCompatActivity {
 
     private static final String TAG = AboutActivity.class.getSimpleName();
 
-    private Toolbar mToolbar;
+    private Toolbar mToolbar;//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
