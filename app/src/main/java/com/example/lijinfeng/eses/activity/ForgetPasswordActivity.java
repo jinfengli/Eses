@@ -16,12 +16,12 @@ import com.avos.avoscloud.RequestPasswordResetCallback;
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.ToastUtil;
+
 import java.util.regex.Pattern;
 
 /*
  * TODO：find account or password
  *
- * @date: 2015-10-20
  * @author: li.jf
  */
 public class ForgetPasswordActivity extends AppCompatActivity {
@@ -53,7 +53,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
     }
 
     /**
-     * 发送找回密码邮件
+     * send found password email
      */
     private void sendFindPwdMail() {
         String email = etForgetPwdEmail.getText().toString();
@@ -61,9 +61,8 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             ToastUtil.showToastL(this, R.string.email_should_not_null);
             return;
         } else {
-            // email不为空，检验一下格式是否正确
             Pattern regex = Pattern.compile(ESConstants.EMAIL_REGEX);
-            if(!regex.matcher(email).matches()) {
+            if (!regex.matcher(email).matches()) {
                 ToastUtil.showToastL(this, R.string.email_format_error);
                 return;
             }
@@ -74,18 +73,18 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
     /**
      * send reset password email
+     *
      * @param email
      */
     private void requestLeanCloudPwdReset(String email) {
         AVUser.requestPasswordResetInBackground(email, new RequestPasswordResetCallback() {
-            @Override public void done(AVException e) {
-                // 回调无异常
+            @Override
+            public void done(AVException e) {
+                // callback success
                 if (e == null) {
-                    // 邮件发送成功，到邮件收取邮件重新登录
                     ToastUtil.showToastS(ForgetPasswordActivity.this, R.string.send_email_success);
                     gotoLoginActivity();
                 } else {
-                    // 邮件发送异常，请检查您的邮件地址
                     Log.e(TAG, "send email fail:" + e.getMessage().toString());
                     ToastUtil.showToastS(ForgetPasswordActivity.this, R.string.send_email_fail);
                 }

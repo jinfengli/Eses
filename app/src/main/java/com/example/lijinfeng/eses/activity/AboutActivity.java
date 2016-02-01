@@ -12,15 +12,11 @@ import com.example.lijinfeng.eses.util.CommonUtil;
 /*
  *  TODO: AboutActivity
  *
- *  Date: 15-9-1 下午11:23
- *  Copyright (c) li.jf All rights reserved.
+ *  @author:li.jf
  */
 public class AboutActivity extends AppCompatActivity {
 
-    private static final String TAG = AboutActivity.class.getSimpleName();
-
-
-    private Toolbar mToolbar; 
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,4 +55,29 @@ public class AboutActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    /**
+     * A simple handler that stops the service if playback is not active (playing)
+     */
+//    private static class DelayedStopHandler extends Handler {
+//        private final WeakReference<MusicService> mWeakReference;
+//
+//        private DelayedStopHandler(MusicService service) {
+//            mWeakReference = new WeakReference<>(service);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            MusicService service = mWeakReference.get();
+//            if (service != null && service.mPlayback != null) {
+//                if (service.mPlayback.isPlaying()) {
+//                    LogHelper.d(TAG, "Ignoring delayed stop since the media player is in use.");
+//                    return;
+//                }
+//                LogHelper.d(TAG, "Stopping service with delay handler.");
+//                service.stopSelf();
+//                service.mServiceStarted = false;
+//            }
+//        }
+//    }
 }

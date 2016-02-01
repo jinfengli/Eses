@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+
 import com.example.lijinfeng.eses.R;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
@@ -13,7 +14,6 @@ import com.example.lijinfeng.eses.util.CommonUtil;
 /**
  * TODO: Record Detail
  *
- * @date 2015-10-04
  * @author li.jf
  */
 public class RecordDetailActivity extends AppCompatActivity {
@@ -27,16 +27,21 @@ public class RecordDetailActivity extends AppCompatActivity {
     private TextView tvComment;
     private TextView tvRecordStatus;
 
-    private String storeNo;
     private String startTime;
     private String sleepTime;
-    /** 今天总共睡眠时常 */
     private String totalSleepTime;
-    /** 备注(今天睡眠如何，工作效率如何) */
+
+    /**
+     * comment
+     */
     private String comment;
-    /** 记录状态是否正常 */
+    /**
+     * record status is normal or not
+     */
     private String status;
-    /** 正常订单 */
+    /**
+     * NORMAL_RECORD
+     */
     private static final int NORMAL_RECORD = 0;
 
     @Override
@@ -51,9 +56,9 @@ public class RecordDetailActivity extends AppCompatActivity {
 
     private void handleIntent() {
         startTime = getIntent().getStringExtra(ESConstants.START_DATE_TIME);
-        sleepTime =  getIntent().getStringExtra(ESConstants.SLEEP_DATE_TIME);
-        // 总睡眠时间等于两个时间相减
-        totalSleepTime= CommonUtil.getDiffHourMinutes(startTime,sleepTime);
+        sleepTime = getIntent().getStringExtra(ESConstants.SLEEP_DATE_TIME);
+        // total sleep time equals sleep time minus start time.
+        totalSleepTime = CommonUtil.getDiffHourMinutes(startTime, sleepTime);
         comment = getIntent().getStringExtra(ESConstants.RECORD_COMMENT);
         status = getIntent().getStringExtra(ESConstants.EXCEPTION_FLAG);
         Log.d(TAG, "startTime:" + startTime);
@@ -78,19 +83,19 @@ public class RecordDetailActivity extends AppCompatActivity {
         tvSleepDateTime = (TextView) findViewById(R.id.tv_detail_sleepDateTime);
         tvTotalSleepTime = (TextView) findViewById(R.id.tv_detail_daily_sleep_time);
         String sleepTotalDateFormat = getResources().getString(R.string.sleep_detail_total_time);
-        tvTotalSleepTime.setText(String.format(sleepTotalDateFormat,totalSleepTime));
+        tvTotalSleepTime.setText(String.format(sleepTotalDateFormat, totalSleepTime));
         tvComment = (TextView) findViewById(R.id.tv_detail_sleep_comment);
         tvRecordStatus = (TextView) findViewById(R.id.tv_record_status);
 
         String startDateFormat = getResources().getString(R.string.start_detail_date_time);
-        tvStartDateTime.setText(String.format(startDateFormat,startTime));
+        tvStartDateTime.setText(String.format(startDateFormat, startTime));
 
         String sleepDateFormat = getResources().getString(R.string.sleep_detail_date_time);
-        tvSleepDateTime.setText(String.format(sleepDateFormat,sleepTime));
+        tvSleepDateTime.setText(String.format(sleepDateFormat, sleepTime));
 
         String commentFormat = getResources().getString(R.string.sleep_detail_record_comment);
-        tvComment.setText(String.format(commentFormat,comment));
-        if(NORMAL_RECORD == Integer.valueOf(status)) {
+        tvComment.setText(String.format(commentFormat, comment));
+        if (NORMAL_RECORD == Integer.valueOf(status)) {
             tvRecordStatus.setText(R.string.normal);
         } else {
             tvRecordStatus.setText(R.string.abnormal);

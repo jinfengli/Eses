@@ -3,7 +3,6 @@ package com.example.lijinfeng.eses.activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +33,7 @@ import java.util.Set;
  *  @Date: 15-9-1 下午11:26
  *  Copyright (C) li.jf All rights reserved.
  */
-public class ChartActivity extends AppCompatActivity implements OnChartValueSelectedListener, View.OnClickListener {
+public class ChartActivity extends BaseActivity implements OnChartValueSelectedListener{
     private static final String TAG = ChartActivity.class.getSimpleName();
 
     private Toolbar toolbar;
@@ -60,6 +59,7 @@ public class ChartActivity extends AppCompatActivity implements OnChartValueSele
         initTitleView();
         init();
         initChartView();
+        initView();
 
     }
 
@@ -69,6 +69,11 @@ public class ChartActivity extends AppCompatActivity implements OnChartValueSele
         timeDiffs = dbHelper.getTimeDiffs();
         Log.d(TAG, "timeDiffs ========================"+timeDiffs);
         mParties = getStringTimeDiffs();
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     public  String[] getStringTimeDiffs(){

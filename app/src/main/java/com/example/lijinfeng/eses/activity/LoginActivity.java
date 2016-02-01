@@ -1,7 +1,6 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.example.lijinfeng.eses.R;
-import com.example.lijinfeng.eses.base.BaseActivity;
 import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.util.CommonUtil;
 import com.example.lijinfeng.eses.util.NetworkUtil;
@@ -34,11 +32,9 @@ public class LoginActivity extends BaseActivity {
 
     private EditText etUsername;
     private EditText etPassword;
-
     private Button btnLogin;
     private TextView tvRegister;
     private TextView tvForgetPassword;
-
     private ProgressDialog progressDialog;
 
     private String username;
@@ -69,24 +65,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    public void onClick(View view) {
-        if(view.getId() == R.id.btn_login) {
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_login) {
             login();
-        } else if(view.getId() == R.id.tv_register) {
-            gotoRegisterActivity();
-        } else if(view.getId() == R.id.tv_forget_password) {
-            gotoForgetPwdActivity();
+        } else if(v.getId() == R.id.tv_register) {
+            gotoActivity(RegisterActivity.class,false);
+        } else if(v.getId() == R.id.tv_forget_password) {
+            gotoActivity(ForgetPasswordActivity.class, false);
         }
-    }
-
-    private void gotoRegisterActivity() {
-        Intent intent = new Intent(this,RegisterActivity.class);
-        startActivity(intent);
-    }
-
-    private void gotoForgetPwdActivity() {
-        Intent intent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
-        startActivity(intent);
     }
 
     private void login() {
@@ -134,7 +120,7 @@ public class LoginActivity extends BaseActivity {
 
                     ToastUtil.showToastS(LoginActivity.this, R.string.login_success);
                     // after login success
-                    gotoMainActivity();
+                    gotoActivity(MainActivity.class, true);
                 } else {
                     dismissProgressDialog();
                     ToastUtil.showToastS(LoginActivity.this, R.string.login_error);
@@ -143,11 +129,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void gotoMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        LoginActivity.this.finish();
-    }
 
     private void showProgressDialog() {
         progressDialog = ProgressDialog.show(this, "",
@@ -155,7 +136,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void dismissProgressDialog() {
-       if(progressDialog !=null) {
+       if(progressDialog != null) {
            progressDialog.dismiss();
        }
     }

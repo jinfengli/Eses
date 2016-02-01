@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     /**
-     * 删除指定位置的记录
+     * delete record that position specified.
      * @param recordBeans
      * @param position
      */
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        recordBeans = new ArrayList<RecordBean>();
+        recordBeans = new ArrayList<>();
         recordBeans = dbHelper.queryAllRecords();
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
@@ -325,7 +325,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mAlertView.dismiss();
             return;
         }
-        // 侧滑处于开启状态时，点击返回键，先关闭侧滑(不是直接和Activity一起关闭)
+
+        // when click the back button, if the drawer is open, just close it.
+        // not closing the Activity.
         if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawers();
             return;

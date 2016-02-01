@@ -1,9 +1,7 @@
 package com.example.lijinfeng.eses.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,9 +21,8 @@ import com.example.lijinfeng.eses.util.ToastUtil;
  * TODO: user register
  *
  * @author li.jf
- * @date 15-9-19 下午3:18
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends BaseActivity {
 
     private Toolbar mToolbar;
     private EditText etUserName;
@@ -117,7 +114,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * 注册ES用户到LeanCloud server
+     * register ES user to LeanCloud server
+     * @param user
      */
     private void signUpLeanCloudServer(AVUser user) {
         user.signUpInBackground(new SignUpCallback() {
@@ -130,9 +128,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         userEmail);
 
                     // register success
-                    Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    RegisterActivity.this.finish();
+                    gotoActivity(MainActivity.class, true);
                 } else {
                     switch (e.getCode()) {
                         case 202:
