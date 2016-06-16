@@ -20,7 +20,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="13dp"
-            android:text="A908653"/>
+            android:text="开始时间"/>
         <!--android:textColor="#575757"-->
 
         <TextView
@@ -33,7 +33,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="13dp"
-            android:text="单鞋" />
+            android:text="休息时间" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="已退货" />
+            android:text="record_Flag" />
     </RelativeLayout>
 
     <RelativeLayout

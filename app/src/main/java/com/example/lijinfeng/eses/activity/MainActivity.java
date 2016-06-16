@@ -31,6 +31,7 @@ import com.example.lijinfeng.eses.constants.ESConstants;
 import com.example.lijinfeng.eses.db.EsesDBHelper;
 import com.example.lijinfeng.eses.db.RecordProvider;
 import com.example.lijinfeng.eses.util.CommonUtil;
+import com.example.lijinfeng.eses.util.LeanCloudUtil;
 import com.example.lijinfeng.eses.util.PreferenceUtils;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenu;
 import com.example.lijinfeng.eses.view.swipeMenuListView.SwipeMenuCreator;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** 数据库操作工具类 */
     private EsesDBHelper dbHelper;
 
+    private LeanCloudUtil leanCloudUtil;
+
     private ContentObserver recordChangeObserver = new RecordChangeObserver(new Handler());
     private ContentResolver mContentResolver;
 
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvSetting;
     private TextView tvFeedback;
     private TextView tvShare;
+
+    static ArrayList<RecordBean> records = new ArrayList<RecordBean>();
 
     /** 删除记录 */
     private static final int DELETE_ITEM = 0;
@@ -98,9 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setBackgroundColor(getResources().getColor(R.color.blue));
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(onMenuItemClicker);
-
-//        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
         //创建返回键，并实现打开关/闭监听
@@ -148,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mContentResolver.registerContentObserver(RecordProvider.CONTENT_URI, true, recordChangeObserver);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(MainActivity.this, RecordDetailActivity.class);
@@ -171,11 +172,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         UmengUpdateAgent.update(this);
         mainAdapter = new MainAdapter(MainActivity.this);
         dbHelper = new EsesDBHelper(this);
+        leanCloudUtil = LeanCloudUtil.getInstance(this);
         recordBeans = new ArrayList<RecordBean>();
-        recordBeans = dbHelper.queryAllRecords();
-
+//        recordBeans = dbHelper.queryAllRecords();
+        recordBeans = leanCloudUtil.query("ljf");
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
+        mainAdapter.notifyDataSetChanged();
 
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -210,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (index) {
                     case DELETE_ITEM:
                         deleteRecordItem(recordBeans, position);
-                        //mAlertView.show();
                         break;
                     case MODIFY_ITEM:
                         // modify
@@ -242,16 +244,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(i == -1) {
                 mAlertView.dismiss();
             } else if(i == 0) {
-//                ToastUtil.showToastL(MainActivity.this, o.getClass() + "");
                 AVUser.logOut();
                 MainActivity.this.finish();
-
-                // 不能这样搞，这样getClass都是com...AlertView。
-                //if(o.getClass() == MenuItem.class) {
-                //    AVUser.logOut();
-                //} else if(o.getClass() == RecordBean.class) {
-                //
-                //}
             }
         }
     };
@@ -269,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override public void onClick(DialogInterface dialog, int which) {
                 dbHelper.deleteRecord(recordBeans.get(position).getRecordNo());
                 recordBeans.remove(position);
-                // mainAdapter.notifyDataSetChanged();
+                mainAdapter.notifyDataSetChanged();
                 mainAdapter.setRecordDatas(recordBeans);
                 lvRecords.setAdapter(mainAdapter);
             }
@@ -302,21 +296,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        recordBeans = new ArrayList<>();
-        recordBeans = dbHelper.queryAllRecords();
+//        recordBeans = new ArrayList<>();
+//        recordBeans = dbHelper.queryAllRecords();
+
+
+// The content of the adapter has changed but ListView did not receive a notification.
+// make sure the content of your adapter is not modified from a background thread . but only from the UI thread.
+        // 注释掉下面这行？
+//        recordBeans = leanCloudUtil.query("ljf");
         mainAdapter.setRecordDatas(recordBeans);
         lvRecords.setAdapter(mainAdapter);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+        mainAdapter.notifyDataSetChanged();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mContentResolver.unregisterContentObserver(recordChangeObserver);
+        recordBeans.clear();
     }
 
     @Override
@@ -335,7 +332,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         super.onBackPressed();
     }
-
 
     private class RecordChangeObserver extends ContentObserver {
         public RecordChangeObserver(Handler handler){

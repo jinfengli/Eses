@@ -49,7 +49,7 @@ import java.util.Calendar;
  *  TODO: Add Record
  *
  *  Date: 15-8-29 下午11:24
- *  Copyright (C) 2015, li.jf,  All rights reserved.
+ *  Copyright (C) 2015, kingfeng All rights reserved.
  */
 public class AddRecordActivity extends AppCompatActivity implements
         CommonAlertDialog.OnSubmitListener,
@@ -403,7 +403,7 @@ public class AddRecordActivity extends AppCompatActivity implements
         if(position == 0) {
             dbHelper.addRecord(recordBean);
 
-//            uploadRecord();
+            uploadRecord();
             AddRecordActivity.this.finish();
         } else {
             mAlertView.dismiss();

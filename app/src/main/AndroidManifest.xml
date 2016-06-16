@@ -57,6 +57,9 @@
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService"></service>
+
+        <!--<service android:name="com.avos.avoscloud.PushService"/>-->
+
         <!-- 把微店接入umeng统计 -->
         <meta-data
             android:name="UMENG_APPKEY"

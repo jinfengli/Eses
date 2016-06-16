@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVInstallation;
-import com.avos.avoscloud.PushService;
 import com.example.lijinfeng.eses.R;
 
 /*
@@ -32,8 +31,8 @@ public class SplashActivity extends BaseActivity {
 
     private void initAVCloud() {
         AVAnalytics.trackAppOpened(getIntent());
-        PushService.setDefaultPushCallback(this, SplashActivity.class);
-        PushService.subscribe(this, "public", SplashActivity.class);
+//        PushService.setDefaultPushCallback(this, SplashActivity.class);
+//        PushService.subscribe(this, "public", SplashActivity.class);
         AVInstallation.getCurrentInstallation().saveInBackground();
     }
 
